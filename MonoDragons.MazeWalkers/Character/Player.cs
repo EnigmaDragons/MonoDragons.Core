@@ -18,9 +18,9 @@ namespace MonoDragons.MazeWalkers.Character
 
         public Player()
         {
-            new KeyDownEventSubscription(x => _isMovingUp = true, this, Keys.W).Subscribe();
-            new KeyUpEventSubscription(x => _isMovingUp = false, this, Keys.W).Subscribe();
-            new KeyDownEventSubscription(x => _isMovingDown = true, this, Keys.S).Subscribe();
+            new KeyDownEventSubscription(x => { _isMovingUp = true; Console.WriteLine("Is Moving Up: " + _isMovingUp); }, this, Keys.W).Subscribe();
+            new KeyUpEventSubscription(x => { _isMovingUp = false; Console.WriteLine("Is Moving Up: " + _isMovingUp); }, this, Keys.W).Subscribe();
+            new KeyDownEventSubscription(x => { _isMovingDown = true; Console.WriteLine("Is Moving Down: " + _isMovingDown); }, this, Keys.S).Subscribe();
             new KeyUpEventSubscription(x => _isMovingDown = false, this, Keys.S).Subscribe();
             new KeyDownEventSubscription(x => _isMovingRight = true, this, Keys.D).Subscribe();
             new KeyUpEventSubscription(x => _isMovingRight = false, this, Keys.D).Subscribe();
@@ -31,8 +31,6 @@ namespace MonoDragons.MazeWalkers.Character
         public void Update(TimeSpan delta)
         {
             var distance = delta.Ticks*_moveSpeed;
-            Console.WriteLine("Is Moving Up: " + _isMovingUp);
-            Console.WriteLine("Is Moving Down: " + _isMovingUp);
             Console.WriteLine("Is Moving Right: " + _isMovingUp);
             Console.WriteLine("Is Moving Left: " + _isMovingUp);
             if (_isMovingUp)
