@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonoDragons.Core.Engine
 {
-    class SceneContents
+    public class SceneContents : IDisposable
     {
+        private readonly List<IDisposable> _loadedContents = new List<IDisposable>();
+
+        public void Add(IDisposable content)
+        {
+            _loadedContents.Add(content);
+        }
+
+        public void Dispose()
+        {
+            _loadedContents.ForEach(x => x.Dispose());
+            _loadedContents.Clear();
+        }
     }
 }
