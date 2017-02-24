@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using MonoDragons.Core.EventSystem;
+ using MonoDragons.Core.UI;
 
 namespace MonoDragons.Core.Engine
 {
@@ -25,6 +26,7 @@ namespace MonoDragons.Core.Engine
             _content = game.Content;
             _navigation = navigation;
             _spriteBatch = spriteBatch;
+            DefaultFont.Load(_content);
         }
 
         public static void PlaySound(string soundName)
@@ -52,6 +54,11 @@ namespace MonoDragons.Core.Engine
             _oldSceneContents.Dispose();
         }
 
+        public static void DrawBrackgroundColor(Color color)
+        {
+            _game.GraphicsDevice.Clear(color);
+        }
+
         public static void Draw(Texture2D texture, Vector2 pixelPosition)
         {
             _spriteBatch.Draw(texture, pixelPosition);
@@ -60,6 +67,11 @@ namespace MonoDragons.Core.Engine
         public static void Draw(Texture2D texture, Rectangle rectPostion)
         {
             _spriteBatch.Draw(texture, rectPostion, Color.White);
+        }
+
+        public static void DrawText(string text, Vector2 position, Color color)
+        {
+            _spriteBatch.DrawString(DefaultFont.Font, text, position, color);
         }
 
         public static void Publish<T>(T payload)

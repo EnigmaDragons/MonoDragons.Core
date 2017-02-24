@@ -1,4 +1,6 @@
 ﻿using System;
+using MonoDragons.Core.Engine;
+using MonoDragons.MazeWalkers.Scenes;
 
 namespace MonoDragons.MazeWalkers
 {
@@ -14,8 +16,8 @@ namespace MonoDragons.MazeWalkers
         [STAThread]
         static void Main()
         {
-            //using (var game = new Game1())
-                //game.Run();
+            using (var game = new MainGame(new TextScene(), new ScreenSize(900, 600)))
+                game.Run();
         }
     }
 #endif
