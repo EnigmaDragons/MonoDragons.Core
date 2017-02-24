@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoDragons.Core.Input;
 
 namespace MonoDragons.Core.Engine
 {
@@ -9,6 +10,7 @@ namespace MonoDragons.Core.Engine
         private readonly GraphicsDeviceManager _graphicsManager;
         private readonly string _startingViewName;
         private readonly SceneFactory _sceneFactory;
+        private readonly WatchKeyboardInput watchForInput;
 
         private SpriteBatch _sprites;
         private IScene _currentScene;
@@ -20,6 +22,7 @@ namespace MonoDragons.Core.Engine
             Content.RootDirectory = "Content";
             _startingViewName = startingViewName;
             _sceneFactory = sceneFactory;
+            watchForInput = new WatchKeyboardInput();
         }
 
         protected override void Initialize()
@@ -46,6 +49,7 @@ namespace MonoDragons.Core.Engine
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            watchForInput.Update(gameTime.ElapsedGameTime);
             _currentScene?.Update(gameTime.ElapsedGameTime);
             base.Update(gameTime);
         }
@@ -53,6 +57,7 @@ namespace MonoDragons.Core.Engine
         protected override void Draw(GameTime gameTime)
         {
             _sprites.Begin();
+            watchForInput.Draw(Vector2.Zero);
             _currentScene?.Draw();
             _sprites.End();
             base.Draw(gameTime);

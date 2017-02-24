@@ -1,20 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework.Content;
 
 namespace MonoDragons.Core.Engine
 {
     public class SceneContents : IDisposable
     {
-        private readonly List<IDisposable> _loadedContents = new List<IDisposable>();
+        private readonly Dictionary<string, IDisposable> _loadedContents = new Dictionary<string, IDisposable>();
+        private readonly ContentManager _contentManager;
 
-        public void Add(IDisposable content)
+        public SceneContents(ContentManager contentManager)
         {
-            _loadedContents.Add(content);
+            _contentManager = contentManager;
+        }
+
+        public void Add(string resourceName, IDisposable content)
+        {
+            _loadedContents.Add(resourceName, content);
+        }
+
+        public T Load<T>(string resourceName) where T : IDisposable
+        {
+            if (!_loadedContents.ContainsKey(resourceName))
+                _loadedContents.Add(resourceName, _contentManager.Load<T>(resourceName));
+            return (T)_loadedContents[resourceName];
         }
 
         public void Dispose()
         {
-            _loadedContents.ForEach(x => x.Dispose());
+            _loadedContents.Values.ToList().ForEach(x => x.Dispose());
             _loadedContents.Clear();
         }
     }
