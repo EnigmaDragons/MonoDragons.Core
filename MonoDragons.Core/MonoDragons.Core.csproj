@@ -51,7 +51,8 @@
     <Compile Include="Engine\World.cs" />
     <Compile Include="EventSystem\Events.cs" />
     <Compile Include="EventSystem\EventSubscription.cs" />
-    <Compile Include="EventSystem\EventTypes\DownKeyEvent.cs" />
+    <Compile Include="EventSystem\EventTypes\KeyDownEvent.cs" />
+    <Compile Include="EventSystem\EventTypes\KeyUpEvent.cs" />
     <Compile Include="Input\WatchKeyboardInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

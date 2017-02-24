@@ -15,13 +15,13 @@ namespace MonoDragons.Core.Input
         {
             var state = Keyboard.GetState();
             var pressedKeys = state.GetPressedKeys().ToList();
-            pressedKeys.Where(x => !_lastState.GetPressedKeys().Any(y => x.Equals(y))).ToList().ForEach(x => World.Publish(new DownKeyEvent(x)));
+            pressedKeys.Where(x => !_lastState.GetPressedKeys().Any(y => x.Equals(y))).ToList().ForEach(x => World.Publish(new KeyDownEvent(x)));
+            pressedKeys.Where(x => _lastState.GetPressedKeys().All(y => !x.Equals(y))).ToList().ForEach(x => World.Publish(new KeyUpEvent(x)));
             _lastState = state;
         }
 
         public void Draw(Vector2 offset)
         {
-            
         }
     }
 }

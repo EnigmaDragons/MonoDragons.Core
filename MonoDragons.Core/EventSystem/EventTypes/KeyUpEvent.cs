@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework.Input;
 
 namespace MonoDragons.Core.EventSystem.EventTypes
 {
-    class UpKeyEvent
+    public class KeyUpEvent
     {
+        public Keys Key { get; }
+
+        public KeyUpEvent(Keys key)
+        {
+            Key = key;
+        }
     }
 }

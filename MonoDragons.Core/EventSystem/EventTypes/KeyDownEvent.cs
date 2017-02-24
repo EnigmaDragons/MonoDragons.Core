@@ -2,11 +2,11 @@
 
 namespace MonoDragons.Core.EventSystem.EventTypes
 {
-    public class DownKeyEvent
+    public class KeyDownEvent
     {
         public Keys Key { get; }
 
-        public DownKeyEvent(Keys key)
+        public KeyDownEvent(Keys key)
         {
             Key = key;
         }
