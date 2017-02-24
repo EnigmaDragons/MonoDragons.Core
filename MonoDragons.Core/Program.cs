@@ -1,9 +1,10 @@
 ﻿using System;
 using MonoDragons.Core.Engine;
 
+#if WINDOWS || LINUX
+
 namespace MonoDragons.Core
 {
-#if WINDOWS || LINUX
     /// <summary>
     /// The main class.
     /// </summary>

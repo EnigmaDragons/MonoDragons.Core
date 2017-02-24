@@ -43,8 +43,9 @@ namespace MonoDragons.MazeWalkers
             // Create a new SpriteBatch, which can be used to draw textures.
             new GameInstance().SetGame(this);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            var music = new LoadedSong("01-02- Lost in a Memory").Get();
-            MediaPlayer.Play(music);
+            var MusicLoad = new LoadedSong("menuLOOP").Get();
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(MusicLoad);
             // TODO: use this.Content to load your game content here
         }
 
