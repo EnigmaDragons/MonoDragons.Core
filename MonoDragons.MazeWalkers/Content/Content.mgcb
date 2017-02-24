@@ -19,3 +19,9 @@
 /processorParam:Quality=Best
 /build:menuLOOP.wav
 
+#begin song1LOOP.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:song1LOOP.wav
+
