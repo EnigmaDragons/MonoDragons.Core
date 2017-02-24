@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using MonoDragons.Core.Engine;
+using MonoDragons.Core.Sounds;
 
 namespace MonoDragons.MazeWalker
 {
@@ -38,7 +41,11 @@ namespace MonoDragons.MazeWalker
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            new GameInstance().SetGame(this);
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            var MusicLoad = new LoadedSong("menuLOOP").Get();
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(MusicLoad);
 
             // TODO: use this.Content to load your game content here
         }
