@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Music\menuLOOP.wma">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -60,12 +63,11 @@
       <Project>{a33f8fe3-a35a-4ddf-b96c-0157224f602c}</Project>
       <Name>MonoDragons.Core</Name>
     </ProjectReference>
-    <Content Include="Content\Music\menuLOOP.ogg">
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Music\menuLOOP.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Music\menuLOOP.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
