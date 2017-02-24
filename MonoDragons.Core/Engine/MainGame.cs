@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using NewYorkCity1337.Engine;
 
 namespace MonoDragons.Core.Engine
 {
@@ -22,24 +21,20 @@ namespace MonoDragons.Core.Engine
 
         protected override void Initialize()
         {
-            _graphicsManager.IsFullScreen = true;
             IsMouseVisible = true;
             _sprites = new SpriteBatch(GraphicsDevice);
-            new GameInstance().SetGame(this);
-            new SpritesBatchInstance().SetSpritesBatch(_sprites);
+            World.Init(this, this, _sprites);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             IsMouseVisible = true;
-            _currentScene?.LoadContent();
         }
 
         protected override void UnloadContent()
         {
             Content.Unload();
-            _currentScene?.UnloadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -61,8 +56,6 @@ namespace MonoDragons.Core.Engine
 
         public void NavigateTo(IScene scene)
         {
-            scene.LoadContent();
-            _currentScene?.UnloadContent();
             _currentScene = scene;
         }
     }

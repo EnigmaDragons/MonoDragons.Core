@@ -38,15 +38,12 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\GameInstance.cs" />
-    <Compile Include="Engine\IGame.cs" />
     <Compile Include="Engine\IGameObject.cs" />
     <Compile Include="Engine\IScene.cs" />
     <Compile Include="Engine\INavigation.cs" />
     <Compile Include="Engine\MainGame.cs" />
     <Compile Include="Engine\SceneContents.cs" />
     <Compile Include="Engine\ScreenSize.cs" />
-    <Compile Include="Engine\SpritesBatchInstance.cs" />
     <Compile Include="Engine\World.cs" />
     <Compile Include="EventSystem\Events.cs" />
     <Compile Include="EventSystem\EventSubscription.cs" />
@@ -54,8 +51,6 @@
     <Compile Include="Input\WatchKeyboardInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sounds\LoadedSong.cs" />
-    <Compile Include="Sounds\LoadedSoundEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
