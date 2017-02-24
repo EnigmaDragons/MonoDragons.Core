@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoDragons.Core", "MonoDragons.Core.csproj", "{A33F8FE3-A35A-4DDF-B96C-0157224F602C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoDragons.MazeWalker", "..\MonoDragons.MazeWalker\MonoDragons.MazeWalker.csproj", "{43C43AF2-F8F5-4FC5-A055-A441741B836D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,10 @@ Global
 		{A33F8FE3-A35A-4DDF-B96C-0157224F602C}.Debug|x86.Build.0 = Debug|x86
 		{A33F8FE3-A35A-4DDF-B96C-0157224F602C}.Release|x86.ActiveCfg = Release|x86
 		{A33F8FE3-A35A-4DDF-B96C-0157224F602C}.Release|x86.Build.0 = Release|x86
+		{43C43AF2-F8F5-4FC5-A055-A441741B836D}.Debug|x86.ActiveCfg = Debug|x86
+		{43C43AF2-F8F5-4FC5-A055-A441741B836D}.Debug|x86.Build.0 = Debug|x86
+		{43C43AF2-F8F5-4FC5-A055-A441741B836D}.Release|x86.ActiveCfg = Release|x86
+		{43C43AF2-F8F5-4FC5-A055-A441741B836D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
