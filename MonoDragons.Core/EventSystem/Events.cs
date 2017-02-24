@@ -14,7 +14,8 @@ namespace MonoDragons.Core.EventSystem
             var eventType = typeof(T);
             if (!_events.ContainsKey(eventType))
                 return;
-            foreach (var e in _events[eventType])
+            var targetEvents = _events[eventType];
+            foreach (var e in targetEvents)
                 ((Action<T>)e)(payload);
         }
 
