@@ -18,6 +18,7 @@ namespace MonoDragons.MazeWalkers.Scenes
         public void Draw()
         {
             World.DrawBrackgroundColor(Color.Purple);
+            World.Draw("Images/Background/bg1", new Rectangle(0, 0, 1020, 996));
             _watchKeyboardInput.Draw(Vector2.Zero);
             _player.Draw(new Vector2(0, 0));
         }

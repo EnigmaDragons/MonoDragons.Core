@@ -52,7 +52,7 @@ namespace MonoDragons.Core.Engine
 
         protected override void Draw(GameTime gameTime)
         {
-            _sprites.Begin();
+            _sprites.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
             _currentScene?.Draw();
             _sprites.End();
             base.Draw(gameTime);
