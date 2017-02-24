@@ -1,12 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using MonoDragons.Core.Engine;
+using MonoDragons.Core.EventSystem.EventTypes;
 
 namespace MonoDragons.Core.Input
 {
-    class WatchKeyboardInput
+    public class WatchKeyboardInput : IGameObject
     {
+        private KeyboardState _lastState;
+
+        public void Update(TimeSpan delta)
+        {
+            var state = Keyboard.GetState();
+            var pressedKeys = state.GetPressedKeys().ToList();
+            pressedKeys.Where(x => !_lastState.GetPressedKeys().Any(y => x.Equals(y))).ToList().ForEach(x => World.Publish(new DownKeyEvent(x)));
+            _lastState = state;
+        }
+
+        public void Draw(Vector2 offset)
+        {
+            
+        }
     }
 }

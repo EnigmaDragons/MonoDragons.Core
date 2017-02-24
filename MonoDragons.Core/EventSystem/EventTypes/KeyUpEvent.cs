@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MonoDragons.Core.EventSystem.EventTypes
 {
-    class DownKeyEvent
+    class UpKeyEvent
     {
     }
 }
