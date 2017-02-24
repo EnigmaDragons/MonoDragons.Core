@@ -17,7 +17,7 @@ namespace MonoDragons.MazeWalkers
         [STAThread]
         static void Main()
         {
-            using (var game = new MainGame("ChronoScene", new ScreenSize(996, 1020), CreateSceneFactory()))
+            using (var game = new MainGame("ChronoScene", new ScreenSize(996, 1000), CreateSceneFactory()))
                 game.Run();
         }
 
