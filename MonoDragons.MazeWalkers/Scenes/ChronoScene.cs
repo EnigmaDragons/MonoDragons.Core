@@ -1,26 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MonoDragons.Core.Input;
+using MonoDragons.MazeWalkers.Character;
 
 namespace MonoDragons.MazeWalkers.Scenes
 {
-    class ChronoScene : IScene
+    public class ChronoScene : IScene
     {
-        public ChronoScene()
-        {
-        }
+        private Player _player = new Player();
+        private WatchKeyboardInput _watchKeyboardInput = new WatchKeyboardInput();
 
         public void Draw()
         {
             World.DrawBrackgroundColor(Color.Purple);
+            _watchKeyboardInput.Draw(Vector2.Zero);
+            _player.Draw(new Vector2(0, 0));
         }
 
         public void Update(TimeSpan delta)
         {
+            _watchKeyboardInput.Update(delta);
+            _player.Update(delta);
         }
     }
 }

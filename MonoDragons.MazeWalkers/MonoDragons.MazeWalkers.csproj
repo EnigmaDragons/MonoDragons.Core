@@ -59,10 +59,18 @@
     <Content Include="Content\Images\Tiles\tile1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Images\Crono Nigga\Walk\down1%28new%29.png" />
-    <Content Include="Content\Images\Crono Nigga\Walk\left1%28new%29.png" />
-    <Content Include="Content\Images\Crono Nigga\Walk\right1%28new%29.png" />
-    <Content Include="Content\Images\Crono Nigga\Walk\up1%28new%29.png" />
+    <Content Include="Content\Images\Crono Nigga\Walk\down1%28new%29.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Crono Nigga\Walk\left1%28new%29.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Crono Nigga\Walk\right1%28new%29.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Crono Nigga\Walk\up1%28new%29.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Images\Tiles\tile1.png" />
     <Content Include="Content\Images\Tiles\tile2.png" />
     <Content Include="Content\Images\Tiles\tile3.png" />
