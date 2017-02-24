@@ -24,7 +24,7 @@ namespace MonoDragons.Core.EventSystem
             if (!_events.ContainsKey(eventType))
                 _events[eventType] = new List<object>();
             if (!_owners.ContainsKey(subscription.Owner))
-                _events[eventType] = new List<object>();
+                _owners[subscription.Owner] = new List<object>();
             _events[eventType].Add(subscription.OnEvent);
             _owners[subscription.Owner].Add(subscription.OnEvent);
         }

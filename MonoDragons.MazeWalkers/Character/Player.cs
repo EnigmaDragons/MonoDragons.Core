@@ -31,6 +31,10 @@ namespace MonoDragons.MazeWalkers.Character
         public void Update(TimeSpan delta)
         {
             var distance = delta.Ticks*_moveSpeed;
+            Console.WriteLine("Is Moving Up: " + _isMovingUp);
+            Console.WriteLine("Is Moving Down: " + _isMovingUp);
+            Console.WriteLine("Is Moving Right: " + _isMovingUp);
+            Console.WriteLine("Is Moving Left: " + _isMovingUp);
             if (_isMovingUp)
                 _screenPositionOffset += new Vector2(0, -distance);
             if (_isMovingDown)
@@ -43,6 +47,7 @@ namespace MonoDragons.MazeWalkers.Character
 
         public void Draw(Vector2 offset)
         {
+            World.Draw("Images/Crono Nigga/Walk/down1(new).png", _screenPositionOffset);
             //sprites.Draw(anims.CurrentFrame, new Rectangle((int)screenPositionOffset.X, (int)screenPositionOffset.Y + 64, 64, 128), Color.White);
         }
     }
