@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
+using MonoDragons.Core.EventSystem;
 
 namespace MonoDragons.Core.Engine
 {
@@ -14,6 +15,7 @@ namespace MonoDragons.Core.Engine
         private static SpriteBatch _spriteBatch;
         private static INavigation _navigation;
 
+        private static readonly Events _events = new Events();
         private static SceneContents _sceneContents = new SceneContents();
         private static SceneContents _oldSceneContents = new SceneContents();
 
@@ -58,6 +60,21 @@ namespace MonoDragons.Core.Engine
         public static void Draw(Texture2D texture, Rectangle rectPostion)
         {
             _spriteBatch.Draw(texture, rectPostion, Color.White);
+        }
+
+        public static void Publish<T>(T payload)
+        {
+            _events.Publish(payload);
+        }
+
+        public static void Subscribe<T>(EventSubscription<T> subscription)
+        {
+            _events.Subscribe(subscription);
+        }
+
+        public static void Unsubscribe(object owner)
+        {
+            _events.Unsubscribe(owner);
         }
     }
 }
