@@ -50,6 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\Tiles\tile1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Tiles\tile2.png" />
+    <Content Include="Content\Images\Tiles\tile3.png" />
+    <Content Include="Content\Images\Tiles\tile4.png" />
+    <Content Include="Content\Images\Tiles\tile5.png" />
+    <Content Include="Content\Images\Tiles\tile6.png" />
     <Content Include="Content\Music\menuLOOP.wma">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
