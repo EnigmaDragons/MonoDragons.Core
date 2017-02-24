@@ -1,30 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace SecurityConsultantCore.EventSystem
+namespace MonoDragons.Core.EventSystem
 {
-    public class Events : IEvents
+    public class Events
     {
-        Dictionary<Type, List<object>> _subscriptions = new Dictionary<Type, List<object>>();
+        private readonly Dictionary<Type, List<object>> _events = new Dictionary<Type, List<object>>();
+        private readonly Dictionary<object, List<object>> _owners = new Dictionary<object, List<object>>();
 
         public void Publish<T>(T payload)
         {
             var eventType = typeof(T);
-            if (_subscriptions.ContainsKey(eventType))
-            {
-                foreach (var e in _subscriptions[eventType])
-                {
-                    ((Action<T>)e)(payload);
-                }
-            }
+            if (!_events.ContainsKey(eventType))
+                return;
+            foreach (var e in _events[eventType])
+                ((Action<T>)e)(payload);
         }
 
-        public void Subscribe<T>(Action<T> onEvent)
+        public void Subscribe<T>(EventSubscription<T> subscription)
         {
             var eventType = typeof(T);
-            if (!_subscriptions.ContainsKey(eventType))
-                _subscriptions[eventType] = new List<object>();
-            _subscriptions[eventType].Add(onEvent);
+            if (!_events.ContainsKey(eventType))
+                _events[eventType] = new List<object>();
+            if (!_owners.ContainsKey(subscription.Owner))
+                _events[eventType] = new List<object>();
+            _events[eventType].Add(subscription.OnEvent);
+            _owners[subscription.Owner].Add(subscription.OnEvent);
+        }
+
+        public void Unsubscribe(object owner)
+        {
+            var events = _owners[owner]; 
+            for (var i = 0; i < _events.Count; i++)
+                _events.ElementAt(i).Value.RemoveAll(x => events.Any(y => y.Equals(x)));
         }
     }
 }
