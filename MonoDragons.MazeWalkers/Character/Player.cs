@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem.Convience;
@@ -14,7 +15,9 @@ namespace MonoDragons.MazeWalkers.Character
         private bool _isMovingUp;
         private bool _isMovingDown;
         private bool _isMovingRight;
-        private bool _isMovingLeft; 
+        private bool _isMovingLeft;
+
+        private string texture = "Images/Crono Nigga/Walk/down1(new).png";
 
         public Player()
         {
@@ -43,7 +46,15 @@ namespace MonoDragons.MazeWalkers.Character
 
         public void Draw(Vector2 offset)
         {
-            World.Draw("Images/Crono Nigga/Walk/down1(new).png", _screenPositionOffset);
+            if (_isMovingRight && !_isMovingLeft)
+                texture = "Images/Crono Nigga/Walk/right1(new).png";
+            else if (!_isMovingRight && _isMovingLeft)
+                texture = "Images/Crono Nigga/Walk/left1(new).png";
+            else if (_isMovingUp && !_isMovingDown)
+                texture = "Images/Crono Nigga/Walk/up1(new).png";
+            else if (!_isMovingUp && _isMovingDown)
+                texture = "Images/Crono Nigga/Walk/down1(new).png";
+            World.Draw(texture, _screenPositionOffset);
         }
     }
 }
