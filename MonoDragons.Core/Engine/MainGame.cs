@@ -27,13 +27,13 @@ namespace MonoDragons.Core.Engine
             IsMouseVisible = true;
             _sprites = new SpriteBatch(GraphicsDevice);
             World.Init(this, this, _sprites);
-            NavigateTo(_startingViewName);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             IsMouseVisible = true;
+            NavigateTo(_startingViewName);
         }
 
         protected override void UnloadContent()

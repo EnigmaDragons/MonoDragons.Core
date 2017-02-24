@@ -14,6 +14,7 @@ namespace MonoDragons.MazeWalkers.Scenes
         public void Init()
         {
             new KeyDownEventSubscription(x => World.NavigateToScene("TextScene2"), this, Keys.Enter).Subscribe();
+            World.PlayMusic("Music/menuLOOP");
         }
 
         public void Update(TimeSpan delta)
