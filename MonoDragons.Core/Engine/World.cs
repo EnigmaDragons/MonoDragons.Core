@@ -61,14 +61,14 @@ namespace MonoDragons.Core.Engine
             _game.GraphicsDevice.Clear(color);
         }
 
-        public static void Draw(Texture2D texture, Vector2 pixelPosition)
+        public static void Draw(string imageName, Vector2 pixelPosition)
         {
-            _spriteBatch.Draw(texture, pixelPosition);
+            _spriteBatch.Draw(Load<Texture2D>(imageName), pixelPosition);
         }
 
-        public static void Draw(Texture2D texture, Rectangle rectPostion)
+        public static void Draw(string imageName, Rectangle rectPostion)
         {
-            _spriteBatch.Draw(texture, rectPostion, Color.White);
+            _spriteBatch.Draw(Load<Texture2D>(imageName), rectPostion, Color.White);
         }
 
         public static void DrawText(string text, Vector2 position, Color color)
