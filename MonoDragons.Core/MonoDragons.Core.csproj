@@ -44,6 +44,7 @@
     <Compile Include="Engine\IScene.cs" />
     <Compile Include="Engine\MainGame.cs" />
     <Compile Include="Engine\SceneContents.cs" />
+    <Compile Include="Engine\SceneFactory.cs" />
     <Compile Include="Engine\ScreenSize.cs" />
     <Compile Include="Engine\World.cs" />
     <Compile Include="EventSystem\Events.cs" />

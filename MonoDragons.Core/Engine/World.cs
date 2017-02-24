@@ -48,9 +48,11 @@ namespace MonoDragons.Core.Engine
             return resource;
         }
 
-        public static void NavigateToScene(string sceneView)
+        public static void NavigateToScene(string sceneName)
         {
             _oldSceneContents = _sceneContents;
+            _sceneContents = new SceneContents();
+            _navigation.NavigateTo(sceneName);
             _oldSceneContents.Dispose();
         }
 

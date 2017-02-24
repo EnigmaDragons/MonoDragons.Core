@@ -4,7 +4,7 @@ using MonoDragons.Core.Engine;
 
 namespace MonoDragons.MazeWalkers.Scenes
 {
-    public class TextScene : IScene
+    public class TextScene2 : IScene
     {
         public void Init()
         {
@@ -16,8 +16,8 @@ namespace MonoDragons.MazeWalkers.Scenes
 
         public void Draw()
         {
-            World.DrawBrackgroundColor(Color.Black);
-            World.DrawText("Hi Tim", new Vector2(0, 0), Color.White);
+            World.DrawBrackgroundColor(Color.Aquamarine);
+            World.DrawText("Hi Giovanni", new Vector2(200, 200), Color.Purple);
         }
     }
 }
