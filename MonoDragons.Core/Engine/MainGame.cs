@@ -7,17 +7,18 @@ namespace MonoDragons.Core.Engine
     public class MainGame : Game, INavigation
     {
         private readonly GraphicsDeviceManager _graphicsManager;
+        private readonly string _startingViewName;
         private readonly SceneFactory _sceneFactory;
 
         private SpriteBatch _sprites;
         private IScene _currentScene;
 
-        public MainGame(IScene startingView, ScreenSize screenSize, SceneFactory sceneFactory)
+        public MainGame(string startingViewName, ScreenSize screenSize, SceneFactory sceneFactory)
         {
             _graphicsManager = new GraphicsDeviceManager(this);
             screenSize.Apply(_graphicsManager);
             Content.RootDirectory = "Content";
-            _currentScene = startingView;
+            _startingViewName = startingViewName;
             _sceneFactory = sceneFactory;
         }
 
@@ -26,6 +27,7 @@ namespace MonoDragons.Core.Engine
             IsMouseVisible = true;
             _sprites = new SpriteBatch(GraphicsDevice);
             World.Init(this, this, _sprites);
+            NavigateTo(_startingViewName);
             base.Initialize();
         }
 
@@ -58,7 +60,9 @@ namespace MonoDragons.Core.Engine
 
         public void NavigateTo(string sceneName)
         {
-            _currentScene = _sceneFactory.Create(sceneName);
+            var scene = _sceneFactory.Create(sceneName);
+            scene.Init();
+            _currentScene = scene;
         }
     }
 }
