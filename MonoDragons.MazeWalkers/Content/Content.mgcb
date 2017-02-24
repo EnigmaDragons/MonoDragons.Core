@@ -13,9 +13,3 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin menuLOOP.wav
-/importer:WavImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:menuLOOP.wav
-
