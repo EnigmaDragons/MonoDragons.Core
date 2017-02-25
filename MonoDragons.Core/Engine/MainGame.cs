@@ -26,6 +26,7 @@ namespace MonoDragons.Core.Engine
         {
             IsMouseVisible = true;
             _sprites = new SpriteBatch(GraphicsDevice);
+            Hack.TheGame = this;
             Input.SetController(_controller);
             World.Init(this, this, _sprites);
             base.Initialize();
