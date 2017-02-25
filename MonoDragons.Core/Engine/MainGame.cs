@@ -1,41 +1,38 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoDragons.Core.Input;
+using MonoDragons.Core.Inputs;
 
 namespace MonoDragons.Core.Engine
 {
     public class MainGame : Game, INavigation
     {
-        private readonly GraphicsDeviceManager _graphicsManager;
         private readonly string _startingViewName;
         private readonly SceneFactory _sceneFactory;
-        private readonly WatchKeyboardInput watchForInput;
+        private readonly IController _controller;
 
         private SpriteBatch _sprites;
         private IScene _currentScene;
 
-        public MainGame(string startingViewName, ScreenSize screenSize, SceneFactory sceneFactory)
+        public MainGame(string startingViewName, ScreenSize screenSize, SceneFactory sceneFactory, IController controller)
         {
-            _graphicsManager = new GraphicsDeviceManager(this);
-            screenSize.Apply(_graphicsManager);
+            screenSize.Apply(new GraphicsDeviceManager(this));
             Content.RootDirectory = "Content";
             _startingViewName = startingViewName;
             _sceneFactory = sceneFactory;
-            watchForInput = new WatchKeyboardInput();
+            _controller = controller;
         }
 
         protected override void Initialize()
         {
             IsMouseVisible = true;
             _sprites = new SpriteBatch(GraphicsDevice);
+            Input.SetController(_controller);
             World.Init(this, this, _sprites);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            IsMouseVisible = true;
             NavigateTo(_startingViewName);
         }
 
@@ -46,10 +43,7 @@ namespace MonoDragons.Core.Engine
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            watchForInput.Update(gameTime.ElapsedGameTime);
+            _controller.Update(gameTime.ElapsedGameTime);
             _currentScene?.Update(gameTime.ElapsedGameTime);
             base.Update(gameTime);
         }
@@ -57,7 +51,6 @@ namespace MonoDragons.Core.Engine
         protected override void Draw(GameTime gameTime)
         {
             _sprites.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-            watchForInput.Draw(Vector2.Zero);
             _currentScene?.Draw();
             _sprites.End();
             base.Draw(gameTime);

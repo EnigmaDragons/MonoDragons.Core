@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework.Content;
+using MonoDragons.Core.Common;
 
 namespace MonoDragons.Core.Engine
 {
@@ -29,7 +29,7 @@ namespace MonoDragons.Core.Engine
 
         public void Dispose()
         {
-            _loadedContents.Values.ToList().ForEach(x => x.Dispose());
+            _loadedContents.Values.ForEach(x => x.Dispose());
             _loadedContents.Clear();
         }
     }
