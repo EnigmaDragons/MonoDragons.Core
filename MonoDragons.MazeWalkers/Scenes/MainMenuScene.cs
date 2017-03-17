@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Engine;
 using System;
+using MonoDragons.Core.Navigation;
+using MonoDragons.Core.UserInterface;
 
 namespace MonoDragons.MazeWalkers.Scenes
 {
@@ -12,10 +14,10 @@ namespace MonoDragons.MazeWalkers.Scenes
 
         public void Draw()
         {
-            World.DrawBrackgroundColor(Color.Black);
+            World.DrawBackgroundColor(Color.Black);
             World.Draw("Images/Background/Maze", new Vector2(58, 0));
-            World.DrawText("MazeWalker", new Vector2(610, 320), Color.White);
-            World.DrawText("Press ENTER to begin", new Vector2(570, 380), Color.White);
+            UI.DrawText("MazeWalker", new Vector2(610, 320), Color.White);
+            UI.DrawText("Press ENTER to begin", new Vector2(570, 380), Color.White);
         }
 
         public void Update(TimeSpan delta)

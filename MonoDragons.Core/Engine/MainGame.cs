@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Inputs;
+using MonoDragons.Core.Memory;
+using MonoDragons.Core.Navigation;
+using MonoDragons.Core.PhysicsEngine;
 
 namespace MonoDragons.Core.Engine
 {
@@ -13,9 +16,9 @@ namespace MonoDragons.Core.Engine
         private SpriteBatch _sprites;
         private IScene _currentScene;
 
-        public MainGame(string startingViewName, ScreenSize screenSize, SceneFactory sceneFactory, IController controller)
+        public MainGame(string startingViewName, ScreenSettings screenSettings, SceneFactory sceneFactory, IController controller)
         {
-            screenSize.Apply(new GraphicsDeviceManager(this));
+            screenSettings.Apply(new GraphicsDeviceManager(this));
             Content.RootDirectory = "Content";
             _startingViewName = startingViewName;
             _sceneFactory = sceneFactory;
@@ -24,11 +27,14 @@ namespace MonoDragons.Core.Engine
 
         protected override void Initialize()
         {
+            
             IsMouseVisible = true;
             _sprites = new SpriteBatch(GraphicsDevice);
             Hack.TheGame = this;
             Input.SetController(_controller);
             World.Init(this, this, _sprites);
+            Resources.Init(this);
+            UserInterface.UI.Init(this, _sprites);
             base.Initialize();
         }
 
@@ -46,12 +52,14 @@ namespace MonoDragons.Core.Engine
         {
             _controller.Update(gameTime.ElapsedGameTime);
             _currentScene?.Update(gameTime.ElapsedGameTime);
+            new Physics().Resolve();
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             _sprites.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            World.DrawBackgroundColor(Color.Black);
             _currentScene?.Draw();
             _sprites.End();
             base.Draw(gameTime);

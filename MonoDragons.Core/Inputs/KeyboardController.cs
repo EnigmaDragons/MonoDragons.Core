@@ -80,5 +80,9 @@ namespace MonoDragons.Core.Inputs
                 {Keys.Right, HorizontalDirection.Right},
             };
         }
+
+        public void ClearBindings()
+        {
+        }
     }
 }

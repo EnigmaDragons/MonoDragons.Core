@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MonoDragons.Core.PhysicsEngine;
 
 namespace MonoDragons.Core.Engine
 {
     public interface IVisual
     {
-        void Draw(Vector2 offset);
+        void Draw(Transform parentTransform);
     }
 }

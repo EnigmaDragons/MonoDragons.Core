@@ -15,9 +15,10 @@ namespace MonoDragons.Core.Engine
             _contentManager = contentManager;
         }
 
-        public void Add(string resourceName, IDisposable content)
+        public void Put(string resourceName, IDisposable content)
         {
-            _loadedContents.Add(resourceName, content);
+            if (!_loadedContents.ContainsKey(resourceName))
+                _loadedContents.Add(resourceName, content);
         }
 
         public T Load<T>(string resourceName) where T : IDisposable

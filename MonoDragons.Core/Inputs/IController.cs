@@ -5,5 +5,6 @@ namespace MonoDragons.Core.Inputs
 {
     public interface IController : ISubject<ControlChange, Direction>, IAutomaton
     {
+        void ClearBindings();
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Inputs;
+using MonoDragons.Core.PhysicsEngine;
 
 namespace MonoDragons.MazeWalkers.Character
 {
@@ -25,7 +26,7 @@ namespace MonoDragons.MazeWalkers.Character
                 _screenPositionOffset += new Vector2((int)_currentDirection.HDir * distance, (int)_currentDirection.VDir * distance);
         }
 
-        public void Draw(Vector2 offset)
+        public void Draw(Transform transform)
         {
             if (_currentDirection.HDir.Equals(HorizontalDirection.Left))
                 texture = "Images/Crono Nigga/Walk/left1(new).png";

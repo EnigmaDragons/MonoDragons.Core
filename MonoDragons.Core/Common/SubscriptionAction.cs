@@ -16,7 +16,7 @@ namespace MonoDragons.Core.Common
             _action(change);
         }
 
-        public static implicit operator SubscriptionAction<T> (Action<T> action)
+        public static implicit operator SubscriptionAction<T>(Action<T> action)
         {
             return new SubscriptionAction<T>(action);
         }

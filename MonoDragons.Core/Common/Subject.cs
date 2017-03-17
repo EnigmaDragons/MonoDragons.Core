@@ -12,6 +12,11 @@ namespace MonoDragons.Core.Common
             _observers.Add(subscription);
         }
 
+        public virtual void UnsubscribeAll()
+        {
+            _observers.Clear();
+        }
+
         public virtual void Unsubscribe(ISubscription<T> subscription)
         {
             _observers.Remove(subscription);
@@ -37,6 +42,12 @@ namespace MonoDragons.Core.Common
         public virtual void Subscribe(ISubscription<T2> subscription)
         {
             _observers2.Add(subscription);
+        }
+
+        public virtual void UnsubscribeAll()
+        {
+            _observers1.Clear();
+            _observers2.Clear();
         }
 
         public virtual void Unsubscribe(ISubscription<T1> subscription)

@@ -26,5 +26,10 @@ namespace MonoDragons.Core.Inputs
         {
             _controller.Subscribe((SubscriptionAction<Direction>)onDirection);
         }
+
+        public static void ClearBindings()
+        {
+            _controller.ClearBindings();
+        }
     }
 }

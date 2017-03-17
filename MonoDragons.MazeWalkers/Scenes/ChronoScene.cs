@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
 using System;
+using MonoDragons.Core.PhysicsEngine;
 using MonoDragons.MazeWalkers.Character;
 
 namespace MonoDragons.MazeWalkers.Scenes
@@ -16,7 +17,7 @@ namespace MonoDragons.MazeWalkers.Scenes
         public void Draw()
         {
             World.Draw("Images/Background/bg1", new Rectangle(0, 0, 1020, 996));
-            _player.Draw(new Vector2(0, 0));
+            _player.Draw(new Transform());
         }
 
         public void Update(TimeSpan delta)
