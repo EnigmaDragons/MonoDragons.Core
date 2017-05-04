@@ -43,8 +43,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\MainMenuScene.cs" />
     <Compile Include="Scenes\ChronoScene.cs" />
-    <Compile Include="Scenes\TextScene.cs" />
-    <Compile Include="Scenes\TextScene2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

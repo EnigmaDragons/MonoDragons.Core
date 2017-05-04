@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Inputs;
+using MonoDragons.Core.Render;
 using MonoDragons.MazeWalkers.Scenes;
 
 namespace MonoDragons.MazeWalkers
@@ -13,7 +14,7 @@ namespace MonoDragons.MazeWalkers
         [STAThread]
         static void Main()
         {
-            using (var game = new MainGame("ChronoScene", new ScreenSettings(996, 1000, false), CreateSceneFactory(), CreateController()))
+            using (var game = new MainGame("MazeWalkers", "ChronoScene", new Display(996, 1000, false), CreateSceneFactory(), CreateController()))
                 game.Run();
         }
 
@@ -28,8 +29,6 @@ namespace MonoDragons.MazeWalkers
                 new Dictionary<string, Func<IScene>>
                 {
                     {"MainMenuScene", () => new MainMenuScene() },
-                    {"TextScene", () => new TextScene()},
-                    {"TextScene2", () => new TextScene2()},
                     {"ChronoScene", () => new ChronoScene() }
                 });
         }

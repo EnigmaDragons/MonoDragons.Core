@@ -17,7 +17,7 @@ namespace MonoDragons.MazeWalkers.Scenes
         public void Draw()
         {
             World.Draw("Images/Background/bg1", new Rectangle(0, 0, 1020, 996));
-            _player.Draw(new Transform());
+            _player.Draw(new Transform2());
         }
 
         public void Update(TimeSpan delta)
