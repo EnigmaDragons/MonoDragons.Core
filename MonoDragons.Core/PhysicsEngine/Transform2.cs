@@ -2,7 +2,7 @@
 
 namespace MonoDragons.Core.PhysicsEngine
 {
-    public struct Transform2
+    public class Transform2
     {
         public static Transform2 Zero = new Transform2(Vector2.Zero, Size2.Zero);
 

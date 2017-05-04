@@ -8,6 +8,7 @@ using MonoDragons.Core.Render;
 using MonoDragons.Core.UserInterface;
 using System;
 using Microsoft.Xna.Framework.Input;
+using MonoDragons.Core.Entities;
 using MonoDragons.Core.Navigation;
 
 namespace MonoDragons.Core.Engine
@@ -18,6 +19,7 @@ namespace MonoDragons.Core.Engine
         private readonly SceneFactory _sceneFactory;
         private readonly IController _controller;
         private readonly Metrics _metrics;
+        private readonly EntitySystem _ecs;
 
         private IScene _currentScene;
 
@@ -50,6 +52,9 @@ namespace MonoDragons.Core.Engine
             _sceneFactory = sceneFactory;
             _controller = controller;
             _metrics = new Metrics();
+            _ecs = Entity.System;
+            Renderers.RegisterAll(_ecs);
+            PhysicsSystems.RegisterAll(_ecs);
             Window.Title = title;
         }
 
@@ -97,6 +102,7 @@ namespace MonoDragons.Core.Engine
             CheckForEscape();
             _metrics.Update(gameTime.ElapsedGameTime);
             _controller.Update(gameTime.ElapsedGameTime);
+            _ecs.Update(gameTime.ElapsedGameTime);
             _currentScene?.Update(gameTime.ElapsedGameTime);
             new Physics().Resolve();
             base.Update(gameTime);
@@ -107,6 +113,7 @@ namespace MonoDragons.Core.Engine
             _sprites.Begin(SpriteSortMode.Deferred, null, SamplerState.AnisotropicClamp);
             World.DrawBackgroundColor(Color.Black);
             _currentScene?.Draw();
+            _ecs.Draw();
             _metrics.Draw(Transform2.Zero);
             HideExternals();
             _sprites.End();
