@@ -16,12 +16,10 @@ namespace MonoDragons.Core.UserInterface
 
         private readonly Display _display;
         private float Scale => _display.Scale;
-
-        private readonly ColoredRectangle _elementHighlight = new ColoredRectangle { Color = Color.Transparent };
+        
         private ClickableUIElement _current = None;
         private bool _wasClicked;
         private ClickUIBranch _elementLayer;
-        private bool _elementChangeAfterPressed;
         private readonly Action<ClickUIBranch>[] subscribeAction;
         
         public ClickUI()
@@ -76,7 +74,7 @@ namespace MonoDragons.Core.UserInterface
         public void Update(TimeSpan delta)
         {
             var mouse = Mouse.GetState();
-            if (Hack.TheGame.IsActive)
+            if (GameInstance.TheGame.IsActive)
             {
                 var newElement = GetElement(mouse);
                 if (newElement != _current)
@@ -109,13 +107,11 @@ namespace MonoDragons.Core.UserInterface
         {
             _current.OnReleased();
             _wasClicked = false;
-            _elementChangeAfterPressed = false;
             _current.OnEntered();
         }
 
         private void ChangeActiveElement(ClickableUIElement newElement)
         {
-            _elementChangeAfterPressed = _wasClicked;
             _current.OnExitted();
             _wasClicked = false;
             _current = newElement;
@@ -129,8 +125,7 @@ namespace MonoDragons.Core.UserInterface
 
         private bool IsSameElement(MouseState mouse)
         {
-            return new Rectangle(_current.Area.Location + _current.ParentLocation.ToPoint(), _current.Area.Size)
-                .Contains(ScaleMousePosition(mouse));
+            return ReferenceEquals(_current, GetElement(mouse));
         }
 
         private static bool WasReleased(MouseState mouse)

@@ -1,25 +1,23 @@
-﻿using MonoDragons.Core.Engine;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MonoDragons.Core.EventSystem
 {
-    public class Events
+    public sealed class Events
     {
         private readonly Dictionary<Type, List<object>> _eventActions = new Dictionary<Type, List<object>>();
         private readonly Dictionary<object, List<EventSubscription>> _ownerSubscriptions = new Dictionary<object, List<EventSubscription>>();
 
         public int SubscriptionCount => _eventActions.Sum(e => e.Value.Count);
 
-        public void Publish<T>(T payload)
+        public void Publish(object payload)
         {
             var eventType = payload.GetType();
             if (_eventActions.ContainsKey(eventType))
                 foreach (var action in _eventActions[eventType].ToList())
-                    try { ((Action<object>)action)(payload); }
-                    catch (Exception ex) { Debug.WriteLine("Exception unhandled in events:" + ex.ToString()); Hack.TheGame.Exit(); }
+                    Task.Run(() => ((Action<object>)action)(payload));
         }
 
         public void Subscribe(EventSubscription subscription)

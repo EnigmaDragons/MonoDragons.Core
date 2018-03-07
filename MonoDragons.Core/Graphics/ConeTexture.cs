@@ -1,10 +1,7 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.PhysicsEngine;
 using MonoDragons.Core.Engine;
-using MonoDragons.Core.Common;
-using System.Linq;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -147,7 +144,7 @@ namespace MonoDragons.Core.UserInterface
                         colorData[index] = Color.Transparent;
                 }
             }
-            var texture = new Texture2D(Hack.TheGame.GraphicsDevice, diam + 1, diam + 1);
+            var texture = new Texture2D(GameInstance.TheGame.GraphicsDevice, diam + 1, diam + 1);
             texture.SetData(colorData);
             return texture;
         }

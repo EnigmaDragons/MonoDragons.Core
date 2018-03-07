@@ -15,6 +15,8 @@ namespace MonoDragons.Core.UserInterface
         private readonly string _name;
         private List<Action<ClickUIBranch>[]> subscriberActions = new List<Action<ClickUIBranch>[]>();
 
+        private readonly object SubBranchesLock = new object();
+
         private Vector2 parentLocation;
         public Vector2 ParentLocation
         {
@@ -23,7 +25,7 @@ namespace MonoDragons.Core.UserInterface
             {
                 parentLocation = value;
                 totalLocation = new Vector2(location.X + ParentLocation.X, location.Y + ParentLocation.Y);
-                _subBranches.ForEach((b) => b.ParentLocation = totalLocation);
+                _subBranches.ToList().ForEach((b) => b.ParentLocation = totalLocation);
                 _elements.ForEach((e) => e.ParentLocation = totalLocation);
             }
         }
@@ -35,7 +37,7 @@ namespace MonoDragons.Core.UserInterface
             {
                 location = value;
                 totalLocation = new Vector2(location.X + ParentLocation.X, location.Y + ParentLocation.Y);
-                _subBranches.ForEach((b) => b.ParentLocation = totalLocation);
+                _subBranches.ToList().ForEach((b) => b.ParentLocation = totalLocation);
                 _elements.ForEach((e) => e.ParentLocation = totalLocation);
             }
         }

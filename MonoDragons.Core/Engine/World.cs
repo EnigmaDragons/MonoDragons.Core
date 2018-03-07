@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -19,8 +18,12 @@ namespace MonoDragons.Core.Engine
 {
     public static class World
     {
-        private static readonly ColoredRectangle _darken = new ColoredRectangle { Color = Color.FromNonPremultiplied(0, 0, 0, 130),
-            Transform = new Transform2(new Size2(1920, 1080)) };
+        private static readonly ColoredRectangle _darken = new ColoredRectangle
+        {
+            Color = Color.FromNonPremultiplied(0, 0, 0, 130),
+            Transform = new Transform2(new Size2(1920, 1080))
+        };
+
         private static readonly Events _events = new Events();
         private static readonly Events _persistentEvents = new Events();
         private static readonly List<EventSubscription> _eventSubs = new List<EventSubscription>();
@@ -47,7 +50,6 @@ namespace MonoDragons.Core.Engine
         {
             _spriteBatch.Draw(texture, ScaleRectangle(rectangle), color);
         }
-
 
         public static void NavigateToScene(string sceneName)
         {
@@ -87,9 +89,9 @@ namespace MonoDragons.Core.Engine
         }
 
         //[DebuggerStepThrough]
-        public static void Publish<T>(T payload)
+        public static void Publish(object payload)
         {
-            Debug.WriteLine(payload.GetType());
+            //Debug.WriteLine(payload.GetType());
             _events.Publish(payload);
             _persistentEvents.Publish(payload);
         }
@@ -110,7 +112,7 @@ namespace MonoDragons.Core.Engine
         {
             _events.Unsubscribe(owner);
             _persistentEvents.Unsubscribe(owner);
-            _eventSubs.Where(x => x.Owner.Equals(owner)).ForEach(x => 
+            _eventSubs.Where(x => x.Owner.Equals(owner)).ForEach(x =>
                 {
                     Resources.NotifyDisposed(x);
                     _eventSubs.Remove(x);
@@ -124,7 +126,7 @@ namespace MonoDragons.Core.Engine
 
         public static void Draw(string name, Transform2 transform)
         {
-             Draw(name, transform.ToRectangle());
+            Draw(name, transform.ToRectangle());
         }
 
         public static void DrawRotatedFromCenter(string name, Transform2 transform)
