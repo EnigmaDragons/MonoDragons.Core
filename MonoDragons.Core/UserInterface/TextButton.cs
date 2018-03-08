@@ -18,7 +18,6 @@ namespace MonoDragons.Core.UserInterface
         private readonly Texture2D _rect;
         private readonly Func<bool> _isVisible;
 
-
         public TextButton(Rectangle area, Action onClick, string text, Color defaultColor, Color hover, Color press)
             : this(area, onClick, text, defaultColor, hover, press, () => true) { }
         public TextButton(Rectangle area, Action onClick, string text, Color defaultColor, Color hover, Color press, Func<bool> isvisible) : base(area)
@@ -29,7 +28,7 @@ namespace MonoDragons.Core.UserInterface
             _hover = hover;
             _press = press;
             _currentColor = _defaultColor;
-            _rect = new RectangleTexture(Area.Width, Area.Height, _currentColor).Create();
+            _rect = new RectangleTexture(_currentColor).Create();
             _isVisible = isvisible;
         }
 

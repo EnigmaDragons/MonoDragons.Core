@@ -1,7 +1,7 @@
-﻿using NAudio.Wave;
-using System.Threading;
+﻿using System.Threading;
+using NAudio.Wave;
 
-namespace MonoDragons.Core.Audio
+namespace MonoDragons.Core.AudioSystem
 {
     internal sealed class Dampening : ISampleProvider
     {

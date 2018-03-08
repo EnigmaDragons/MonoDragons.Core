@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace MonoDragons.Core.EventSystem.EventTypes
+namespace MonoDragons.Core.Inputs.KeyboardEvents
 {
-    public class KeyDownEvent
+    public class KeyUpEvent
     {
         public Keys Key { get; }
 
-        public KeyDownEvent(Keys key)
+        public KeyUpEvent(Keys key)
         {
             Key = key;
         }

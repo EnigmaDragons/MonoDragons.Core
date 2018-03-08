@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A33F8FE3-A35A-4DDF-B96C-0157224F602C}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MonoDragons.Core</RootNamespace>
     <AssemblyName>MonoDragons.Core</AssemblyName>
@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
-    <DefineConstants>TRACE;LINUX</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -39,15 +39,20 @@
     </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>MonoDragons.Core.Demo</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Audio\Audio.cs" />
-    <Compile Include="Audio\AudioPlayer.cs" />
-    <Compile Include="Audio\PlayOnce.cs" />
-    <Compile Include="Audio\Loop.cs" />
-    <Compile Include="Audio\Dampening.cs" />
+    <Compile Include="AudioSystem\Audio.cs" />
+    <Compile Include="AudioSystem\AudioPlayer.cs" />
+    <Compile Include="AudioSystem\PlayOnce.cs" />
+    <Compile Include="AudioSystem\Loop.cs" />
+    <Compile Include="AudioSystem\Dampening.cs" />
     <Compile Include="Common\Map.cs" />
+    <Compile Include="Common\MustInit.cs" />
+    <Compile Include="Common\NotInitializedException.cs" />
+    <Compile Include="Demo.cs" />
+    <Compile Include="Development\Perf.cs" />
+    <Compile Include="EngimaDragons\OilLogoScene.cs" />
     <Compile Include="Engine\IControl.cs" />
     <Compile Include="Engine\ISpatialVisual.cs" />
     <Compile Include="Engine\ISpatialVisualControl.cs" />
@@ -60,30 +65,33 @@
     <Compile Include="Common\Rng.cs" />
     <Compile Include="Common\Subject.cs" />
     <Compile Include="Common\SubscriptionAction.cs" />
-    <Compile Include="EngimaDragons\LogoScene.cs" />
+    <Compile Include="EngimaDragons\PixelLogoScene.cs" />
     <Compile Include="Engine\GameInstance.cs" />
     <Compile Include="Engine\IVisualAutomaton.cs" />
-    <Compile Include="Engine\Metrics.cs" />
+    <Compile Include="Development\Metrics.cs" />
     <Compile Include="Engine\Timer.cs" />
-    <Compile Include="EventSystem\EventPipe.cs" />
+    <Compile Include="EventSystem\Event.cs" />
     <Compile Include="Graphics\BobbingEffect.cs" />
     <Compile Include="IO\AppDataJsonIo.cs" />
-    <Compile Include="Navigation\INavigation.cs" />
+    <Compile Include="Scenes\CurrentSceneNavigation.cs" />
+    <Compile Include="Scenes\INavigation.cs" />
+    <Compile Include="Scenes\CurrentScene.cs" />
     <Compile Include="Scenes\IScene.cs" />
     <Compile Include="Engine\IAutomaton.cs" />
     <Compile Include="Engine\IVisual.cs" />
     <Compile Include="Engine\NeedlesslyComplexMainGame.cs" />
+    <Compile Include="Scenes\PlaceholderScene.cs" />
     <Compile Include="Scenes\SceneContents.cs" />
     <Compile Include="Scenes\SceneFactory.cs" />
     <Compile Include="Engine\ISpatial.cs" />
     <Compile Include="Render\Display.cs" />
     <Compile Include="Engine\World.cs" />
-    <Compile Include="Inputs\Keyboard\KeyDownEventSubscription.cs" />
-    <Compile Include="Inputs\Keyboard\KeyUpEventSubscription.cs" />
+    <Compile Include="Inputs\KeyboardEvents\KeyDownEventSubscription.cs" />
+    <Compile Include="Inputs\KeyboardEvents\KeyUpEventSubscription.cs" />
     <Compile Include="EventSystem\Events.cs" />
     <Compile Include="EventSystem\EventSubscription.cs" />
-    <Compile Include="Inputs\Keyboard\KeyDownEvent.cs" />
-    <Compile Include="Inputs\Keyboard\KeyUpEvent.cs" />
+    <Compile Include="Inputs\KeyboardEvents\KeyDownEvent.cs" />
+    <Compile Include="Inputs\KeyboardEvents\KeyUpEvent.cs" />
     <Compile Include="Graphics\CircleTexture.cs" />
     <Compile Include="Graphics\CometTexture.cs" />
     <Compile Include="Graphics\LineTexture.cs" />
@@ -100,7 +108,6 @@
     <Compile Include="Inputs\ControlState.cs" />
     <Compile Include="Inputs\VerticalDirection.cs" />
     <Compile Include="Memory\Resources.cs" />
-    <Compile Include="PhysicsEngine\BoxCollider.cs" />
     <Compile Include="PhysicsEngine\Physics.cs" />
     <Compile Include="PhysicsEngine\PhysicsInstance.cs" />
     <Compile Include="PhysicsEngine\RandomDirection.cs" />
@@ -111,8 +118,9 @@
     <Compile Include="Render\Animation.cs" />
     <Compile Include="Render\Animations.cs" />
     <Compile Include="Render\Camera.cs" />
-    <Compile Include="Navigation\FadingInScene.cs" />
+    <Compile Include="Scenes\FadingInScene.cs" />
     <Compile Include="Render\CurrentDisplay.cs" />
+    <Compile Include="Scenes\Scene.cs" />
     <Compile Include="Text\IWrapText.cs" />
     <Compile Include="Text\EnumExtensions.cs" />
     <Compile Include="Text\WrappingText.cs" />
@@ -191,6 +199,9 @@
     </Content>
     <Content Include="Content\Fonts\Audiowide.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Logo\oilsplash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Music\mute.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace MonoDragons.Core.Engine
+namespace MonoDragons.Core.Common
 {
-    public class Map<K, V> : Dictionary<K, V>
+    public class Map<TKey, TValue> : Dictionary<TKey, TValue>
     {
     }
 }

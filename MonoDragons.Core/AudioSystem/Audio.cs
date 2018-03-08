@@ -1,7 +1,7 @@
-﻿using NAudio.Wave;
-using System;
+﻿using System;
+using NAudio.Wave;
 
-namespace MonoDragons.Core.Audio
+namespace MonoDragons.Core.AudioSystem
 {
     public static class Audio
     {

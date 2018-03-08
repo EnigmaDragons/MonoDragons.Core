@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoDragons.Core.PhysicsEngine;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.PhysicsEngine;
 
-namespace MonoDragons.Core.UserInterface
+namespace MonoDragons.Core.Graphics
 {
     public class ConeTexture
     {

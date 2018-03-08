@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
+using MonoDragons.Core.Engine;
 using MonoDragons.Core.Scenes;
 using MonoDragons.Core.Text;
 
@@ -7,15 +7,13 @@ namespace MonoDragons.Core.Memory
 {
     public static class Resources
     {
-        private static Game _game;
         private static SceneContents _sceneContents;
 
-        public static int CurrentSceneDisposableCount => _sceneContents?.ContentCount ?? 0;
+        public static int CurrentSceneResourceCount => _sceneContents?.ContentCount ?? 0;
 
-        public static void Init(Game game)
+        public static void Init()
         {
-            _game = game;
-            _sceneContents = new SceneContents(_game.Content);
+            _sceneContents = new SceneContents(GameInstance.ContentManager);
         }
 
         public static void Put(string toString, IDisposable disposable)
@@ -31,8 +29,8 @@ namespace MonoDragons.Core.Memory
         public static void Unload()
         {
             _sceneContents.Dispose();
-            _sceneContents = new SceneContents(_game.Content);
-            DefaultFont.Load(_game.Content);
+            _sceneContents = new SceneContents(GameInstance.ContentManager);
+            DefaultFont.Load(GameInstance.ContentManager);
         }
 
         public static void Dispose(IDisposable disposable)
@@ -46,6 +44,5 @@ namespace MonoDragons.Core.Memory
             if (disposable != null)
                 _sceneContents.NotifyDisposed(disposable);
         }
-
     }
 }

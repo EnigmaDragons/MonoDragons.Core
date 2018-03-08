@@ -2,11 +2,11 @@
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 
-namespace MonoDragons.Core.Audio
+namespace MonoDragons.Core.AudioSystem
 {
     internal class AudioPlayer : IDisposable
     {
-        public static readonly AudioPlayer Instance = new AudioPlayer(44100, 2);
+        public static readonly AudioPlayer Instance = new AudioPlayer();
 
         private readonly IWavePlayer _player;
         private readonly MixingSampleProvider _mixer;

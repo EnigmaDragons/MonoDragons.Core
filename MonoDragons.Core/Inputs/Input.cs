@@ -24,10 +24,10 @@ namespace MonoDragons.Core.Inputs
 
         public static void OnDirection(Action<Direction> onDirection)
         {
-            _controller.Subscribe((SubscriptionAction<Direction>)onDirection);
+            _controller.Subscribe(new SubscriptionAction<Direction>(onDirection));
         }
 
-        public static void ClearBindings()
+        public static void ClearTransientBindings()
         {
             _controller.ClearBindings();
         }

@@ -10,7 +10,7 @@ namespace MonoDragons.Core.Text
 
         public static void Load(ContentManager content)
         {
-            Font = content.Load<SpriteFont>(Name);
+            Font = content?.Load<SpriteFont>(Name);
         }
     }
 }

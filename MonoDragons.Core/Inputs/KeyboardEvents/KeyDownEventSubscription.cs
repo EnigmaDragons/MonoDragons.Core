@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Input;
-using MonoDragons.Core.Engine;
-using MonoDragons.Core.EventSystem.EventTypes;
+using MonoDragons.Core.EventSystem;
 
-namespace MonoDragons.Core.EventSystem.Convenience
+namespace MonoDragons.Core.Inputs.KeyboardEvents
 {
     public class KeyDownEventSubscription
     {
@@ -20,7 +19,7 @@ namespace MonoDragons.Core.EventSystem.Convenience
 
         public void Subscribe()
         {
-            World.Subscribe(EventSubscription.Create<KeyDownEvent>(TriggerActionOnProperKey, _owner));
+            Event.Subscribe(EventSubscription.Create<KeyDownEvent>(TriggerActionOnProperKey, _owner));
         }
 
         private void TriggerActionOnProperKey(KeyDownEvent eventt)

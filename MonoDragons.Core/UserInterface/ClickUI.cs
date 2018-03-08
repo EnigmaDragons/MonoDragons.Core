@@ -29,7 +29,7 @@ namespace MonoDragons.Core.UserInterface
         {
             _display = display;
             _elementLayer = _branches[0];
-            subscribeAction = new Action<ClickUIBranch>[] { (br) => Add(br), (br) => Remove(br) }; ;
+            subscribeAction = new Action<ClickUIBranch>[] { Add, Remove }; ;
         }
 
         public void Add(ClickUIBranch branch)

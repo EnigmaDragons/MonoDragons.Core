@@ -2,11 +2,11 @@
 
 namespace MonoDragons.Core.Common
 {
-    public class SubscriptionAction<T> : ISubscription<T>
+    public sealed class SubscriptionAction<T> : ISubscription<T>
     {
         private readonly Action<T> _action;
 
-        private SubscriptionAction(Action<T> action)
+        public SubscriptionAction(Action<T> action)
         {
             _action = action;
         }

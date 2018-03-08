@@ -15,7 +15,7 @@ namespace MonoDragons.Core.UserInterface
         private readonly Transform2 _transform;
         private readonly Action _onClick;
 
-        private ColoredRectangle _current;
+        private readonly ColoredRectangle _current;
 
         public SingleImageButton(string image, Color hover, Color press, Transform2 transform, Action onClick) : base(transform.ToRectangle())
         {
@@ -24,9 +24,12 @@ namespace MonoDragons.Core.UserInterface
             _press = press;
             _transform = transform;
             _onClick = onClick;
-            _current = new ColoredRectangle();
-            _current.Color = Color.Transparent;
-            _current.Transform = transform;
+
+            _current = new ColoredRectangle
+            {
+                Color = Color.Transparent,
+                Transform = transform
+            };
         }
 
         public void Draw(Transform2 parentTransform)

@@ -1,4 +1,6 @@
-﻿namespace MonoDragons.Core.Render
+﻿using Microsoft.Xna.Framework;
+
+namespace MonoDragons.Core.Render
 {
     public static class CurrentDisplay
     {
@@ -13,5 +15,7 @@
         {
             return _display;
         }
+
+        public static Rectangle FullScreenRectangle => new Rectangle(0, 0, _display.ProgramWidth, _display.ProgramHeight);
     }
 }

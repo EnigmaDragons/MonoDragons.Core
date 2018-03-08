@@ -19,13 +19,9 @@ namespace MonoDragons.Core.Graphics
         {
             var length = 18;
             var data = new Color[1 * 18];
-
-            var alpha = 255;
+            
             for (var i = 1; i < data.Length; i++)
-            {
-                alpha = 255 * i / length;
-                data[i] = new Color(_color, alpha);
-            }
+                data[i] = new Color(_color, 255 * i / length);
             var height = _isHorizontal ? 1 : length;
             var width = _isHorizontal ? length : 1;
 

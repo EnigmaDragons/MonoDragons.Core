@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using MonoDragons.Core.PhysicsEngine;
-using MonoDragons.Core.Scenes;
 using MonoDragons.Core.UserInterface;
 
-namespace MonoDragons.Core.Navigation
+namespace MonoDragons.Core.Scenes
 {
     public sealed class FadingInScene : IScene
     {
@@ -14,7 +13,7 @@ namespace MonoDragons.Core.Navigation
         private double _transitionElapsedMillis;
         private bool _transitionComplete;
 
-        private ColoredRectangle _fade = new ColoredRectangle { Transform = new Transform2(new Size2(1920, 1080)) };
+        private readonly ColoredRectangle _fade = new ColoredRectangle { Color = Color.Black, Transform = new Transform2(new Size2(1920, 1080)) };
 
         private IScene _scene;
 

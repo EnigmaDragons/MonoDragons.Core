@@ -20,7 +20,7 @@ namespace MonoDragons.Core.UserInterface
         private Vector2 parentLocation;
         public Vector2 ParentLocation
         {
-            get { return parentLocation; }
+            get => parentLocation;
             set
             {
                 parentLocation = value;

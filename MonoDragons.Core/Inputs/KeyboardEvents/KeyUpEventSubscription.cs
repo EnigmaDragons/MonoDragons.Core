@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Input;
-using MonoDragons.Core.Engine;
-using MonoDragons.Core.EventSystem.EventTypes;
+using MonoDragons.Core.EventSystem;
 
-namespace MonoDragons.Core.EventSystem.Convenience
+namespace MonoDragons.Core.Inputs.KeyboardEvents
 {
     public class KeyUpEventSubscription
     {
@@ -20,13 +19,13 @@ namespace MonoDragons.Core.EventSystem.Convenience
 
         public void Subscribe()
         {
-            World.Subscribe(EventSubscription.Create<KeyUpEvent>(TriggerActionOnProperKey, _owner));
+            Event.Subscribe(EventSubscription.Create<KeyUpEvent>(TriggerActionOnProperKey, _owner));
         }
 
-        private void TriggerActionOnProperKey(KeyUpEvent eventt)
+        private void TriggerActionOnProperKey(KeyUpEvent e)
         {
-            if (eventt.Key.Equals(_key))
-                _onEvent(eventt);
+            if (e.Key.Equals(_key))
+                _onEvent(e);
         }
     }
 }

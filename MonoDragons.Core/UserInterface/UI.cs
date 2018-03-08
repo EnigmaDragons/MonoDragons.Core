@@ -18,21 +18,19 @@ namespace MonoDragons.Core.UserInterface
             { HorizontalAlignment.Center, GetCenterPosition },
             { HorizontalAlignment.Right, GetRightPosition },
         };
-
-        private static Game _game;
+        
         private static SpriteBatch _spriteBatch;
         private static Display _display;
 
         public static void Init(Game game, SpriteBatch spriteBatch, Display display)
         {
-            _game = game;
             _spriteBatch = spriteBatch;
             _display = display;
         }
 
         public static void DrawBackgroundColor(Color color)
         {
-            _game.GraphicsDevice.Clear(color);
+            GameInstance.GraphicsDevice.Clear(color);
         }
 
         public static void DrawCentered(string imageName)

@@ -10,18 +10,25 @@ namespace MonoDragons.Core.UserInterface
 {
     public sealed class ColoredRectangle : IVisual, IDisposable
     {
+        private Color _color;
         private Texture2D _background;
 
-        private Color color;
-        public Color Color { get { return color; } set { color = value; GenerateTexture(); } }
-        private Transform2 transform;
-        public Transform2 Transform { get { return transform; } set { transform = value; GenerateTexture(); } }
+        public Transform2 Transform { get; set; }
+
+        public Color Color
+        {
+            get => _color;
+            set
+            {
+                _color = value;
+                UpdateTexture();
+            }
+        }
 
         public ColoredRectangle()
         {
-            color = Color.Orange;
-            transform = new Transform2(new Size2(400, 100));
-            _background = new RectangleTexture(transform.ToRectangle(), Color).Create();
+            Transform = new Transform2(new Size2(400, 100));
+            _background = new RectangleTexture(Color.Orange).Create();
         }
 
         public void Draw(Transform2 parentTransform)
@@ -30,10 +37,10 @@ namespace MonoDragons.Core.UserInterface
             World.Draw(_background, position.ToRectangle());
         }
 
-        private void GenerateTexture()
+        private void UpdateTexture()
         {
             Resources.Dispose(_background);
-            _background = new RectangleTexture(transform.ToRectangle(), Color).Create();
+            _background = new RectangleTexture(_color).Create();
         }
 
         public void Dispose()

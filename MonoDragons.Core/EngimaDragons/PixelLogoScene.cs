@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MonoDragons.Core.Engine;
 using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Scenes;
+using MonoDragons.Core.UserInterface;
 
 namespace MonoDragons.Core.EngimaDragons
 {
-    public class LogoScene : IScene
+    public sealed class PixelLogoScene : IScene
     {
+        private readonly string _nextScene;
+
         private bool _begunTransition;
         private bool _transitionComplete;
 
+        public PixelLogoScene(string nextScene = "Intro")
+        {
+            _nextScene = nextScene;
+        }
+
         public void Init()
         {
-            Input.ClearBindings();
+            Input.ClearTransientBindings();
             Input.On(Control.Start, NavigateToMainMenu);
         }
 
@@ -23,7 +30,7 @@ namespace MonoDragons.Core.EngimaDragons
                 return;
 
             _transitionComplete = true;
-            World.NavigateToScene("Intro");
+            Scene.NavigateTo(_nextScene);
         }
 
         public async void Update(TimeSpan delta)
@@ -32,13 +39,13 @@ namespace MonoDragons.Core.EngimaDragons
                 return;
 
             _begunTransition = true;
-            await Task.Delay(2000);
+            await Task.Delay(3000);
             NavigateToMainMenu();
         }
 
         public void Draw()
         {
-            UserInterface.UI.DrawCentered("Images/Logo/enigmadragons-presents");
+            UI.DrawCentered("Images/Logo/enigmadragons-presents");
         }
     }
 }
