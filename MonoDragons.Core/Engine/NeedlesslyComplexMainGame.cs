@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoDragons.Core.Graphics;
 using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Memory;
 using MonoDragons.Core.PhysicsEngine;
@@ -24,24 +23,23 @@ namespace MonoDragons.Core.Engine
         private SpriteBatch _sprites;
         private Display _display;
         private Size2 _defaultScreenSize;
-        private Texture2D _black;
 
         // @todo #1 fix this so we config everything before the game
-        public NeedlesslyComplexMainGame(string title, string startingViewName, Size2 defaultGameSize, CurrentScene scene, IController controller)
+        public NeedlesslyComplexMainGame(string title, string startingViewName, Size2 defaultGameSize, IScene scene, IController controller)
             : this(title, startingViewName, scene, controller)
         {
             _areScreenSettingsPreCalculated = false;
             _defaultScreenSize = defaultGameSize;
         }
 
-        public NeedlesslyComplexMainGame(string title, string startingViewName, Display screenSettings, CurrentScene scene, IController controller)
+        public NeedlesslyComplexMainGame(string title, string startingViewName, Display screenSettings, IScene scene, IController controller)
             : this(title, startingViewName, scene, controller)
         {
             _areScreenSettingsPreCalculated = true;
             _display = screenSettings;
         }
 
-        private NeedlesslyComplexMainGame(string title, string startingViewName, CurrentScene scene, IController controller)
+        private NeedlesslyComplexMainGame(string title, string startingViewName, IScene scene, IController controller)
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -68,9 +66,9 @@ namespace MonoDragons.Core.Engine
                 IsMouseVisible = true;
                 _sprites = new SpriteBatch(GraphicsDevice);
                 Input.SetController(_controller);
-                _black = new RectangleTexture(Color.Black).Create();
                 World.Init(_sprites, _display);
-                UI.Init(this, _sprites, _display);
+                UI.Init(_sprites, _display);
+                _scene.Init();
                 base.Initialize();
             });
         }
@@ -105,8 +103,6 @@ namespace MonoDragons.Core.Engine
 #endif
             _controller.Update(gameTime.ElapsedGameTime);
             _scene.Update(gameTime.ElapsedGameTime);
-            new Physics().Resolve();
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -117,17 +113,7 @@ namespace MonoDragons.Core.Engine
 #if DEBUG
             _metrics.Draw(Transform2.Zero);
 #endif
-            HideExternals();
             _sprites.End();
-            base.Draw(gameTime);
-        }
-
-        private void HideExternals()
-        {
-            _sprites.Draw(_black, new Rectangle(new Point(_display.GameWidth, 0),
-                new Point(_display.ProgramWidth - _display.GameWidth, _display.ProgramHeight)), Color.Black);
-            _sprites.Draw(_black, new Rectangle(new Point(0, _display.GameHeight),
-                new Point(_display.ProgramWidth, _display.ProgramHeight - _display.GameHeight)), Color.Black);
         }
     }
 }

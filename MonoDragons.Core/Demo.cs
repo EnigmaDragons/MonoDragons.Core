@@ -21,14 +21,14 @@ namespace MonoDragons.Core
                 game.Run();
         }
 
-        private static CurrentScene SetupScene()
+        private static IScene SetupScene()
         {
             var currentScene = new CurrentScene();
             Scene.Init(new CurrentSceneNavigation(currentScene, CreateSceneFactory(), 
                 Input.ClearTransientBindings, 
                 Audio.StopMusic, 
                 Resources.Unload));
-            return currentScene;
+            return new HideViewportExternals(currentScene);
         }
 
         private static SceneFactory CreateSceneFactory()

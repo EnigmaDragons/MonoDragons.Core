@@ -73,6 +73,7 @@
     <Compile Include="EventSystem\Event.cs" />
     <Compile Include="Graphics\BobbingEffect.cs" />
     <Compile Include="IO\AppDataJsonIo.cs" />
+    <Compile Include="Render\HideViewportExternals.cs" />
     <Compile Include="Scenes\CurrentSceneNavigation.cs" />
     <Compile Include="Scenes\INavigation.cs" />
     <Compile Include="Scenes\CurrentScene.cs" />

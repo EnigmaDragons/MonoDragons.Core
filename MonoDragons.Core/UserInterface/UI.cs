@@ -22,7 +22,7 @@ namespace MonoDragons.Core.UserInterface
         private static SpriteBatch _spriteBatch;
         private static Display _display;
 
-        public static void Init(Game game, SpriteBatch spriteBatch, Display display)
+        public static void Init(SpriteBatch spriteBatch, Display display)
         {
             _spriteBatch = spriteBatch;
             _display = display;
