@@ -16,7 +16,7 @@ namespace MonoDragons.Core.EventSystem
         
         public static void Publish(object payload)
         {
-            Debug.WriteLine(payload.GetType());
+            Debug.WriteLine(payload.ToString());
             TransientEvents.Publish(payload);
             PersistentEvents.Publish(payload);
         }

@@ -25,6 +25,7 @@ namespace MonoDragons.Core.Scenes
         public void NavigateTo(IScene scene)
         {
             _beforeNavigate.ForEach(x => x());
+            _currentScene.Dispose();
             scene.Init();
             _currentScene.Set(scene);
         }

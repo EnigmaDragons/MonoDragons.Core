@@ -1,20 +1,20 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.PhysicsEngine;
-using System;
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Memory;
 using MonoDragons.Core.Text;
 
 namespace MonoDragons.Core.UserInterface
 {
-    public sealed class Label : IVisual, IDisposable
+    public sealed class Label : IVisual
     {
         private readonly ColoredRectangle _background = new ColoredRectangle();
         private readonly IWrapText _textWrapper;
 
         public string Font { get; set; } = DefaultFont.Name;
-        public Color TextColor { get; set; } = Color.White;
+        public Color TextColor { get; set; } = DefaultFont.Color;
         public HorizontalAlignment HorizontalAlignment { get; set; } = HorizontalAlignment.Center;
 
         public Transform2 Transform
@@ -36,6 +36,8 @@ namespace MonoDragons.Core.UserInterface
 
         public string RawText { get; set; } = "";
 
+        public Func<bool> IsVisible { get; set; } = () => true;
+
         public Label()
         {
             _textWrapper = new WrappingText(() => Resources.Load<SpriteFont>(Font), () => _background.Transform.Size.Width);
@@ -43,13 +45,11 @@ namespace MonoDragons.Core.UserInterface
 
         public void Draw(Transform2 parentTransform)
         {
+            if (!IsVisible())
+                return;
+
             _background.Draw(parentTransform);
             UI.DrawTextAligned(Text, new Rectangle((parentTransform.Location + Transform.Location).ToPoint(), Transform.Size.ToPoint()), TextColor, Font, HorizontalAlignment);
-        }
-
-        public void Dispose()
-        {
-            _background.Dispose();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MonoDragons.Core.Memory
 
         public static void Init()
         {
-            _sceneContents = new SceneContents(GameInstance.ContentManager);
+            _sceneContents = new SceneContents(CurrentGame.ContentManager);
         }
 
         public static void Put(string toString, IDisposable disposable)
@@ -29,8 +29,8 @@ namespace MonoDragons.Core.Memory
         public static void Unload()
         {
             _sceneContents.Dispose();
-            _sceneContents = new SceneContents(GameInstance.ContentManager);
-            DefaultFont.Load(GameInstance.ContentManager);
+            _sceneContents = new SceneContents(CurrentGame.ContentManager);
+            DefaultFont.Load(CurrentGame.ContentManager);
         }
 
         public static void Dispose(IDisposable disposable)

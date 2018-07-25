@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.PhysicsEngine;
+using MonoDragons.Core.Text;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -12,17 +13,29 @@ namespace MonoDragons.Core.UserInterface
         private readonly Func<bool> _isVisible;
 
         public Transform2 Transform => new Transform2(Area);
-        public string Text { set { _label.Text = value; } }
+        public string Text { set => _label.Text = value; }
+        public Color TextColor { set => _label.TextColor = value; }
+        public Action OnPress { set => _button.OnPress = value; }
+        public Action OnEnter { set => _button.OnEnter = value; }
+        public HorizontalAlignment TextAlignment { set => _label.HorizontalAlignment = value; }
+        public Transform2 TextTransform { set => _label.Transform = value.WithPadding(8, 8); }
+        public Action OnClick { set => _button.OnClick = value; }
 
-        public ImageTextButton(string text, string basic, string hover, string press, Transform2 transform, Action onClick)
-            : this(text, basic, hover, press, transform, onClick, () => true) { }
+        public ImageTextButton(Rectangle rect, string text, string basic, string hover, string press)
+            : this(new Transform2(rect), () => {}, text, basic, hover, press, () => true) { }
 
-        public ImageTextButton(string text, string basic, string hover, string press, Transform2 transform, Action onClick, Func<bool> isVisible)
+        public ImageTextButton(Rectangle rect, Action onClick, string text, string basic, string hover, string press)
+            : this(new Transform2(rect), onClick, text, basic, hover, press, () => true) { }
+
+        public ImageTextButton(Transform2 transform, Action onClick, string text, string basic, string hover, string press)
+            : this(transform, onClick, text, basic, hover, press, () => true) { }
+
+        public ImageTextButton(Transform2 transform, Action onClick, string text, string basic, string hover, string press, Func<bool> isVisible)
             : base(transform.ToRectangle())
         {
             _isVisible = isVisible;
             _button = new ImageButton(basic, hover, press, transform, onClick, _isVisible);
-            _label = new Label { BackgroundColor = Color.Transparent, Text = text, Transform = transform.WithPadding(8, 8), TextColor = Color.White };
+            _label = new Label { BackgroundColor = Color.Transparent, Text = text, Transform = transform.WithPadding(8, 8), TextColor = DefaultFont.Color };
         }
 
         public override void OnEntered()

@@ -4,17 +4,27 @@ using NAudio.Wave.SampleProviders;
 
 namespace MonoDragons.Core.AudioSystem
 {
-    internal class AudioPlayer : IDisposable
+    internal interface IAudioPlayer : IDisposable
     {
-        public static readonly AudioPlayer Instance = new AudioPlayer();
+        void Play(ISampleProvider samples);
+        void StopAll();
+    }
+
+    internal class AudioPlayer : IAudioPlayer
+    {
+        public static readonly IAudioPlayer Instance = GetAudioPlayer();
+        private static IAudioPlayer GetAudioPlayer()
+        {
+            try { return new AudioPlayer(); }
+            catch { return new NullAudioPlayer(); }
+        }
 
         private readonly IWavePlayer _player;
         private readonly MixingSampleProvider _mixer;
 
-        public AudioPlayer(int sampleRate = 44100, int channelCount = 2)
+        public AudioPlayer(int sampleRate = 44100)
         {
-            _mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, channelCount));
-            _mixer.ReadFully = true;
+            _mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, 2)) {ReadFully = true};
             _player = new WaveOutEvent();
             _player.Init(_mixer);
             _player.Play();
@@ -22,26 +32,24 @@ namespace MonoDragons.Core.AudioSystem
 
         public void Play(ISampleProvider samples)
         {
-            AddMixerInput(samples);
+            _mixer.AddMixerInput(samples);
         }
 
-        private ISampleProvider ConvertToRightChannelCount(ISampleProvider input)
+        public void StopAll()
         {
-            if (input.WaveFormat.Channels == _mixer.WaveFormat.Channels)
-                return input;
-            if (input.WaveFormat.Channels == 1 && _mixer.WaveFormat.Channels == 2)
-                return new MonoToStereoSampleProvider(input);
-            throw new NotImplementedException("Not yet implemented this channel count conversion");
-        }
-
-        private void AddMixerInput(ISampleProvider input)
-        {
-            _mixer.AddMixerInput(ConvertToRightChannelCount(input));
+            _mixer.RemoveAllMixerInputs();
         }
 
         public void Dispose()
         {
             _player.Dispose();
         }
+    }
+
+    internal class NullAudioPlayer : IAudioPlayer
+    {
+        public void Dispose() {}
+        public void Play(ISampleProvider samples) {}
+        public void StopAll() {}
     }
 }

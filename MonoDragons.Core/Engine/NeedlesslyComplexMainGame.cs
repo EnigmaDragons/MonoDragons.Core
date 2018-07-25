@@ -8,6 +8,7 @@ using MonoDragons.Core.UserInterface;
 using System;
 using MonoDragons.Core.Development;
 using MonoDragons.Core.Scenes;
+using System.Windows.Forms;
 
 namespace MonoDragons.Core.Engine
 {
@@ -57,17 +58,17 @@ namespace MonoDragons.Core.Engine
         {
             Perf.Time($"{nameof(NeedlesslyComplexMainGame)}.Initialize", () =>
             {
-                GameInstance.Init(this);
+                CurrentGame.Init(this);
                 Resources.Init();
                 InitDisplayIfNeeded();
                 // @todo #1 Bug: Update the GraphicsDeviceManager in the constructor, to avoid the window being mispositioned and visibly changing size
-                _display.Apply(_graphics);
+                CurrentDisplay.Init(_graphics, _display);
                 Window.Position = new Point(0, 0); // Delete this once the above issue is fixed
                 IsMouseVisible = true;
                 _sprites = new SpriteBatch(GraphicsDevice);
                 Input.SetController(_controller);
-                World.Init(_sprites, _display);
-                UI.Init(_sprites, _display);
+                World.Init(_sprites);
+                UI.Init(_sprites);
                 _scene.Init();
                 base.Initialize();
             });
@@ -76,14 +77,7 @@ namespace MonoDragons.Core.Engine
         private void InitDisplayIfNeeded()
         {
             if (!_areScreenSettingsPreCalculated)
-            {
-                var widthScale = (float)GraphicsDevice.DisplayMode.Width / _defaultScreenSize.Width;
-                var heightScale = (float)GraphicsDevice.DisplayMode.Height / _defaultScreenSize.Height;
-                var scale = widthScale > heightScale ? heightScale : widthScale;
-                _display = new Display((int)Math.Round(_defaultScreenSize.Width * scale), (int)Math.Round(_defaultScreenSize.Height * scale),
-                    true, scale);
-            }
-            CurrentDisplay.Init(_display);
+                _display = new Display(_defaultScreenSize.Width, _defaultScreenSize.Height, true, 1);
         }
 
         protected override void LoadContent()
@@ -107,9 +101,10 @@ namespace MonoDragons.Core.Engine
 
         protected override void Draw(GameTime gameTime)
         {
-            _sprites.Begin(SpriteSortMode.Deferred, null, SamplerState.AnisotropicClamp);
+            _sprites.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
             GraphicsDevice.Clear(Color.Black);
             _scene.Draw();
+            //World
 #if DEBUG
             _metrics.Draw(Transform2.Zero);
 #endif

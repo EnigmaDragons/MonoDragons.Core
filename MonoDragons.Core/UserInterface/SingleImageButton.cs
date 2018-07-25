@@ -58,10 +58,5 @@ namespace MonoDragons.Core.UserInterface
             _current.Color = Color.Transparent;
             _onClick.Invoke();
         }
-
-        public void Dispose()
-        {
-            _current.Dispose();
-        }
     }
 }

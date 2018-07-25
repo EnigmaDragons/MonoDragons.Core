@@ -19,5 +19,9 @@ namespace MonoDragons.Core.Scenes
         {
             UI.DrawTextCentered("Placeholder", CurrentDisplay.FullScreenRectangle, Color.White);
         }
+
+        public void Dispose()
+        {
+        }
     }
 }
