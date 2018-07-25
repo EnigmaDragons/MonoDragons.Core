@@ -26,7 +26,7 @@ namespace MonoDragons.Core
             var currentScene = new CurrentScene();
             Scene.Init(new CurrentSceneNavigation(currentScene, CreateSceneFactory(), 
                 Input.ClearTransientBindings, 
-                Audio.StopMusic, 
+                AudioPlayer.Instance.StopAll, 
                 Resources.Unload));
             return new HideViewportExternals(currentScene);
         }
@@ -36,7 +36,7 @@ namespace MonoDragons.Core
             return new SceneFactory(new Map<string, Func<IScene>>
             {
                 { "Logo", () => new FadingInScene(new OilLogoScene()) },
-                { "Intro", () => new PlaceholderScene() },
+                { "Intro", () => new VolumeDemo() },
             });
         }
 

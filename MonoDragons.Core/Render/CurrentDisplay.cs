@@ -4,18 +4,29 @@ namespace MonoDragons.Core.Render
 {
     public static class CurrentDisplay
     {
+        private static GraphicsDeviceManager _graphics;
         private static Display _display;
-
-        internal static void Init(Display display)
-        {
-            _display = display;
+        public static Display Display {
+            set
+            {
+                _display = value;
+                _display.Apply(_graphics);
+            }
         }
 
-        public static Display Get()
+        public static int GameWidth => _display.GameWidth;
+        public static int GameHeight => _display.GameHeight;
+        public static bool FullScreen => _display.FullScreen;
+        internal static int ProgramWidth => _display.ProgramWidth;
+        internal static int ProgramHeight => _display.ProgramHeight;
+        internal static float Scale => _display.Scale;
+
+        internal static void Init(GraphicsDeviceManager graphics, Display display)
         {
-            return _display;
+            _graphics = graphics;
+            Display = display;
         }
 
-        public static Rectangle FullScreenRectangle => new Rectangle(0, 0, _display.ProgramWidth, _display.ProgramHeight);
+        public static Rectangle FullScreenRectangle => new Rectangle(0, 0, _display.GameWidth, _display.GameHeight);
     }
 }

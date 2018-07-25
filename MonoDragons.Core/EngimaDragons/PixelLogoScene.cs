@@ -47,5 +47,9 @@ namespace MonoDragons.Core.EngimaDragons
         {
             UI.DrawCentered("Images/Logo/enigmadragons-presents");
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

@@ -1,38 +1,45 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
+using MonoDragons.Core.Common;
+using MonoDragons.Core.Engine;
+using MonoDragons.Core.PhysicsEngine;
 
 namespace MonoDragons.Core.Graphics
 {
-    public class BobbingEffect
+    public sealed class BobbingEffect : IAutomaton
     {
-        private readonly int _framesPerIndexerIncrement = 25;
-        private int _indexer = 0;
+        private static readonly int[] DefaultEffectPairs =
+        {
+            0, 0, -1, 0, -1, -1, -1, -2, -2, -2, -2, -3, -2, -4, -2, -5, -2, -5, -2, -4, -2, -3, -2, -2, -1, -2, -1, -1,
+            -1, 0, 0, 0, 1, 0, 1, -1, 1, -2, 2, -2, 2, -3, 2, -4, 2, -5, 2, -4, 2, -3, 2, -2, 1, -2, 1, -1, 1, 0
+        };
+
+        private readonly int _framesPerIndexerIncrement;
+        private int _index;
         private int _frame = 0;
         private readonly Vector2[] _bobbingEffect;
-        public Vector2 Effect
+
+        public BobbingEffect(int framesPerChange = 12)
         {
-            get
-            {
-                if (++_frame == _framesPerIndexerIncrement)
-                {
-                    _frame = 0;
-                    _indexer = ++_indexer < _bobbingEffect.Length ? _indexer : 0;
-                }
-                return _bobbingEffect[_indexer];
-            }
-        }
-        //= new Vector2[] { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 2), new Vector2(1, 3), new Vector2(0, 3), new Vector2(-1, 3), new Vector2(-1, 2), new Vector2(-1, 1), new Vector2(0, 1) }
-        public BobbingEffect(int framesPerChange, params Vector2[] offsets)
-        {
+            _index = Rng.Int(DefaultEffectPairs.Length / 2);
             _framesPerIndexerIncrement = framesPerChange;
-            _bobbingEffect = offsets;
+            _bobbingEffect = new Vector2[DefaultEffectPairs.Length / 2];
+            for (var i = 0; i * 2 < DefaultEffectPairs.Length; i++)
+                _bobbingEffect[i] = new Vector2(DefaultEffectPairs[i * 2], DefaultEffectPairs[i * 2 + 1]);
         }
 
-        public BobbingEffect(int framesPerChange, params int[] offsetsParams)
+        public void Update(TimeSpan delta)
         {
-            _framesPerIndexerIncrement = framesPerChange;
-            _bobbingEffect = new Vector2[offsetsParams.Length / 2];
-            for (var i = 0; i * 2 < offsetsParams.Length; i++)
-                _bobbingEffect[i] = new Vector2(offsetsParams[i * 2], offsetsParams[i * 2 + 1]);
+            if (++_frame == _framesPerIndexerIncrement)
+            {
+                _frame = 0;
+                _index = ++_index < _bobbingEffect.Length ? _index : 0;
+            }
+        }
+
+        public void Draw(IVisual visual, Transform2 parentTransform)
+        {
+            visual.Draw(parentTransform + _bobbingEffect[_index]);
         }
     }
 }

@@ -25,5 +25,10 @@ namespace MonoDragons.Core.Scenes
         {
             Value.Draw();
         }
+
+        public void Dispose()
+        {
+            Value.Dispose();
+        }
     }
 }

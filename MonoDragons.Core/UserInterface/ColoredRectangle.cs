@@ -2,13 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Graphics;
-using MonoDragons.Core.Memory;
 using MonoDragons.Core.PhysicsEngine;
-using System;
 
 namespace MonoDragons.Core.UserInterface
 {
-    public sealed class ColoredRectangle : IVisual, IDisposable
+    public sealed class ColoredRectangle : IVisual
     {
         private Color _color;
         private Texture2D _background;
@@ -17,7 +15,7 @@ namespace MonoDragons.Core.UserInterface
 
         public Color Color
         {
-            get => _color;
+            get { return _color; }
             set
             {
                 _color = value;
@@ -28,7 +26,7 @@ namespace MonoDragons.Core.UserInterface
         public ColoredRectangle()
         {
             Transform = new Transform2(new Size2(400, 100));
-            _background = new RectangleTexture(Color.Orange).Create();
+            _background = new RectangleTexture(Color.Transparent).Create();
         }
 
         public void Draw(Transform2 parentTransform)
@@ -39,13 +37,7 @@ namespace MonoDragons.Core.UserInterface
 
         private void UpdateTexture()
         {
-            Resources.Dispose(_background);
             _background = new RectangleTexture(_color).Create();
-        }
-
-        public void Dispose()
-        {
-            Resources.Dispose(_background);
         }
     }
 }

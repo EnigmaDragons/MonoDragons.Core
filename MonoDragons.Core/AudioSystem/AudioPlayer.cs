@@ -11,10 +11,9 @@ namespace MonoDragons.Core.AudioSystem
         private readonly IWavePlayer _player;
         private readonly MixingSampleProvider _mixer;
 
-        public AudioPlayer(int sampleRate = 44100, int channelCount = 2)
+        public AudioPlayer(int sampleRate = 44100)
         {
-            _mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, channelCount));
-            _mixer.ReadFully = true;
+            _mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, 2)) {ReadFully = true};
             _player = new WaveOutEvent();
             _player.Init(_mixer);
             _player.Play();
@@ -22,21 +21,12 @@ namespace MonoDragons.Core.AudioSystem
 
         public void Play(ISampleProvider samples)
         {
-            AddMixerInput(samples);
+            _mixer.AddMixerInput(samples);
         }
 
-        private ISampleProvider ConvertToRightChannelCount(ISampleProvider input)
+        public void StopAll()
         {
-            if (input.WaveFormat.Channels == _mixer.WaveFormat.Channels)
-                return input;
-            if (input.WaveFormat.Channels == 1 && _mixer.WaveFormat.Channels == 2)
-                return new MonoToStereoSampleProvider(input);
-            throw new NotImplementedException("Not yet implemented this channel count conversion");
-        }
-
-        private void AddMixerInput(ISampleProvider input)
-        {
-            _mixer.AddMixerInput(ConvertToRightChannelCount(input));
+            _mixer.RemoveAllMixerInputs();
         }
 
         public void Dispose()

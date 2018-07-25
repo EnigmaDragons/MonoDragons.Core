@@ -42,7 +42,6 @@ namespace MonoDragons.Core.Scenes
                 _transitionElapsedMillis += delta.TotalMilliseconds;
                 _transitionComplete = _transitionElapsedMillis > _duration.TotalMilliseconds;
                 _fade.Color = Color.FromNonPremultiplied(0, 0, 0, (int)(255 - 255 * (_transitionElapsedMillis / _duration.TotalMilliseconds)));
-                return;
             }
 
             _scene.Update(delta);
@@ -54,6 +53,10 @@ namespace MonoDragons.Core.Scenes
 
             if (!_transitionComplete)
                 _fade.Draw(Transform2.Zero);
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

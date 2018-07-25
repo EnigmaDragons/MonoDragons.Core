@@ -2,7 +2,7 @@
 
 namespace MonoDragons.Core.Scenes
 {
-    public interface IScene
+    public interface IScene: IDisposable
     {
         void Init();
         void Update(TimeSpan delta);

@@ -5,29 +5,25 @@ using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Engine;
 using System.Linq;
 using MonoDragons.Core.Render;
+using MonoDragons.Core.EventSystem;
 
 namespace MonoDragons.Core.UserInterface
 {
-    public sealed class ClickUI : IAutomaton
+    public sealed class ClickUI : IAutomaton, IDisposable
     {
         public static readonly ClickableUIElement None = new NoneClickableUIElement();
 
         private List<ClickUIBranch> _branches = new List<ClickUIBranch> { new ClickUIBranch("Base", 0) };
-
-        private readonly Display _display;
-        private float Scale => _display.Scale;
+        
+        private float Scale => CurrentDisplay.Scale;
         
         private ClickableUIElement _current = None;
         private bool _wasClicked;
         private ClickUIBranch _elementLayer;
         private readonly Action<ClickUIBranch>[] subscribeAction;
-        
-        public ClickUI()
-            : this(CurrentDisplay.Get()) { }
 
-        public ClickUI(Display display)
+        public ClickUI()
         {
-            _display = display;
             _elementLayer = _branches[0];
             subscribeAction = new Action<ClickUIBranch>[] { Add, Remove }; ;
         }
@@ -63,6 +59,12 @@ namespace MonoDragons.Core.UserInterface
             {
                 _branches.Remove(b);
                 b.Unsubscribe(subscribeAction);
+                if (b.IsCurrentElement(_current) && _current.IsHovered)
+                {
+                    Event.Publish(new ActiveElementChanged(_current));
+                    _current.OnExitted();
+                    _current.IsHovered = false;
+                }
             }
         }
 
@@ -71,10 +73,15 @@ namespace MonoDragons.Core.UserInterface
             _elementLayer.Remove(element);
         }
 
+        public void Clear()
+        {
+            _branches.ToList().ForEach(Remove);
+        }
+
         public void Update(TimeSpan delta)
         {
             var mouse = Mouse.GetState();
-            if (GameInstance.TheGame.IsActive)
+            if (CurrentGame.TheGame.IsActive)
             {
                 var newElement = GetElement(mouse);
                 if (newElement != _current)
@@ -82,7 +89,7 @@ namespace MonoDragons.Core.UserInterface
                 else if (MouseIsOutOfGame(mouse))
                     return;
                 else if (WasMouseReleased(mouse))
-                    OnReleased();
+                    OnReleased(mouse);
                 else if (mouse.LeftButton == ButtonState.Pressed)
                     OnPressed();
             }
@@ -90,8 +97,8 @@ namespace MonoDragons.Core.UserInterface
 
         private bool MouseIsOutOfGame(MouseState mouse)
         {
-            return mouse.Position.X < 0 || mouse.Position.X > _display.GameWidth 
-                || mouse.Position.Y < 0 || mouse.Position.Y > _display.GameHeight;
+            return mouse.Position.X < 0 || mouse.Position.X > CurrentDisplay.GameWidth 
+                || mouse.Position.Y < 0 || mouse.Position.Y > CurrentDisplay.GameHeight;
         }
 
         private void OnPressed()
@@ -103,19 +110,26 @@ namespace MonoDragons.Core.UserInterface
             _wasClicked = true;
         }
 
-        private void OnReleased()
+        private void OnReleased(MouseState mouse)
         {
             _current.OnReleased();
             _wasClicked = false;
-            _current.OnEntered();
+            if(_current == GetElement(mouse))
+                _current.OnEntered();
         }
 
         private void ChangeActiveElement(ClickableUIElement newElement)
         {
-            _current.OnExitted();
+            if (_current.IsHovered)
+            {
+                _current.OnExitted();
+                _current.IsHovered = false;
+            }
+            Event.Publish(new ActiveElementChanged(_current.IsHovered ? _current : None, newElement));
             _wasClicked = false;
             _current = newElement;
             _current.OnEntered();
+            _current.IsHovered = true;
         }
 
         private bool WasMouseReleased(MouseState mouse)
@@ -143,6 +157,16 @@ namespace MonoDragons.Core.UserInterface
         private Point ScaleMousePosition(MouseState mouse)
         {
             return new Point((int)Math.Round(mouse.Position.X / Scale), (int)Math.Round(mouse.Position.Y / Scale));
+        }
+
+        public void Dispose()
+        {
+            if (_current.IsHovered)
+            {
+                _current.OnExitted();
+                Event.Publish(new ActiveElementChanged(_current));
+            }
+            _current = None;
         }
     }
 }
