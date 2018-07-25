@@ -4,9 +4,20 @@ using NAudio.Wave.SampleProviders;
 
 namespace MonoDragons.Core.AudioSystem
 {
-    internal class AudioPlayer : IDisposable
+    internal interface IAudioPlayer : IDisposable
     {
-        public static readonly AudioPlayer Instance = new AudioPlayer();
+        void Play(ISampleProvider samples);
+        void StopAll();
+    }
+
+    internal class AudioPlayer : IAudioPlayer
+    {
+        public static readonly IAudioPlayer Instance = GetAudioPlayer();
+        private static IAudioPlayer GetAudioPlayer()
+        {
+            try { return new AudioPlayer(); }
+            catch { return new NullAudioPlayer(); }
+        }
 
         private readonly IWavePlayer _player;
         private readonly MixingSampleProvider _mixer;
@@ -33,5 +44,12 @@ namespace MonoDragons.Core.AudioSystem
         {
             _player.Dispose();
         }
+    }
+
+    internal class NullAudioPlayer : IAudioPlayer
+    {
+        public void Dispose() {}
+        public void Play(ISampleProvider samples) {}
+        public void StopAll() {}
     }
 }
