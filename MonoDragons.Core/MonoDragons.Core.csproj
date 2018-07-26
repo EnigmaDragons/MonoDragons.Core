@@ -53,12 +53,16 @@
     <Compile Include="AudioSystem\SmartSample.cs" />
     <Compile Include="AudioSystem\Sound.cs" />
     <Compile Include="AudioSystem\SoundType.cs" />
+    <Compile Include="Errors\Error.cs" />
     <Compile Include="Common\Map.cs" />
     <Compile Include="Common\MustInit.cs" />
     <Compile Include="Common\NotInitializedException.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="Development\Perf.cs" />
     <Compile Include="EngimaDragons\OilLogoScene.cs" />
+    <Compile Include="Errors\MetaAppDetails.cs" />
+    <Compile Include="Errors\ReportErrorHandler.cs" />
+    <Compile Include="Errors\IErrorHandler.cs" />
     <Compile Include="Engine\TimerTask.cs" />
     <Compile Include="Scenes\VolumeDemo.cs" />
     <Compile Include="Text\ScaledSpriteFontSet.cs" />
@@ -201,6 +205,8 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.AudioSystem;
 using MonoDragons.Core.Common;
 using MonoDragons.Core.Development;
 using MonoDragons.Core.EngimaDragons;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.Errors;
 using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Memory;
 using MonoDragons.Core.Render;
@@ -17,8 +19,13 @@ namespace MonoDragons.Core
         [STAThread]
         static void Main()
         {
-            using (var game = Perf.Time("Startup", () => new NeedlesslyComplexMainGame("MonoDragons.Core", "Logo", new Display(1600, 900, false), SetupScene(), CreateKeyboardController())))
-                game.Run();
+            var appName = "MonoDragons.Core";
+            var fatalErrorReporter = new ReportErrorHandler(new MetaAppDetails(appName, "1.0", Environment.OSVersion.VersionString));
+            Error.HandleAsync(() =>
+            {
+                using (var game = Perf.Time("Startup", () => new NeedlesslyComplexMainGame(appName, "Logo", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), fatalErrorReporter)))
+                    game.Run();
+            }, x => fatalErrorReporter.ResolveError(x)).GetAwaiter().GetResult();
         }
 
         private static IScene SetupScene()
