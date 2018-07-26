@@ -53,6 +53,7 @@
     <Compile Include="AudioSystem\SmartSample.cs" />
     <Compile Include="AudioSystem\Sound.cs" />
     <Compile Include="AudioSystem\SoundType.cs" />
+    <Compile Include="Common\Metric.cs" />
     <Compile Include="Errors\Error.cs" />
     <Compile Include="Common\Map.cs" />
     <Compile Include="Common\MustInit.cs" />

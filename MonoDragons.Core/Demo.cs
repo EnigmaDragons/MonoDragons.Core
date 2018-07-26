@@ -19,11 +19,12 @@ namespace MonoDragons.Core
         [STAThread]
         static void Main()
         {
-            var appName = "MonoDragons.Core";
-            var fatalErrorReporter = new ReportErrorHandler(new MetaAppDetails(appName, "1.0", Environment.OSVersion.VersionString));
+            var appDetails = new MetaAppDetails("MonoDragons.Core", "1.0", Environment.OSVersion.VersionString);
+            var fatalErrorReporter = new ReportErrorHandler(appDetails);
+            Metric.AppDetails = appDetails;
             Error.HandleAsync(() =>
             {
-                using (var game = Perf.Time("Startup", () => new NeedlesslyComplexMainGame(appName, "Logo", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), fatalErrorReporter)))
+                using (var game = Perf.Time("Startup", () => new NeedlesslyComplexMainGame(appDetails.Name, "Logo", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), fatalErrorReporter)))
                     game.Run();
             }, x => fatalErrorReporter.ResolveError(x)).GetAwaiter().GetResult();
         }
