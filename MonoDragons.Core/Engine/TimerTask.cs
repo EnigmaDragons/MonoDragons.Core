@@ -28,9 +28,10 @@ namespace MonoDragons.Core.Engine
                 return;
 
             _performTask();
-            _isFinished = true;
             if (_recurring)
                 Reset();
+            else
+                _isFinished = true;
         }
 
         public void Reset()
