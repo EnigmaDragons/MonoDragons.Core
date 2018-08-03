@@ -4,13 +4,13 @@ using NAudio.Wave.SampleProviders;
 
 namespace MonoDragons.Core.AudioSystem
 {
-    internal interface IAudioPlayer : IDisposable
+    public interface IAudioPlayer : IDisposable
     {
         void Play(ISampleProvider samples);
         void StopAll();
     }
 
-    internal class AudioPlayer : IAudioPlayer
+    public class AudioPlayer : IAudioPlayer
     {
         public static readonly IAudioPlayer Instance = GetAudioPlayer();
         private static IAudioPlayer GetAudioPlayer()

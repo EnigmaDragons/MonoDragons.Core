@@ -33,6 +33,11 @@ namespace MonoDragons.Core.EventSystem
             Resources.Put(subscription.GetHashCode().ToString(), subscription);
         }
 
+        public static void Subscribe<T>(Action<T> onEvent, object owner) where T : IDisposable
+        {
+            Subscribe(EventSubscription.Create<T>(onEvent, owner));
+        }
+
         public static void Unsubscribe(object owner)
         {
             TransientEvents.Unsubscribe(owner);
