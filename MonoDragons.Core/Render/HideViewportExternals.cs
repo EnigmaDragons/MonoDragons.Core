@@ -37,9 +37,9 @@ namespace MonoDragons.Core.Render
 
         private void HideExternals()
         {
-            World.Draw(_black.Get(), new Rectangle(new Point((int)Math.Round(CurrentDisplay.GameWidth / CurrentDisplay.Scale), 0),
+            GameWorld.Draw(_black.Get(), new Rectangle(new Point((int)Math.Round(CurrentDisplay.GameWidth / CurrentDisplay.Scale), 0),
                 new Point(5000, 5000)), Color.Black);
-            World.Draw(_black.Get(), new Rectangle(new Point(0, (int)Math.Round(CurrentDisplay.GameHeight / CurrentDisplay.Scale)),
+            GameWorld.Draw(_black.Get(), new Rectangle(new Point(0, (int)Math.Round(CurrentDisplay.GameHeight / CurrentDisplay.Scale)),
                 new Point(5000, 5000)), Color.Black);
         }
 

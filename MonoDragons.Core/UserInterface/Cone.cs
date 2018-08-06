@@ -4,7 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Graphics;
 using MonoDragons.Core.Memory;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.PhysicsEngine;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -29,7 +31,7 @@ namespace MonoDragons.Core.UserInterface
         public void Draw(Transform2 parentTransform)
         {
             var position = parentTransform + Transform;
-            World.DrawRotatedFromCenter(_background, position.ToRectangle(), Transform.Rotation);
+            GameWorld.DrawRotatedFromCenter(_background, position.ToRectangle(), Transform.Rotation);
         }
 
         private void GenerateTexture()

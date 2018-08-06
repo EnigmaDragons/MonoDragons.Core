@@ -4,16 +4,17 @@ using MonoDragons.Core.Engine;
 using MonoDragons.Core.PhysicsEngine;
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Memory;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.Text;
 
 namespace MonoDragons.Core.UserInterface
 {
     public sealed class Label : IVisual
     {
-        private readonly ColoredRectangle _background = new ColoredRectangle();
+        private readonly UiColoredRectangle _background = new UiColoredRectangle();
         private readonly IWrapText _textWrapper;
 
-        public string Font { get; set; } = DefaultFont.Name;
+        public string Font { get; set; } = DefaultFont.Medium;
         public Color TextColor { get; set; } = DefaultFont.Color;
         public HorizontalAlignment HorizontalAlignment { get; set; } = HorizontalAlignment.Center;
 

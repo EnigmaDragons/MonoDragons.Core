@@ -42,30 +42,51 @@
     <StartupObject>MonoDragons.Core.Demo</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Animations\AnimationExtensions.cs" />
     <Compile Include="Animations\HorizontalFlyInAnimation.cs" />
     <Compile Include="Animations\IAnimation.cs" />
+    <Compile Include="Animations\ScreenFade.cs" />
     <Compile Include="Animations\VerticalFlyInAnimation.cs" />
-    <Compile Include="Animations\WithOffset.cs" />
     <Compile Include="Animations\SinglePositionTraverseAnimation.cs" />
-    <Compile Include="AudioSystem\AudioDirector.cs" />
-    <Compile Include="AudioSystem\AudioPlayer.cs" />
-    <Compile Include="AudioSystem\MasterVolume.cs" />
-    <Compile Include="AudioSystem\SmartSample.cs" />
-    <Compile Include="AudioSystem\Sound.cs" />
-    <Compile Include="AudioSystem\SoundType.cs" />
-    <Compile Include="Common\Metric.cs" />
+    <Compile Include="Audio\AudioDirector.cs" />
+    <Compile Include="Audio\AudioPlayer.cs" />
+    <Compile Include="Audio\MasterVolume.cs" />
+    <Compile Include="Audio\SmartSample.cs" />
+    <Compile Include="Audio\Sound.cs" />
+    <Compile Include="Audio\SoundType.cs" />
+    <Compile Include="Common\ConcurrentDictionaryWithDefault.cs" />
+    <Compile Include="Common\DictionaryWithDefault.cs" />
+    <Compile Include="Common\Logger.cs" />
+    <Compile Include="Common\TrackingEvent.cs" />
+    <Compile Include="Development\DevTextColor.cs" />
+    <Compile Include="Development\RecentEventDebugLogView.cs" />
+    <Compile Include="Development\VolumeDemo.cs" />
+    <Compile Include="EngimaDragons\EnigmaDragonsResources.cs" />
     <Compile Include="Errors\Error.cs" />
     <Compile Include="Common\Map.cs" />
     <Compile Include="Common\MustInit.cs" />
     <Compile Include="Common\NotInitializedException.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="Development\Perf.cs" />
-    <Compile Include="EngimaDragons\OilLogoScene.cs" />
-    <Compile Include="Errors\MetaAppDetails.cs" />
+    <Compile Include="Errors\MessageBoxErrorHandler.cs" />
+    <Compile Include="Errors\AppDetails.cs" />
     <Compile Include="Errors\ReportErrorHandler.cs" />
     <Compile Include="Errors\IErrorHandler.cs" />
     <Compile Include="Engine\TimerTask.cs" />
-    <Compile Include="Scenes\VolumeDemo.cs" />
+    <Compile Include="Examples\SimpleLogoScene.cs" />
+    <Compile Include="Examples\SimpleMainMenuScene.cs" />
+    <Compile Include="Inputs\DirectionChanged.cs" />
+    <Compile Include="Physics\Engine\Physics.cs" />
+    <Compile Include="Physics\Engine\PhysicsInstance.cs" />
+    <Compile Include="Physics\HorizontalDirection.cs" />
+    <Compile Include="Physics\VerticalDirection.cs" />
+    <Compile Include="Render\SpriteAnimation.cs" />
+    <Compile Include="Render\SpriteAnimationFrame.cs" />
+    <Compile Include="Render\GameWorld.cs" />
+    <Compile Include="Scenes\ClickUiScene.cs" />
+    <Compile Include="Scenes\LoadingScene.cs" />
+    <Compile Include="Scenes\SceneContainer.cs" />
+    <Compile Include="Scenes\SimpleScene.cs" />
     <Compile Include="Text\ScaledSpriteFontSet.cs" />
     <Compile Include="UserInterface\ActiveElementChanged.cs" />
     <Compile Include="UserInterface\Anchor.cs" />
@@ -75,17 +96,13 @@
     <Compile Include="Engine\IVisualControl.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="Common\ISubscription.cs" />
-    <Compile Include="Common\ISubject.cs" />
     <Compile Include="Common\ObjectExtensions.cs" />
     <Compile Include="Common\Optional.cs" />
     <Compile Include="Common\Rng.cs" />
-    <Compile Include="Common\Subject.cs" />
     <Compile Include="Common\SubscriptionAction.cs" />
-    <Compile Include="EngimaDragons\PixelLogoScene.cs" />
     <Compile Include="Engine\CurrentGame.cs" />
     <Compile Include="Engine\IVisualAutomaton.cs" />
     <Compile Include="Development\Metrics.cs" />
-    <Compile Include="Engine\Timer.cs" />
     <Compile Include="EventSystem\Event.cs" />
     <Compile Include="Graphics\BobbingEffect.cs" />
     <Compile Include="Graphics\HollowedRectangleTexture.cs" />
@@ -103,7 +120,6 @@
     <Compile Include="Scenes\SceneFactory.cs" />
     <Compile Include="Engine\ISpatial.cs" />
     <Compile Include="Render\Display.cs" />
-    <Compile Include="Engine\World.cs" />
     <Compile Include="Inputs\KeyboardEvents\KeyDownEventSubscription.cs" />
     <Compile Include="Inputs\KeyboardEvents\KeyUpEventSubscription.cs" />
     <Compile Include="EventSystem\Events.cs" />
@@ -118,20 +134,16 @@
     <Compile Include="Inputs\Control.cs" />
     <Compile Include="Inputs\ControlSubscription.cs" />
     <Compile Include="Inputs\Direction.cs" />
-    <Compile Include="Inputs\HorizontalDirection.cs" />
     <Compile Include="Inputs\IController.cs" />
     <Compile Include="Inputs\KeyboardController.cs" />
     <Compile Include="Inputs\Input.cs" />
-    <Compile Include="Inputs\ControlChange.cs" />
+    <Compile Include="Inputs\ControlStateChanged.cs" />
     <Compile Include="Inputs\ControlState.cs" />
-    <Compile Include="Inputs\VerticalDirection.cs" />
     <Compile Include="Memory\Resources.cs" />
-    <Compile Include="PhysicsEngine\Physics.cs" />
-    <Compile Include="PhysicsEngine\PhysicsInstance.cs" />
-    <Compile Include="PhysicsEngine\RandomDirection.cs" />
-    <Compile Include="PhysicsEngine\Rotation2.cs" />
-    <Compile Include="PhysicsEngine\Size2.cs" />
-    <Compile Include="PhysicsEngine\Transform2.cs" />
+    <Compile Include="Physics\RandomDirection.cs" />
+    <Compile Include="Physics\Rotation2.cs" />
+    <Compile Include="Physics\Size2.cs" />
+    <Compile Include="Physics\Transform2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\Animation.cs" />
     <Compile Include="Render\Animations.cs" />
@@ -142,6 +154,7 @@
     <Compile Include="Text\IWrapText.cs" />
     <Compile Include="Text\EnumExtensions.cs" />
     <Compile Include="Text\WrappingText.cs" />
+    <Compile Include="UserInterface\CenteredRawImage.cs" />
     <Compile Include="UserInterface\ExpandingImageButton.cs" />
     <Compile Include="UserInterface\TintedImageBox.cs" />
     <Compile Include="UserInterface\KeyboardTyping.cs" />
@@ -177,14 +190,17 @@
     <Compile Include="UserInterface\SimpleClickable.cs" />
     <Compile Include="UserInterface\SingleImageButton.cs" />
     <Compile Include="UserInterface\SmartControl.cs" />
-    <Compile Include="UserInterface\CursorLoader.cs" />
     <Compile Include="UserInterface\TextButton.cs" />
     <Compile Include="UserInterface\TextClickable.cs" />
     <Compile Include="UserInterface\TextureButtonWithText.cs" />
     <Compile Include="UserInterface\UI.cs" />
+    <Compile Include="UserInterface\UiColoredRectangle.cs" />
+    <Compile Include="UserInterface\UiImage.cs" />
+    <Compile Include="UserInterface\UIMathExtensions.cs" />
     <Compile Include="UserInterface\UiStateTextures.cs" />
     <Compile Include="UserInterface\VerticalAlignment.cs" />
     <Compile Include="UserInterface\VisualClickableUIElement.cs" />
+    <Compile Include="UserInterface\WithOffset.cs" />
     <Compile Include="UserInterface\WrapGrid.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +231,6 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Fonts\Arial.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\Fonts\Audiowide.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -231,6 +244,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\None.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\SuperDragonAttack.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Music\mute.mp3">
@@ -342,7 +358,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.PhysicsEngine;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -24,7 +26,7 @@ namespace MonoDragons.Core.UserInterface
                 return;
 
             var currentTint = ShouldTint() ? Tint : Color.White;
-            World.Draw(Image, parentTransform + Transform, currentTint);
+            GameWorld.Draw(Image, parentTransform + Transform, currentTint);
         }
     }
 }

@@ -9,6 +9,9 @@ using MonoDragons.Core.UserInterface;
 using MonoDragons.Core.Development;
 using MonoDragons.Core.Scenes;
 using MonoDragons.Core.Errors;
+using System.Windows.Forms;
+using Microsoft.Xna.Framework.Input;
+using MonoDragons.Core.Physics;
 
 namespace MonoDragons.Core.Engine
 {
@@ -19,33 +22,16 @@ namespace MonoDragons.Core.Engine
         private readonly IScene _scene;
         private readonly IController _controller;
         private readonly Metrics _metrics;
-        private readonly bool _areScreenSettingsPreCalculated;
         private readonly IErrorHandler _errorHandler;
-        
-        private SpriteBatch _sprites;
-        private Display _display;
-        private Size2 _defaultScreenSize;
+        private readonly Display _display;
 
-        // @todo #1 fix this so we config everything before the game
-        public NeedlesslyComplexMainGame(string title, string startingViewName, Size2 defaultGameSize, 
-                IScene scene, IController controller, IErrorHandler errorHandler)
-            : this(title, startingViewName, scene, controller, errorHandler)
-        {
-            _areScreenSettingsPreCalculated = false;
-            _defaultScreenSize = defaultGameSize;
-        }
+        public static SpriteBatch WorldSpriteBatch;
+        private SpriteBatch _uiSpriteBatch;
 
-        public NeedlesslyComplexMainGame(string title, string startingViewName, Display screenSettings, 
-                IScene scene, IController controller, IErrorHandler errorHandler)
-            : this(title, startingViewName, scene, controller, errorHandler)
-        {
-            _areScreenSettingsPreCalculated = true;
-            _display = screenSettings;
-        }
-
-        private NeedlesslyComplexMainGame(string title, string startingViewName,
+        public NeedlesslyComplexMainGame(string title, string startingViewName, Display display,
             IScene scene, IController controller, IErrorHandler errorHandler)
         {
+            _display = display;
             _errorHandler = errorHandler;
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -56,78 +42,98 @@ namespace MonoDragons.Core.Engine
             _metrics = new Metrics();
 #endif
             Window.Title = title;
+            //((Form)Form.FromHandle(Window.Handle)).Closing += (o, e) => Environment.Exit(0);
         }
 
         protected override void Initialize()
         {
-            Error.HandleAsync(() =>
+            try
             {
                 Perf.Time($"{nameof(NeedlesslyComplexMainGame)}.Initialize", () =>
                 {
                     CurrentGame.Init(this);
                     Resources.Init();
-                    InitDisplayIfNeeded();
                     // @todo #1 Bug: Update the GraphicsDeviceManager in the constructor, to avoid the window being mispositioned and visibly changing size
                     CurrentDisplay.Init(_graphics, _display);
-                    Window.Position = new Point(0, 0); // Delete this once the above issue is fixed
+                    Window.Position = new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - CurrentDisplay.GameWidth) / 2,
+                        (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - CurrentDisplay.GameHeight) / 2 - 40); // Delete this once the above issue is fixed
                     IsMouseVisible = true;
-                    _sprites = new SpriteBatch(GraphicsDevice);
+                    _uiSpriteBatch = new SpriteBatch(GraphicsDevice);
+                    WorldSpriteBatch = new SpriteBatch(GraphicsDevice);
                     Input.SetController(_controller);
-                    World.Init(_sprites);
-                    UI.Init(_sprites);
+                    GameWorld.Init(WorldSpriteBatch);
+                    UI.Init(_uiSpriteBatch); 
                     _scene.Init();
                     base.Initialize();
                 });
-            }, x => _errorHandler.ResolveError(this, x)).GetAwaiter().GetResult();
-        }
-
-        private void InitDisplayIfNeeded()
-        {
-            if (!_areScreenSettingsPreCalculated)
-                _display = new Display(_defaultScreenSize.Width, _defaultScreenSize.Height, true, 1);
+            }
+            catch (Exception e)
+            {
+                _errorHandler.Handle(new Exception("Error while Initializing MonoDragons Core engine", e));
+            }
         }
 
         protected override void LoadContent()
         {
-            Error.HandleAsync(() =>
+            try
             {
                 Scene.NavigateTo(_startingViewName);
-            }, x => _errorHandler.ResolveError(this, x)).GetAwaiter().GetResult();
+            }
+            catch (Exception e)
+            {
+                _errorHandler.Handle(new Exception($"Error while navigating to Scene {_scene.GetType()}", e));
+            };
         }
 
         protected override void UnloadContent()
         {
-            Error.HandleAsync(() =>
+            try
             {
                 Content.Unload();
-            }, x => _errorHandler.ResolveError(this, x)).GetAwaiter().GetResult();
+            }
+            catch (Exception e)
+            {
+                _errorHandler.Handle(e);
+            }
         }
 
         protected override void Update(GameTime gameTime)
         {
-            Error.HandleAsync(() =>
+            try
             {
 #if DEBUG
                 _metrics.Update(gameTime.ElapsedGameTime);
+                if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.OemTilde))
+                    Environment.Exit(0);
 #endif
                 _controller.Update(gameTime.ElapsedGameTime);
                 _scene.Update(gameTime.ElapsedGameTime);
-            }, x => _errorHandler.ResolveError(this, x)).GetAwaiter().GetResult();
+            }
+            catch (Exception e)
+            {
+                _errorHandler.Handle(new Exception("Error in Update Loop", e));
+            }
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            Error.HandleAsync(() =>
+            try
             {
-                _sprites.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+                _uiSpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.AnisotropicClamp);
+                WorldSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
                 GraphicsDevice.Clear(Color.Black);
                 _scene.Draw();
-                //World
 #if DEBUG
                 _metrics.Draw(Transform2.Zero);
 #endif
-                _sprites.End();
-            }, x => _errorHandler.ResolveError(this, x)).GetAwaiter().GetResult();
+                WorldSpriteBatch.End();
+                _uiSpriteBatch.End();
+            }
+            catch (Exception e)
+            {
+                _errorHandler.Handle(new Exception("Error in Draw Loop", e));
+            }
         }
     }
 }
+

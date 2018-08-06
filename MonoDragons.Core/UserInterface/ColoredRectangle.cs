@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Graphics;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.PhysicsEngine;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -32,7 +34,7 @@ namespace MonoDragons.Core.UserInterface
         public void Draw(Transform2 parentTransform)
         {
             var position = parentTransform + Transform;
-            World.Draw(_background, position.ToRectangle());
+            GameWorld.Draw(_background, position.ToRectangle());
         }
 
         private void UpdateTexture()

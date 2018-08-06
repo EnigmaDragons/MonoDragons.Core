@@ -3,12 +3,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Graphics;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.PhysicsEngine;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
     public class TextButton : VisualClickableUIElement
     {
+        private readonly Rectangle _area;
         private readonly Action _onClick;
         private readonly string _text;
         private readonly Texture2D _default;
@@ -25,6 +28,7 @@ namespace MonoDragons.Core.UserInterface
             : this(area, onClick, text, defaultColor, hover, press, () => true) { }
         public TextButton(Rectangle area, Action onClick, string text, Color defaultColor, Color hover, Color press, Func<bool> isvisible) : base(area)
         {
+            _area = area;
             _onClick = onClick;
             _text = text;
             _default = new RectangleTexture(defaultColor).Create();
@@ -62,7 +66,7 @@ namespace MonoDragons.Core.UserInterface
         {
             if (_isVisible())
             {
-                World.Draw(_currentRect, new Rectangle(Area.Location + parentTransform.Location.ToPoint(), Area.Size));
+                UI.Draw(_currentRect, new Transform2(_area) + parentTransform);
                 UI.DrawTextCentered(_text, new Rectangle(Area.Location + parentTransform.Location.ToPoint(), Area.Size), Color.White);
             }
         }

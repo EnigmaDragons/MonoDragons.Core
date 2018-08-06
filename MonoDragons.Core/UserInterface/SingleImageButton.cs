@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.PhysicsEngine;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -34,7 +36,7 @@ namespace MonoDragons.Core.UserInterface
 
         public void Draw(Transform2 parentTransform)
         {
-            World.Draw(_image, parentTransform + _transform);
+            GameWorld.Draw(_image, parentTransform + _transform);
             _current.Draw(parentTransform);
         }
 

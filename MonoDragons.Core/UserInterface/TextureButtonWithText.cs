@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.PhysicsEngine;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -60,7 +62,7 @@ namespace MonoDragons.Core.UserInterface
         {
             if (_isVisible())
             {
-                World.Draw(_current, new Rectangle(Area.Location + parentTransform.Location.ToPoint(), Area.Size));
+                GameWorld.Draw(_current, new Rectangle(Area.Location + parentTransform.Location.ToPoint(), Area.Size));
                 UI.DrawTextCentered(_text, new Rectangle(Area.Location + parentTransform.Location.ToPoint(), Area.Size), Color.White);
             }
         }

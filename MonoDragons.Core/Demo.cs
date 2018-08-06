@@ -7,6 +7,7 @@ using MonoDragons.Core.Development;
 using MonoDragons.Core.EngimaDragons;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Errors;
+using MonoDragons.Core.Examples;
 using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Memory;
 using MonoDragons.Core.Render;
@@ -16,24 +17,24 @@ namespace MonoDragons.Core
 {
     public static class Demo
     {
+        public static readonly IErrorHandler ErrorHandler = new MessageBoxErrorHandler();
+
+        public static readonly AppDetails AppDetails = new AppDetails("MonoDragons Demo App", "0.0", Environment.OSVersion.VersionString);
+        
         [STAThread]
         static void Main()
         {
-            var appDetails = new MetaAppDetails("MonoDragons.Core", "1.0", Environment.OSVersion.VersionString);
-            var fatalErrorReporter = new ReportErrorHandler(appDetails);
-            Metric.AppDetails = appDetails;
-            Error.HandleAsync(() =>
+            Error.Handle(() =>
             {
-                using (var game = Perf.Time("Startup", () => new NeedlesslyComplexMainGame(appDetails.Name, "Logo", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), fatalErrorReporter)))
+                using (var game = new NeedlesslyComplexMainGame(AppDetails.Name, "Logo", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), ErrorHandler))
                     game.Run();
-            }, x => fatalErrorReporter.ResolveError(x)).GetAwaiter().GetResult();
+            }, ErrorHandler.Handle);
         }
 
         private static IScene SetupScene()
         {
             var currentScene = new CurrentScene();
-            Scene.Init(new CurrentSceneNavigation(currentScene, CreateSceneFactory(), 
-                Input.ClearTransientBindings, 
+            Scene.Init(new CurrentSceneNavigation(currentScene, CreateSceneFactory(),  
                 AudioPlayer.Instance.StopAll, 
                 Resources.Unload));
             return new HideViewportExternals(currentScene);
@@ -43,8 +44,8 @@ namespace MonoDragons.Core
         {
             return new SceneFactory(new Map<string, Func<IScene>>
             {
-                { "Logo", () => new FadingInScene(new OilLogoScene()) },
-                { "Intro", () => new VolumeDemo() },
+                { "Logo", () => new SimpleLogoScene("MainMenu", EnigmaDragonsResources.LogoImage) },
+                { "MainMenu", () => new MainMenuScene("Logo") },
             });
         }
 
@@ -52,7 +53,7 @@ namespace MonoDragons.Core
         {
             return new KeyboardController(new Map<Keys, Control>
             {
-                { Keys.OemTilde, Control.Select },
+                { Keys.Space, Control.Select },
                 { Keys.Enter, Control.Start },
                 { Keys.V, Control.A },
                 { Keys.O, Control.X }

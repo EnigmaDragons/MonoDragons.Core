@@ -12,7 +12,10 @@ namespace MonoDragons.Core.Text
         public static ScaledSpriteFontSet ScaledFontSet { internal get; set; }
         public static SpriteFont Value => ScaledFontSet.DefaultFont;
 
-        public static string Name { get; set; } = "Fonts/Audiowide";
+        public static string Header { get; set; } = "Fonts/Enigmatic/Enigmatic-36";
+        public static string Large { get; set; } = "Fonts/Enigmatic/Enigmatic-24";
+        public static string Medium { get; set; } = "Fonts/Enigmatic/Enigmatic-18";
+        public static string Body { get; set; } = "Fonts/Enigmatic/Enigmatic-14";
         public static Color Color { get; set; } = Color.White;
         public static float[] AvailableScales { get; set; } = new float[0];
         public static Optional<int> FutureLineSpacing { get; set; } = new Optional<int>();
@@ -22,9 +25,9 @@ namespace MonoDragons.Core.Text
         {
             if (content == null)
                 return;
-            var defaultFont = content.Load<SpriteFont>(Name);
+            var defaultFont = content.Load<SpriteFont>(Medium);
             var allFonts = new Dictionary<float, SpriteFont> { { 1, defaultFont } };
-            AvailableScales.ForEach(s => allFonts.Add(s, content.Load<SpriteFont>(Name + "-" + s.ToString(CultureInfo.InvariantCulture))));
+            AvailableScales.ForEach(s => allFonts.Add(s, content.Load<SpriteFont>(Medium + "-" + s.ToString(CultureInfo.InvariantCulture))));
             ScaledFontSet = new ScaledSpriteFontSet(defaultFont, allFonts);
             if (FutureLineSpacing.HasValue)
                 ScaledFontSet.ForEach(f => f.LineSpacing = FutureLineSpacing.Value);

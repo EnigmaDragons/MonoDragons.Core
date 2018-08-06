@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.PhysicsEngine;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -66,7 +68,7 @@ namespace MonoDragons.Core.UserInterface
             _background.Draw(parentTransform);
             var iconArea = new Rectangle(_iconArea.Location, _iconArea.Size);
             iconArea.Offset(parentTransform.Location);
-            World.Draw(_icon, iconArea);
+            GameWorld.Draw(_icon, iconArea);
         }
 
         public override string ToString()

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Memory;
-using MonoDragons.Core.PhysicsEngine;
 using MonoDragons.Core.Text;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
@@ -31,11 +32,11 @@ namespace MonoDragons.Core.UserInterface
             };
         }
 
-        private static SpriteBatch _spriteBatch;
+        public static SpriteBatch SpriteBatch { get; set; }
 
         public static void Init(SpriteBatch spriteBatch)
         {
-            _spriteBatch = spriteBatch;
+            SpriteBatch = spriteBatch;
         }
 
         public static int OfScreenWidth(float part)
@@ -102,7 +103,7 @@ namespace MonoDragons.Core.UserInterface
 
         public static void DrawCenteredWithOffset(string imageName, Vector2 widthHeight, Vector2 offSet)
         {
-            _spriteBatch.Draw(Resources.Load<Texture2D>(imageName), null,
+            SpriteBatch.Draw(Resources.Load<Texture2D>(imageName), null,
                 new Rectangle(ScalePoint(CurrentDisplay.GameWidth / 2 / CurrentDisplay.Scale - widthHeight.X / 2 + offSet.X,
                     CurrentDisplay.GameHeight / 2 / CurrentDisplay.Scale - widthHeight.Y / 2 + offSet.Y),
                     ScalePoint(widthHeight.X, widthHeight.Y)),
@@ -112,10 +113,10 @@ namespace MonoDragons.Core.UserInterface
         public static void DrawText(string text, Vector2 position, Color color)
         {
             if (DefaultFont.ScaledFontSet.Contains(CurrentDisplay.Scale))
-                _spriteBatch.DrawString(DefaultFont.ScaledFontSet[CurrentDisplay.Scale], text, ScalePoint(position.X, position.Y).ToVector2(), color,
+                SpriteBatch.DrawString(DefaultFont.ScaledFontSet[CurrentDisplay.Scale], text ?? "", ScalePoint(position.X, position.Y).ToVector2(), color,
                     0, Vector2.Zero, 1, SpriteEffects.None, 1);
             else
-                _spriteBatch.DrawString(DefaultFont.ScaledFontSet.DefaultFont, text, ScalePoint(position.X, position.Y).ToVector2(), color,
+                SpriteBatch.DrawString(DefaultFont.ScaledFontSet.DefaultFont, text ?? "", ScalePoint(position.X, position.Y).ToVector2(), color,
                     0, Vector2.Zero, CurrentDisplay.Scale, SpriteEffects.None, 1);
         }
 
@@ -126,14 +127,26 @@ namespace MonoDragons.Core.UserInterface
             else DrawStringScalingSpriteBatchIfNeeded(text, position, color, font);
         }
 
+        public static void DrawWithSpriteEffects(string imageName, Transform2 transform, Color tint, SpriteEffects effects)
+        {
+            SpriteBatch.Draw(texture: Resources.Load<Texture2D>(imageName),
+                destinationRectangle: ScaleRectangle(transform.ToRectangle()),
+                sourceRectangle: null,
+                color: tint,
+                rotation: 0.0f,
+                origin: null,
+                effects: effects,
+                layerDepth: 0.0f);
+        }
+
         private static void DrawUnscaledString(string text, Vector2 position, Color color, string font)
         {
-            _spriteBatch.DrawString(Resources.Load<SpriteFont>(font), text, position, color, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+            SpriteBatch.DrawString(Resources.Load<SpriteFont>(font), text ?? "", position, color, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
         }
 
         private static void DrawStringScalingSpriteBatchIfNeeded(string text, Vector2 position, Color color, string font)
         {
-            var scaledFontName = font + "-" + CurrentDisplay.Scale.ToString();
+            var scaledFontName = font + "-" + CurrentDisplay.Scale.ToString(CultureInfo.InvariantCulture);
             if (_scaledFontAvailability.ContainsKey(scaledFontName))
             {
                 if (_scaledFontAvailability[scaledFontName])
@@ -156,19 +169,19 @@ namespace MonoDragons.Core.UserInterface
 
         private static void DrawUnscaledSpriteBatchString(string text, Vector2 position, Color color, string scaledFontName)
         {
-            _spriteBatch.DrawString(Resources.Load<SpriteFont>(scaledFontName), text, ScalePoint(position.X, position.Y).ToVector2(), color,
+            SpriteBatch.DrawString(Resources.Load<SpriteFont>(scaledFontName), text ?? "", ScalePoint(position.X, position.Y).ToVector2(), color,
                     0, Vector2.Zero, 1, SpriteEffects.None, 1);
         }
 
         private static void DrawScaledSpriteBatchString(string text, Vector2 position, Color color, string font)
         {
-            _spriteBatch.DrawString(Resources.Load<SpriteFont>(font), text, ScalePoint(position.X, position.Y).ToVector2(), color,
+            SpriteBatch.DrawString(Resources.Load<SpriteFont>(font), text ?? "", ScalePoint(position.X, position.Y).ToVector2(), color,
                     0, Vector2.Zero, CurrentDisplay.Scale, SpriteEffects.None, 1);
         }
 
         public static void DrawTextCentered(string text, Rectangle area, Color color)
         {
-            DrawTextCentered(text, area, color, DefaultFont.Name);
+            DrawTextCentered(text, area, color, DefaultFont.Medium);
         }
         
         public static void DrawTextCentered(string text, Rectangle area, Color color, string font)
@@ -192,7 +205,53 @@ namespace MonoDragons.Core.UserInterface
             var wrapped = new WrappingText(() => spriteFont, () => area.Width).Wrap(text);
             var size = spriteFont.MeasureString(wrapped);
             DrawText(wrapped, _alignPositions[horizontalAlignment](area, size), color, font);
-        } 
+        }
+
+        public static void Draw(Texture2D texture, Rectangle rectangle, Color color)
+        {
+            SpriteBatch.Draw(texture, ScaleRectangle(rectangle), color);
+        }
+
+        public static void Draw(string imageName, Rectangle rectangle, Color color)
+        {
+            SpriteBatch.Draw(Resources.Load<Texture2D>(imageName), ScaleRectangle(rectangle), color);
+        }
+
+        public static void Draw(string imageName, Vector2 pixelPosition)
+        {
+            var resource = Resources.Load<Texture2D>(imageName);
+            SpriteBatch.Draw(resource, new Rectangle(ScalePoint(pixelPosition), ScalePoint(resource.Width, resource.Height)), Color.White);
+        }
+
+        public static void Draw(string imageName, Transform2 transform)
+        {
+            Draw(imageName, transform.ToRectangle());
+        }
+
+        public static void Draw(Texture2D texture, Transform2 transform)
+        {
+            SpriteBatch.Draw(texture, ScaleRectangle(transform.ToRectangle()), Color.White);
+        }
+
+        public static void Draw(string imageName, Transform2 transform, Color tint)
+        {
+            SpriteBatch.Draw(Resources.Load<Texture2D>(imageName), ScaleRectangle(transform.ToRectangle()), tint);
+        }
+
+        public static void Draw(string imageName, Rectangle rectPostion)
+        {
+            SpriteBatch.Draw(Resources.Load<Texture2D>(imageName), ScaleRectangle(rectPostion), Color.White);
+        }
+
+        public static void Draw(string imageName, Vector2 size, Anchor anchor)
+        {
+            SpriteBatch.Draw(Resources.Load<Texture2D>(imageName), ScaleRectangle(new Rectangle(
+                    new Point(
+                        anchor.AnchorFromLeft ? anchor.HorizontalOffset : (int)Math.Round(CurrentDisplay.GameWidth / CurrentDisplay.Scale - anchor.HorizontalOffset),
+                        anchor.AnchorFromTop ? anchor.VerticalOffset : (int)Math.Round(CurrentDisplay.GameHeight / CurrentDisplay.Scale - anchor.VerticalOffset)),
+                    size.ToPoint())),
+                Color.White);
+        }
 
         private static Vector2 GetLeftPosition(Rectangle area, Vector2 size)
         {
@@ -209,9 +268,24 @@ namespace MonoDragons.Core.UserInterface
             return new Vector2(area.Location.X + area.Width - size.X, area.Location.Y + (area.Height / 2) - (size.Y / 2));
         }
 
+        public static Rectangle ScaleRectangle(Rectangle rectangle)
+        {
+            return new Rectangle(ScalePoint(rectangle.Location), ScalePoint(rectangle.Size));
+        }
+
         private static Point ScalePoint(float x, float y)
         {
-            return new Point((int)Math.Round(x * CurrentDisplay.Scale), (int)Math.Round(y * CurrentDisplay.Scale));
+            return ScalePoint(new Vector2(x, y));
+        }
+
+        private static Point ScalePoint(Vector2 vector)
+        {
+            return new Point((int)Math.Round(vector.X * CurrentDisplay.Scale), (int)Math.Round(vector.Y * CurrentDisplay.Scale));
+        }
+
+        private static Point ScalePoint(Point point)
+        {
+            return ScalePoint(point.ToVector2());
         }
     }
 }

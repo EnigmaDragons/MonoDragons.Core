@@ -1,5 +1,6 @@
 ﻿using System;
 using MonoDragons.Core.Common;
+using MonoDragons.Core.EventSystem;
 
 namespace MonoDragons.Core.Inputs
 {
@@ -14,22 +15,30 @@ namespace MonoDragons.Core.Inputs
 
         public static void On(Control control, Action onPress)
         {
-            _controller.Subscribe(new ControlSubscription(control, onPress));
+            On(control, onPress, () => { });
         }
 
         public static void On(Control control, Action onPress, Action onRelease)
-        {
-            _controller.Subscribe(new ControlSubscription(control, onPress, onRelease));
+        {            
+            Event.Subscribe<ControlStateChanged>(c =>
+            {
+                if (!c.Control.Equals(control))
+                    return;
+                if (c.State.Equals(ControlState.Active))
+                    onPress();
+                else if (c.State.Equals(ControlState.Inactive))
+                    onRelease();
+            }, _controller);
         }
 
         public static void OnDirection(Action<Direction> onDirection)
         {
-            _controller.Subscribe(new SubscriptionAction<Direction>(onDirection));
+            Event.Subscribe<DirectionChanged>(d => onDirection(d.Current), _controller);
         }
 
         public static void ClearTransientBindings()
         {
-            _controller.ClearBindings();
+            Event.Unsubscribe(_controller);
         }
     }
 }

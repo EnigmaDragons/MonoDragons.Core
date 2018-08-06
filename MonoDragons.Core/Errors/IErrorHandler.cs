@@ -6,7 +6,6 @@ namespace MonoDragons.Core.Errors
 {
     public interface IErrorHandler
     {
-        Task ResolveError(Exception ex);
-        Task ResolveError(Game game, Exception ex);
+        void Handle(Exception ex);
     }
 }

@@ -3,6 +3,8 @@ using MonoDragons.Core.Engine;
 using MonoDragons.Core.PhysicsEngine;
 using System;
 using System.Windows.Forms;
+using MonoDragons.Core.Physics;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -19,7 +21,6 @@ namespace MonoDragons.Core.UserInterface
         public Action OnPress { get; set; } = () => { };
         public Action OnEnter { get; set; } = () => { };
         public Action OnExit { get; set; } = () => { };
-        public Cursor HoveredCursor { get; set; } = Cursors.Default;
 
         private string _current;
         private Transform2 _currentTransform;
@@ -48,14 +49,13 @@ namespace MonoDragons.Core.UserInterface
         public override void Draw(Transform2 parentTransform)
         {
             if (_isVisible())
-                World.Draw(_current, parentTransform + _currentTransform);
+                GameWorld.Draw(_current, parentTransform + _currentTransform);
         }
 
         public override void OnEntered()
         {
             _current = _hover;
             _currentTransform = _expandedTransform;
-            CurrentGame.Cursor = HoveredCursor;
 
             if (_isVisible())
                 OnEnter();
@@ -65,7 +65,6 @@ namespace MonoDragons.Core.UserInterface
         {
             _current = _basic;
             _currentTransform = _baseTransform;
-            CurrentGame.Cursor = Cursors.Default;
 
             if (_isVisible())
                 OnExit();

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MonoDragons.Core.Common;
 using MonoDragons.Core.Memory;
@@ -16,7 +16,7 @@ namespace MonoDragons.Core.EventSystem
         
         public static void Publish(object payload)
         {
-            Debug.WriteLine(payload.ToString());
+            Logger.WriteLine(payload.ToString());
             TransientEvents.Publish(payload);
             PersistentEvents.Publish(payload);
         }
@@ -26,6 +26,11 @@ namespace MonoDragons.Core.EventSystem
             PersistentEvents.Subscribe(subscription);
         }
 
+        public static void Subscribe<T>(Action<T> onEvent, object owner)
+        {
+            Subscribe(EventSubscription.Create<T>(onEvent, owner));
+        }
+        
         public static void Subscribe(EventSubscription subscription)
         {
             TransientEvents.Subscribe(subscription);

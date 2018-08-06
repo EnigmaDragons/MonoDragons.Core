@@ -2,16 +2,16 @@
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Memory;
-using MonoDragons.Core.PhysicsEngine;
 using MonoDragons.Core.UserInterface;
 using System;
 using System.Diagnostics;
+using MonoDragons.Core.Physics;
 
 namespace MonoDragons.Core.Development
 {
     public sealed class Metrics : IVisualAutomaton
     {
-        private readonly Timer _timer;
+        private readonly TimerTask _timer;
 
         private int _framesThisSecond;
         private int _updatesThisSecond;
@@ -21,7 +21,7 @@ namespace MonoDragons.Core.Development
 
         public Metrics()
         {
-            _timer = new Timer(AccumulateMetrics, 500);
+            _timer = new TimerTask(AccumulateMetrics, 500);
         }
 
         public void Update(TimeSpan delta)
@@ -32,11 +32,12 @@ namespace MonoDragons.Core.Development
 
         public void Draw(Transform2 parentTransform)
         {
-            var color = Color.Yellow;
-            UI.DrawText($"FPS: {_framesPerSecond}", new Vector2(0, 0), color);
-            UI.DrawText($"UPS: {_updatesPerSecond}", new Vector2(0, 40), color);
-            UI.DrawText($"Sub: {Event.SubscriptionCount}", new Vector2(0, 80), color);
-            UI.DrawText($"Scn: {Resources.CurrentSceneResourceCount}", new Vector2(0, 120), color);
+            var color = DevText.Color;
+            var font = DevText.Font;
+            UI.DrawText($"FPS: {_framesPerSecond}", new Vector2(0, 0), color, font);
+            UI.DrawText($"UPS: {_updatesPerSecond}", new Vector2(0, 22), color, font);
+            UI.DrawText($"Sub: {Event.SubscriptionCount}", new Vector2(0, 44), color, font);
+            UI.DrawText($"Scn: {Resources.CurrentSceneResourceCount}", new Vector2(0, 66), color, font);
             _framesThisSecond++;
         }
 

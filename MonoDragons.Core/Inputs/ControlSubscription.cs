@@ -3,7 +3,7 @@ using MonoDragons.Core.Common;
 
 namespace MonoDragons.Core.Inputs
 {
-    public class ControlSubscription : ISubscription<ControlChange>
+    public class ControlSubscription : ISubscription<ControlStateChanged>
     {
         private readonly Control _control;
         private readonly Action _onActive;
@@ -19,13 +19,13 @@ namespace MonoDragons.Core.Inputs
             _onInactive = onInactive;
         }
 
-        public void Update(ControlChange change)
+        public void Update(ControlStateChanged stateChanged)
         {
-            if (!change.Control.Equals(_control))
+            if (!stateChanged.Control.Equals(_control))
                 return;
-            if (change.State.Equals(ControlState.Active))
+            if (stateChanged.State.Equals(ControlState.Active))
                 _onActive();
-            if (change.State.Equals(ControlState.Inactive))
+            if (stateChanged.State.Equals(ControlState.Inactive))
                 _onInactive();
         }
     }

@@ -9,50 +9,45 @@ namespace MonoDragons.Core.Errors
 {
     public class ReportErrorHandler : IErrorHandler
     {
-        private readonly MetaAppDetails _appDetails;
+        private readonly AppDetails _appDetails;
+        private readonly string _postUrl;
+        private bool _reportedFatalError = false;
 
-        public ReportErrorHandler(MetaAppDetails appDetails)
+        public ReportErrorHandler(AppDetails appDetails, string postUrl)
         {
             _appDetails = appDetails;
+            _postUrl = postUrl;
         }
 
-        public async Task ResolveError(Game game, Exception ex)
+        public void Handle(Exception ex)
         {
-            using (var client = new HttpClient())
-                await client.PostAsync("https://hk86vytqs1.execute-api.us-west-2.amazonaws.com/GameMetrics/ReportCrashDetail", 
-                    new StringContent(JsonConvert.SerializeObject(new CrashDetail
-                    {
-                        ApplicationName = _appDetails.Name,
-                        ApplicationVersion = _appDetails.Version,
-                        ContextJson = JsonConvert.SerializeObject(new Context
-                        {
-                            OS = _appDetails.OS,
-                            ErrorMessage = ex.Message
-                        }),
-                        StackTrace = ex.StackTrace
-                    }), Encoding.UTF8, "application/json"));
-            game.Exit();
-        }
-
-        public async Task ResolveError(Exception ex)
-        {
-            using (var client = new HttpClient())
+            try
             {
-                await client.PostAsync(
-                    "https://hk86vytqs1.execute-api.us-west-2.amazonaws.com/GameMetrics/ReportCrashDetail",
-                    new StringContent(JsonConvert.SerializeObject(new CrashDetail
-                    {
-                        ApplicationName = _appDetails.Name,
-                        ApplicationVersion = _appDetails.Version,
-                        ContextJson = JsonConvert.SerializeObject(new Context
-                        {
-                            OS = _appDetails.OS,
-                            ErrorMessage = ex.Message
-                        }),
-                        StackTrace = ex.StackTrace
-                    }), Encoding.UTF8, "application/json"));
+                var inner = ex;
+                while (inner.InnerException != null)
+                    inner = inner.InnerException;
+                
+                if (!_reportedFatalError)
+                    using (var client = new HttpClient())
+                        client.PostAsync(
+                            _postUrl,
+                            new StringContent(JsonConvert.SerializeObject(new CrashDetail
+                            {
+                                ApplicationName = _appDetails.Name,
+                                ApplicationVersion = _appDetails.Version,
+                                ContextJson = JsonConvert.SerializeObject(new Context
+                                {
+                                    OS = _appDetails.OS,
+                                    ErrorMessage = inner.Message
+                                }),
+                                StackTrace = inner.StackTrace
+                            }), Encoding.UTF8, "application/json")).GetAwaiter().GetResult();
+                _reportedFatalError = true;
             }
-            throw ex;
+            catch (Exception e)
+            {
+                // Ignore and keep on Trucking
+            }
         }
 
         private class CrashDetail

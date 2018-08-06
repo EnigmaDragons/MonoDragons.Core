@@ -4,10 +4,12 @@ using System.Linq;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Common;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.EventSystem;
+using MonoDragons.Core.Physics;
 
 namespace MonoDragons.Core.Inputs
 {
-    public class KeyboardController : Subject<ControlChange, Direction>, IController
+    public class KeyboardController : IController
     {
         private readonly Map<Keys, HorizontalDirection> _hDirBind;
         private readonly Map<Keys, VerticalDirection> _vDirBind;
@@ -35,7 +37,7 @@ namespace MonoDragons.Core.Inputs
             var releasedKeys = _lastState.GetPressedKeys().Where(x => downKeys.All(y => !y.Equals(x))).ToList();
             _currentDirection = GetDirection(downKeys);
             NotifyControlSubscribers(pressedKeys, releasedKeys);
-            NotifyDirectionSubscribers(_currentDirection);
+            NotifyDirectionSubscribers();
             _lastState = state;
             _lastDirection = _currentDirection;
         }
@@ -55,37 +57,43 @@ namespace MonoDragons.Core.Inputs
             return new Direction(hDir, vDir);
         }
 
-        private void NotifyDirectionSubscribers(Direction direction)
+        private void NotifyDirectionSubscribers()
         {
-            NotifySubscribers(direction);
+            Event.Publish(new DirectionChanged(_lastDirection, _currentDirection));
         }
 
         private void NotifyControlSubscribers(List<Keys> pressedKeys, List<Keys> releasedKeys)
         {
             pressedKeys.Where(x => _controlBind.ContainsKey(x))
-                .ForEach(x => NotifySubscribers(new ControlChange(_controlBind[x], ControlState.Active)));
+                .ForEach(x => NotifySubscribers(new ControlStateChanged(_controlBind[x], ControlState.Active)));
             releasedKeys.Where(x => _controlBind.ContainsKey(x))
-                .ForEach(x => NotifySubscribers(new ControlChange(_controlBind[x], ControlState.Inactive)));
+                .ForEach(x => NotifySubscribers(new ControlStateChanged(_controlBind[x], ControlState.Inactive)));
 
             if ((int)_currentDirection.HDir != (int)_lastDirection.HDir && _currentDirection.HDir == HorizontalDirection.Left)
-                NotifySubscribers(new ControlChange(Control.Left, ControlState.Active));
+                NotifySubscribers(new ControlStateChanged(Control.Left, ControlState.Active));
             if ((int)_currentDirection.HDir != (int)_lastDirection.HDir && _currentDirection.HDir == HorizontalDirection.Right)
-                NotifySubscribers(new ControlChange(Control.Right, ControlState.Active));
+                NotifySubscribers(new ControlStateChanged(Control.Right, ControlState.Active));
             if ((int)_currentDirection.VDir != (int)_lastDirection.VDir && _currentDirection.VDir == VerticalDirection.Down)
-                NotifySubscribers(new ControlChange(Control.Down, ControlState.Active));
+                NotifySubscribers(new ControlStateChanged(Control.Down, ControlState.Active));
             if ((int)_currentDirection.VDir != (int)_lastDirection.VDir && _currentDirection.VDir == VerticalDirection.Up)
-                NotifySubscribers(new ControlChange(Control.Up, ControlState.Active));
+                NotifySubscribers(new ControlStateChanged(Control.Up, ControlState.Active));
 
             if ((int)_currentDirection.HDir != (int)_lastDirection.HDir && _lastDirection.HDir == HorizontalDirection.Left)
-                NotifySubscribers(new ControlChange(Control.Left, ControlState.Inactive));
+                NotifySubscribers(new ControlStateChanged(Control.Left, ControlState.Inactive));
             if ((int)_currentDirection.HDir != (int)_lastDirection.HDir && _lastDirection.HDir == HorizontalDirection.Right)
-                NotifySubscribers(new ControlChange(Control.Right, ControlState.Inactive));
+                NotifySubscribers(new ControlStateChanged(Control.Right, ControlState.Inactive));
             if ((int)_currentDirection.VDir != (int)_lastDirection.VDir && _lastDirection.VDir == VerticalDirection.Down)
-                NotifySubscribers(new ControlChange(Control.Down, ControlState.Inactive));
+                NotifySubscribers(new ControlStateChanged(Control.Down, ControlState.Inactive));
             if ((int)_currentDirection.VDir != (int)_lastDirection.VDir && _lastDirection.VDir == VerticalDirection.Up)
-                NotifySubscribers(new ControlChange(Control.Up, ControlState.Inactive));
+                NotifySubscribers(new ControlStateChanged(Control.Up, ControlState.Inactive));
         }
 
+        private void NotifySubscribers(ControlStateChanged c)
+        {
+            Event.Publish(c);
+        }
+
+        
         private static Map<Keys, VerticalDirection> CreateDefaultVDirBind()
         {
             return new Map<Keys, VerticalDirection>
@@ -106,12 +114,6 @@ namespace MonoDragons.Core.Inputs
                 {Keys.Left, HorizontalDirection.Left},
                 {Keys.Right, HorizontalDirection.Right},
             };
-        }
-
-        public void ClearBindings()
-        {
-            Observers1.Clear();
-            Observers2.Clear();
         }
     }
 }

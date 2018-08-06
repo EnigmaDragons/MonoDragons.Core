@@ -1,6 +1,8 @@
 ﻿using MonoDragons.Core.Engine;
 using MonoDragons.Core.PhysicsEngine;
 using System;
+using MonoDragons.Core.Physics;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
@@ -38,7 +40,7 @@ namespace MonoDragons.Core.UserInterface
         public override void Draw(Transform2 parentTransform)
         {
             if (_isVisible())
-                World.Draw(_current, parentTransform + _transform);
+                GameWorld.Draw(_current, parentTransform + _transform);
         }
 
         public override void OnEntered()
