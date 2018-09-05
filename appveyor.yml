@@ -1,0 +1,11 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+install:
+- ps: >-
+    # Install MonoGame
+
+    (New-Object Net.WebClient).DownloadFile('http://www.monogame.net/releases/v3.5.1/MonoGameSetup.exe', 'C:\MonoGameSetup.exe')
+
+    Invoke-Command -ScriptBlock {C:\MonoGameSetup.exe /S /v/qn}
+build:
+  verbosity: minimal
