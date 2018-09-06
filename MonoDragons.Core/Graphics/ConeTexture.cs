@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Physics;
-using MonoDragons.Core.PhysicsEngine;
 
 namespace MonoDragons.Core.Graphics
 {

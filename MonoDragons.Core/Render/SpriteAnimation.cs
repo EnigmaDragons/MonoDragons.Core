@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Physics;
-using MonoDragons.Core.PhysicsEngine;
 using MonoDragons.Core.Render;
 
 namespace ZeroFootPrintSociety.Tiles

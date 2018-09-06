@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Engine;
-using System.Linq;
-using MonoDragons.Core.Render;
 using MonoDragons.Core.EventSystem;
+using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {

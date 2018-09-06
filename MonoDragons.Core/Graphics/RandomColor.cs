@@ -1,6 +1,4 @@
-﻿
-using Microsoft.Xna.Framework;
-using MonoDragons.Core.Common;
+﻿using Microsoft.Xna.Framework;
 
 namespace MonoDragons.Core.Graphics
 {

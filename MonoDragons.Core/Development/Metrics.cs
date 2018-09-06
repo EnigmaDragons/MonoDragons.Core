@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Memory;
-using MonoDragons.Core.UserInterface;
-using System;
-using System.Diagnostics;
 using MonoDragons.Core.Physics;
+using MonoDragons.Core.UserInterface;
 
 namespace MonoDragons.Core.Development
 {

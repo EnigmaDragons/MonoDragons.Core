@@ -4,7 +4,7 @@ using System.Text;
 using MonoDragons.Core.Errors;
 using Newtonsoft.Json;
 
-namespace MonoDragons.Core.Common
+namespace MonoDragons
 {
     public static class TrackingEvent
     {

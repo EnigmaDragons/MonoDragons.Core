@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MonoDragons.Core.Common
+namespace MonoDragons
 {
     public class DictionaryWithDefault<Key, Value> : Dictionary<Key, Value>
     {

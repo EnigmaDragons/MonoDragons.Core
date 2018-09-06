@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace MonoDragons.Core.UserInterface
+﻿namespace MonoDragons.Core.UserInterface
 {
     public class ActiveElementChanged
     {

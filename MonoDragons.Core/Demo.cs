@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.AudioSystem;
-using MonoDragons.Core.Common;
-using MonoDragons.Core.Development;
 using MonoDragons.Core.EngimaDragons;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Errors;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonoDragons.Core.Common
+namespace MonoDragons
 {
     public static class ObjectExtensions
     {

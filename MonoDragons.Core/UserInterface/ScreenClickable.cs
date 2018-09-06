@@ -1,6 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using MonoDragons.Core.Engine;
-using System;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace MonoDragons.Core.UserInterface
 {

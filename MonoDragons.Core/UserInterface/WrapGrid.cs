@@ -1,8 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Physics;
-using MonoDragons.Core.PhysicsEngine;
 
 namespace MonoDragons.Core.UserInterface
 {

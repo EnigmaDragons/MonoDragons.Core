@@ -1,8 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using MonoDragons.Core.Common;
 using MonoDragons.Core.Physics;
-using MonoDragons.Core.PhysicsEngine;
 using MonoDragons.Core.UserInterface;
 
 namespace MonoDragons.Core.Animations

@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Memory;
 using MonoDragons.Core.Physics;
-using MonoDragons.Core.PhysicsEngine;
 using MonoDragons.Core.Text;
 using MonoDragons.Core.UserInterface;
 

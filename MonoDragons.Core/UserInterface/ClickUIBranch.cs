@@ -1,8 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MonoDragons.Core.Common;
+using Microsoft.Xna.Framework;
 using MonoDragons.Core.EventSystem;
 
 namespace MonoDragons.Core.UserInterface

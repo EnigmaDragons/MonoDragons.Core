@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Engine;
-using MonoDragons.Core.PhysicsEngine;
-using System.Linq;
-using MonoDragons.Core.Common;
 using MonoDragons.Core.Physics;
 
 namespace MonoDragons.Core.UserInterface
@@ -28,7 +26,6 @@ namespace MonoDragons.Core.UserInterface
             _items = items;
             _margin = margin;
         }
-
 
         public override void OnEntered()
         {

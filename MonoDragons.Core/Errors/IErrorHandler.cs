@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 
 namespace MonoDragons.Core.Errors
 {

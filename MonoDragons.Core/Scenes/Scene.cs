@@ -1,6 +1,4 @@
-﻿using MonoDragons.Core.Common;
-
-namespace MonoDragons.Core.Scenes
+﻿namespace MonoDragons.Core.Scenes
 {
     public static class Scene
     {

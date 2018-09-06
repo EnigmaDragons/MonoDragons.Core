@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace MonoDragons.Core.Common
+namespace MonoDragons
 {
     public class ConcurrentDictionaryWithDefault<Key, Value> : ConcurrentDictionary<Key, Value>
     {

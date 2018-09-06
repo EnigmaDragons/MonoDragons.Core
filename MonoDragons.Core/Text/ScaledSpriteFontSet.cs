@@ -1,10 +1,8 @@
-﻿using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using MonoDragons.Core.Common;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections;
-using Microsoft.Xna.Framework;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoDragons.Core.Text
 {
@@ -13,7 +11,6 @@ namespace MonoDragons.Core.Text
         public SpriteFont DefaultFont { get; }
         private Dictionary<float, SpriteFont> _fonts;
         public SpriteFont this[float index] => _fonts[index];
-
 
         public ScaledSpriteFontSet(SpriteFont defaultFont, Dictionary<float, SpriteFont> allFonts)
         {

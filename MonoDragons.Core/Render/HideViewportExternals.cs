@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoDragons.Core.Engine;
 using MonoDragons.Core.Graphics;
 using MonoDragons.Core.Scenes;
 using System;
-using MonoDragons.Core.Common;
 
 namespace MonoDragons.Core.Render
 {

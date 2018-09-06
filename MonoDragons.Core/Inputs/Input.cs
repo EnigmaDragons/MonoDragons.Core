@@ -1,5 +1,4 @@
 ﻿using System;
-using MonoDragons.Core.Common;
 using MonoDragons.Core.EventSystem;
 
 namespace MonoDragons.Core.Inputs

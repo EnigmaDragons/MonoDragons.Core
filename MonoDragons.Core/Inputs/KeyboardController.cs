@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
-using MonoDragons.Core.Common;
-using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Physics;
 
@@ -93,7 +91,6 @@ namespace MonoDragons.Core.Inputs
             Event.Publish(c);
         }
 
-        
         private static Map<Keys, VerticalDirection> CreateDefaultVDirBind()
         {
             return new Map<Keys, VerticalDirection>
