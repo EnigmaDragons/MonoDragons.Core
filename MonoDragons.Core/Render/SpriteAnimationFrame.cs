@@ -21,7 +21,7 @@ namespace MonoDragons.Core.Render
 
         public void Draw(Transform2 parentTransform)
         {
-            GameWorld.Draw(_sprite, (parentTransform + _transform).ToRectangle(), Tint);
+            World.Draw(_sprite, (parentTransform + _transform).ToRectangle(), Tint);
         }
     }
 }

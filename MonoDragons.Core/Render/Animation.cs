@@ -49,7 +49,7 @@ namespace MonoDragons.Core.Render
 
         public void Draw(Transform2 transform)
         {
-            GameWorld.Draw(CurrentSprite, transform);
+            World.Draw(CurrentSprite, transform);
         }
     }
 }

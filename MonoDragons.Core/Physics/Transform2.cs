@@ -51,35 +51,12 @@ namespace MonoDragons.Core.Physics
             ZIndex = zIndex;
         }
 
-        public bool Intersects(Point point)
-        {
-            return ToRectangle().Contains(point);
-        }
-
-        public bool Intersects(Transform2 other)
-        {
-            return ToRectangle().Intersects(other.ToRectangle());
-        }
-
-        public Transform2 WithSize(Size2 size)
-        {
-            return new Transform2(Location, Rotation, size, Scale, ZIndex);
-        }
-
-        public Rectangle ToRectangle()
-        {
-            return new Rectangle((Location * Scale).ToPoint(), (Size * Scale).ToPoint());
-        }
-
-        public Transform2 WithPadding(int x, int y)
-        {
-            return WithPadding(new Size2(x, y));
-        }
-
-        public Transform2 WithPadding(Size2 paddingAmount)
-        {
-            return new Transform2(Location + paddingAmount.ToVector(), Rotation, Size - (paddingAmount * 2), Scale, ZIndex);
-        }
+        public bool Intersects(Point point) => ToRectangle().Contains(point);
+        public bool Intersects(Transform2 other) => ToRectangle().Intersects(other.ToRectangle());
+        public Transform2 WithSize(Size2 size) => new Transform2(Location, Rotation, size, Scale, ZIndex);
+        public Rectangle ToRectangle() => new Rectangle((Location * Scale).ToPoint(), (Size * Scale).ToPoint());
+        public Transform2 WithPadding(int x, int y) => WithPadding(new Size2(x, y));
+        public Transform2 WithPadding(Size2 amt) => new Transform2(Location + amt.ToVector(), Rotation, Size - (amt * 2), Scale, ZIndex);
 
         public override string ToString()
         {
@@ -105,5 +82,7 @@ namespace MonoDragons.Core.Physics
         {
             return this + new Transform2(Vector2.Zero, Rotation2.Default, Size2.Zero, Scale / scale, ZIndex);
         }
+
+        public Vector2 Center() => (Size / 2).ToVector() + Location;
     }
 }

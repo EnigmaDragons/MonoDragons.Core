@@ -5,38 +5,24 @@ namespace MonoDragons.Core.Physics
 {
     public struct Rotation2
     {
-        public static Rotation2 None = new Rotation2(0);
-        public static Rotation2 Default = new Rotation2(0);
-        public static Rotation2 Up = new Rotation2(0);
-        public static Rotation2 Right = new Rotation2(90);
-        public static Rotation2 Down = new Rotation2(180);
-        public static Rotation2 Left = new Rotation2(270);
-        public static Rotation2 UpLeft = new Rotation2(315);
-        public static Rotation2 UpRight= new Rotation2(45);
-        public static Rotation2 DownLeft = new Rotation2(215);
-        public static Rotation2 DownRight = new Rotation2(135);
+        public static readonly Rotation2 None = new Rotation2(0);
+        public static readonly Rotation2 Default = new Rotation2(0);
+        public static readonly Rotation2 Up = new Rotation2(0);
+        public static readonly Rotation2 Right = new Rotation2(90);
+        public static readonly Rotation2 Down = new Rotation2(180);
+        public static readonly Rotation2 Left = new Rotation2(270);
+        public static readonly Rotation2 UpLeft = new Rotation2(315);
+        public static readonly Rotation2 UpRight= new Rotation2(45);
+        public static readonly Rotation2 DownLeft = new Rotation2(215);
+        public static readonly Rotation2 DownRight = new Rotation2(135);
 
         public float Value { get; }
 
-        public Rotation2(float value)
-        {
-            Value = value;
-        }
+        public Rotation2(float value) => Value = value;
 
-        public override bool Equals(object obj)
-        {
-            return Math.Abs(Value - ((Rotation2)obj).Value) < 0.01;
-        }
-
-        public override int GetHashCode()
-        {
-            return (int)Value;
-        }
-
-        public override string ToString()
-        {
-            return Value.ToString();
-        }
+        public override bool Equals(object obj) => Math.Abs(Value - ((Rotation2)obj).Value) < 0.01;
+        public override int GetHashCode() => (int)Value;
+        public override string ToString() => Value.ToString();
 
         public static Rotation2 operator +(Rotation2 r1, Rotation2 r2)
         {

@@ -6,16 +6,30 @@ namespace MonoDragons
 {
     public static class EnumerableExtensions
     {
-        public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        public static List<T> AsList<T>(this T item) => new List<T>(1) { item };
+                
+        public static TItem Added<TCollectionItem, TItem>(this List<TCollectionItem> list, TItem item)
+            where TItem : TCollectionItem
         {
-            collection.ToList().ForEach(action);
+            list.Add(item);
+            return item;
         }
+        
+        public static void ForEach<T>(this IEnumerable<T> c, Action<T> action) => c.ToList().ForEach(action);
 
-        public static void ForEachIndex<T>(this IEnumerable<T> collection, Action<T, int> indexAction)
+        public static void ForEachIndex<T>(this IEnumerable<T> c, Action<T, int> indexAction)
         {
-            var coll = collection.ToList();
+            var coll = c.ToList();
             for (var i = 0; i < coll.Count; i++)
                 indexAction(coll[i], i);
+        }
+        
+        public static IEnumerable<T> Preferred<T>(this IEnumerable<T> c, Func<T, bool> isPreferred) => Preferred(c.ToList(), isPreferred);
+        public static IEnumerable<T> Preferred<T>(this ICollection<T> c, Func<T, bool> isPreferred)
+        {
+            return c.Any(isPreferred) 
+                ? c.Where(isPreferred) 
+                : c;
         }
     }
 }

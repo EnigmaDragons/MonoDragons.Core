@@ -45,7 +45,6 @@ namespace MonoDragons.Core.Render
             deviceManager.PreferredBackBufferHeight = ProgramHeight;
             deviceManager.IsFullScreen = UseFullscreen;
             deviceManager.ApplyChanges();
-            int i = 0;
         }
     }
 }

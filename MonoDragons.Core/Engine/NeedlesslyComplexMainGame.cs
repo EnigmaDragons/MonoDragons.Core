@@ -59,7 +59,7 @@ namespace MonoDragons.Core.Engine
                     _uiSpriteBatch = new SpriteBatch(GraphicsDevice);
                     WorldSpriteBatch = new SpriteBatch(GraphicsDevice);
                     Input.SetController(_controller);
-                    GameWorld.Init(WorldSpriteBatch);
+                    World.Init(WorldSpriteBatch);
                     UI.Init(_uiSpriteBatch); 
                     _scene.Init();
                     base.Initialize();

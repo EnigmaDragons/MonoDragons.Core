@@ -25,7 +25,7 @@ namespace MonoDragons.Core.UserInterface
                 return;
 
             var currentTint = ShouldTint() ? Tint : Color.White;
-            GameWorld.Draw(Image, parentTransform + Transform, currentTint);
+            World.Draw(Image, parentTransform + Transform, currentTint);
         }
     }
 }

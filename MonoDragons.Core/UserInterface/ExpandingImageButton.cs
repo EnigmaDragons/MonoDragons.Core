@@ -46,7 +46,7 @@ namespace MonoDragons.Core.UserInterface
         public override void Draw(Transform2 parentTransform)
         {
             if (_isVisible())
-                GameWorld.Draw(_current, parentTransform + _currentTransform);
+                World.Draw(_current, parentTransform + _currentTransform);
         }
 
         public override void OnEntered()

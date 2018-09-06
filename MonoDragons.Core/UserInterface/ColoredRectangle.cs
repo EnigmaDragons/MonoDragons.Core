@@ -33,7 +33,7 @@ namespace MonoDragons.Core.UserInterface
         public void Draw(Transform2 parentTransform)
         {
             var position = parentTransform + Transform;
-            GameWorld.Draw(_background, position.ToRectangle());
+            World.Draw(_background, position.ToRectangle());
         }
 
         private void UpdateTexture()

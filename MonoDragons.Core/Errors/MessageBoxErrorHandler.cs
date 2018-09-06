@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace MonoDragons.Core.Errors
 {
-    class MessageBoxErrorHandler : IErrorHandler
+    public sealed class MessageBoxErrorHandler : IErrorHandler
     {
         public void Handle(Exception ex)
         {

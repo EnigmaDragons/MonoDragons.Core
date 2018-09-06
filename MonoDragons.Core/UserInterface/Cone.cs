@@ -30,7 +30,7 @@ namespace MonoDragons.Core.UserInterface
         public void Draw(Transform2 parentTransform)
         {
             var position = parentTransform + Transform;
-            GameWorld.DrawRotatedFromCenter(_background, position.ToRectangle(), Transform.Rotation);
+            World.DrawRotatedFromCenter(_background, position.ToRectangle(), Transform.Rotation);
         }
 
         private void GenerateTexture()

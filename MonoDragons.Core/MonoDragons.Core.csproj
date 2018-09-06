@@ -49,6 +49,7 @@
     <Compile Include="Animations\VerticalFlyInAnimation.cs" />
     <Compile Include="Animations\SinglePositionTraverseAnimation.cs" />
     <Compile Include="Audio\AudioDirector.cs" />
+    <Compile Include="Audio\AudioLoadException.cs" />
     <Compile Include="Audio\AudioPlayer.cs" />
     <Compile Include="Audio\MasterVolume.cs" />
     <Compile Include="Audio\SmartSample.cs" />
@@ -56,7 +57,9 @@
     <Compile Include="Audio\SoundType.cs" />
     <Compile Include="Common\ConcurrentDictionaryWithDefault.cs" />
     <Compile Include="Common\DictionaryWithDefault.cs" />
+    <Compile Include="Common\IInitializable.cs" />
     <Compile Include="Common\Logger.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Common\TrackingEvent.cs" />
     <Compile Include="Development\DevTextColor.cs" />
     <Compile Include="Development\RecentEventDebugLogView.cs" />
@@ -82,7 +85,7 @@
     <Compile Include="Physics\VerticalDirection.cs" />
     <Compile Include="Render\SpriteAnimation.cs" />
     <Compile Include="Render\SpriteAnimationFrame.cs" />
-    <Compile Include="Render\GameWorld.cs" />
+    <Compile Include="Render\World.cs" />
     <Compile Include="Scenes\ClickUiScene.cs" />
     <Compile Include="Scenes\LoadingScene.cs" />
     <Compile Include="Scenes\SceneContainer.cs" />
@@ -179,7 +182,7 @@
     <Compile Include="UserInterface\MutableTextPage.cs" />
     <Compile Include="UserInterface\ClickableUIElement.cs" />
     <Compile Include="UserInterface\ClickUI.cs" />
-    <Compile Include="UserInterface\ImageBox.cs" />
+    <Compile Include="UserInterface\Sprite.cs" />
     <Compile Include="Text\DefaultFont.cs" />
     <Compile Include="UserInterface\ImageButton.cs" />
     <Compile Include="UserInterface\NoneClickableUIElement.cs" />
@@ -204,12 +207,10 @@
     <Compile Include="UserInterface\WrapGrid.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="NAudio, Version=1.8.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\lib\NAudio.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK">

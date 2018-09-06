@@ -15,9 +15,10 @@ namespace MonoDragons.Core.EventSystem
         public void Publish(object payload)
         {
             var eventType = payload.GetType();
+            // TODO: Make this class an automaton instead of using Threading
             if (_eventActions.ContainsKey(eventType))
                 foreach (var action in _eventActions[eventType].ToList())
-                    Task.Run(() => ((Action<object>)action)(payload));
+                    ((Action<object>)action)(payload);
         }
 
         public void Subscribe(EventSubscription subscription)

@@ -34,8 +34,8 @@ namespace MonoDragons.Core.Inputs
             var pressedKeys = downKeys.Where(x => !_lastState.GetPressedKeys().Any(y => x.Equals(y))).ToList();
             var releasedKeys = _lastState.GetPressedKeys().Where(x => downKeys.All(y => !y.Equals(x))).ToList();
             _currentDirection = GetDirection(downKeys);
-            NotifyControlSubscribers(pressedKeys, releasedKeys);
-            NotifyDirectionSubscribers();
+            NotifyControlSubscribersIfChanged(pressedKeys, releasedKeys);
+            NotifyDirectionSubscribersIfChanged();
             _lastState = state;
             _lastDirection = _currentDirection;
         }
@@ -55,12 +55,13 @@ namespace MonoDragons.Core.Inputs
             return new Direction(hDir, vDir);
         }
 
-        private void NotifyDirectionSubscribers()
+        private void NotifyDirectionSubscribersIfChanged()
         {
-            Event.Publish(new DirectionChanged(_lastDirection, _currentDirection));
+            if (!_currentDirection.Equals(_lastDirection))
+                Event.Publish(new DirectionChanged(_lastDirection, _currentDirection));
         }
 
-        private void NotifyControlSubscribers(List<Keys> pressedKeys, List<Keys> releasedKeys)
+        private void NotifyControlSubscribersIfChanged(List<Keys> pressedKeys, List<Keys> releasedKeys)
         {
             pressedKeys.Where(x => _controlBind.ContainsKey(x))
                 .ForEach(x => NotifySubscribers(new ControlStateChanged(_controlBind[x], ControlState.Active)));

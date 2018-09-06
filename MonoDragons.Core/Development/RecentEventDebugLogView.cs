@@ -15,6 +15,7 @@ namespace MonoDragons.Core.Development
         public Vector2 Position { get; set; }
         public int MaxLines { get; set; } = 40;
         public string HideTextPart { get; set; } = "";
+        public string FilterStartsWith { get; set; } = "";
 
         public RecentEventDebugLogView()
         {
@@ -39,6 +40,9 @@ namespace MonoDragons.Core.Development
 
         private void Append(string text)
         {
+            if (!string.IsNullOrWhiteSpace(FilterStartsWith) && text.StartsWith(FilterStartsWith))
+                return;
+                
             var rendered = text.Replace(HideTextPart, ""); 
             _new.Enqueue(rendered);
         }

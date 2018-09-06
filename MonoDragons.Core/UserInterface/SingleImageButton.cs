@@ -35,7 +35,7 @@ namespace MonoDragons.Core.UserInterface
 
         public void Draw(Transform2 parentTransform)
         {
-            GameWorld.Draw(_image, parentTransform + _transform);
+            World.Draw(_image, parentTransform + _transform);
             _current.Draw(parentTransform);
         }
 

@@ -16,7 +16,7 @@ namespace MonoDragons.Core.Render
 
         public static int GameWidth => _display.GameWidth;
         public static int GameHeight => _display.GameHeight;
-        internal static float Scale => _display.Scale;
+        public static float Scale => _display.Scale;
 
         internal static void Init(GraphicsDeviceManager graphics, Display display)
         {
