@@ -1,11 +1,18 @@
-version: 1.0.{build}
+version: 0.1.{build}
 image: Visual Studio 2017
+environment:
+  SonarToken:
+    secure: z5kWIkrJTl5nFcWYIdriFBgQ6TqhUGIlurOw3dFXzHZewne2bDh+SHK9Zv3On0gx
 install:
 - ps: >-
-    # Install MonoGame
-
     (New-Object Net.WebClient).DownloadFile('http://www.monogame.net/releases/v3.5.1/MonoGameSetup.exe', 'C:\MonoGameSetup.exe')
-
+    
     Invoke-Command -ScriptBlock {C:\MonoGameSetup.exe /S /v/qn}
+    
+    choco install sonarscanner-msbuild-net46
+before_build:
+- cmd: SonarScanner.MSBuild.exe begin /k:"MonoDragons.Core" /d:sonar.organization="enigmadragons" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=%SonarToken%
 build:
   verbosity: minimal
+after_build:
+- cmd: SonarScanner.MSBuild.exe end /d:sonar.login=%SonarToken%
