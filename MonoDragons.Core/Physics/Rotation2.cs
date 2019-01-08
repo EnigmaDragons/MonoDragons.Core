@@ -1,7 +1,8 @@
 ﻿using System;
 using MonoDragons.Core.Inputs;
+using MonoDragons.Core.Physics;
 
-namespace MonoDragons.Core.Physics
+namespace MonoDragons.Core
 {
     public struct Rotation2
     {

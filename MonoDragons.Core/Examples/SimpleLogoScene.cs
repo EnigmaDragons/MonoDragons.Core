@@ -21,7 +21,7 @@ namespace MonoDragons.Core.Examples
         {
             Input.On(Control.Start, NavigateToMainMenu);
             Input.On(Control.Select, NavigateToMainMenu);
-            AddClickable(new ScreenClickable(NavigateToMainMenu));
+            Add(new ScreenClickable(NavigateToMainMenu));
 
             var anim1 = new ScreenFade { Duration = TimeSpan.FromSeconds(3.4), FromAlpha = 255, ToAlpha = 0 };
             var anim2 = new ScreenFade { Duration = TimeSpan.FromSeconds(1), FromAlpha = 0, ToAlpha = 0 };

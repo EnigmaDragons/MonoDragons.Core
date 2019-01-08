@@ -10,16 +10,32 @@ namespace MonoDragons.Core.EventSystem
         private static readonly List<EventSubscription> EventSubs = new List<EventSubscription>();
         private static readonly Events TransientEvents = new Events();
         private static readonly Events PersistentEvents = new Events();
+        private static readonly Events NetEvents = new Events();
 
-        public static int SubscriptionCount => TransientEvents.SubscriptionCount + PersistentEvents.SubscriptionCount;
+        public static int SubscriptionCount => TransientEvents.SubscriptionCount + PersistentEvents.SubscriptionCount + NetEvents.SubscriptionCount;
         
         public static void Publish(object payload)
         {
             Logger.WriteLine(payload.ToString());
             TransientEvents.Publish(payload);
             PersistentEvents.Publish(payload);
+            NetEvents.Publish(payload);
         }
 
+        public static void PublishLocally(object payload)
+        {
+            Logger.WriteLine(payload.ToString());
+            TransientEvents.Publish(payload);
+            PersistentEvents.Publish(payload);
+        }
+
+        public static void NetSubscribe(EventSubscription subscription)
+        {
+            NetEvents.Subscribe(subscription);
+            EventSubs.Add(subscription);
+            Resources.Put(subscription.GetHashCode().ToString(), subscription);
+        }
+        
         public static void SubscribeForever(EventSubscription subscription)
         {
             PersistentEvents.Subscribe(subscription);
@@ -41,6 +57,7 @@ namespace MonoDragons.Core.EventSystem
         {
             TransientEvents.Unsubscribe(owner);
             PersistentEvents.Unsubscribe(owner);
+            //NetEvents.Unsubscribe(owner);
             EventSubs.Where(x => x.Owner.Equals(owner)).ForEach(x =>
             {
                 Resources.NotifyDisposed(x);

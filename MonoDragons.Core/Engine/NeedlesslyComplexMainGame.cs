@@ -8,6 +8,7 @@ using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Inputs.KeyboardEvents;
 using MonoDragons.Core.Memory;
+using MonoDragons.Core.Network;
 using MonoDragons.Core.Physics;
 using MonoDragons.Core.Render;
 using MonoDragons.Core.Scenes;
@@ -111,6 +112,7 @@ namespace MonoDragons.Core.Engine
                 if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.OemTilde))
                     Environment.Exit(0);
 #endif
+                Multiplayer.Update(gameTime.ElapsedGameTime);
                 _controller.Update(gameTime.ElapsedGameTime);
                 _scene.Update(gameTime.ElapsedGameTime);
             }

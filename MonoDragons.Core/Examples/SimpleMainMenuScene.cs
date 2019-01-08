@@ -39,8 +39,8 @@ namespace MonoDragons.Core.Examples
                     Transform = new Transform2(new Vector2(0.1.VW(), 0.1.VH()), new Size2(0.8.VW(), 0.05.VH()))
                 });
 
-            AddClickable(MakeButton("New Game", new Point(0.05.VW(), 0.7.VH()), StartNewGame));
-            AddClickable(MakeButton("Exit Game", new Point(0.05.VW(), 0.8.VH()), StartNewGame));
+            Add(MakeButton("New Game", new Point(0.05.VW(), 0.7.VH()), StartNewGame));
+            Add(MakeButton("Exit Game", new Point(0.05.VW(), 0.8.VH()), StartNewGame));
             Add(new ScreenFade {Duration = TimeSpan.FromSeconds(1)}.Started());
         }
 

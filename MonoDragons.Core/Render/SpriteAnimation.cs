@@ -5,7 +5,7 @@ using MonoDragons.Core.Engine;
 using MonoDragons.Core.Physics;
 using MonoDragons.Core.Render;
 
-namespace ZeroFootPrintSociety.Tiles
+namespace MonoDragons.Core.Render
 {
     public class SpriteAnimation : IVisualAutomaton
     {

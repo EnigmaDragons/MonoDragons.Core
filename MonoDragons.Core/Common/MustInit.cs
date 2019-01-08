@@ -20,5 +20,12 @@ namespace MonoDragons
         public void Init(T value) => _value = value;
         public void Set(T value) => Init(value);
         public void Clear() => Init(default(T));
+
+        public T Pop()
+        {
+            var v = _value;
+            Clear();
+            return v;
+        }
     }
 }

@@ -22,6 +22,11 @@ namespace MonoDragons.Core.Development
             Logger.AddSink(Append);
         }
 
+        public void Clear()
+        {
+            _lines.Clear();
+        }
+        
         public void Draw(Transform2 parentTransform)
         {
             for (var i = 0; i < _lines.Count; i++)
@@ -43,7 +48,7 @@ namespace MonoDragons.Core.Development
             if (!string.IsNullOrWhiteSpace(FilterStartsWith) && text.StartsWith(FilterStartsWith))
                 return;
                 
-            var rendered = text.Replace(HideTextPart, ""); 
+            var rendered = HideTextPart.Length > 0 ? text.Replace(HideTextPart, "") : text; 
             _new.Enqueue(rendered);
         }
     }

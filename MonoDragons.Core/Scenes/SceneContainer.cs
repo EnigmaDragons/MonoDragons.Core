@@ -16,6 +16,7 @@ namespace MonoDragons.Core.Scenes
 
         protected virtual Func<Transform2> GetOffset { get; set; }
 
+        protected void Add(Action action) => Add(new ActionAutomation(action));
         protected void Add(IVisual visual) =>  OnlyDuringInit(() => _visuals.Add(visual));
         protected void Add(IAutomaton automaton) => OnlyDuringInit(() => _automata.Add(automaton));
         protected void Add(object actor) => OnlyDuringInit(() => _actors.Add(actor));
