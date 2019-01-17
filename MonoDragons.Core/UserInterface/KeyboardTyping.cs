@@ -8,10 +8,10 @@ namespace MonoDragons.Core.UserInterface
 {
     public sealed class KeyboardTyping : IAutomaton
     {
-        private static readonly TimeSpan backspaceRepeatInterval = TimeSpan.FromMilliseconds(60);
+        private static readonly TimeSpan BackspaceRepeatInterval = TimeSpan.FromMilliseconds(60);
 
         private Action<string> _setValue = t => {};
-        public string Result { get; private set; }
+        private string Result { get; set; }
 
         private TimeSpan _backspaceHeldDurationSinceInvocation;
 
@@ -24,6 +24,7 @@ namespace MonoDragons.Core.UserInterface
         public KeyboardTyping OutputTo(Action<string> setValue)
         {
             _setValue = setValue;
+            _setValue(Result);
             return this;
         }
 
@@ -37,11 +38,13 @@ namespace MonoDragons.Core.UserInterface
         {
             if (state.IsKeyDown(Keys.Back))
             {
+                if (_backspaceHeldDurationSinceInvocation.Equals(TimeSpan.Zero))
+                    Result = Result.Substring(0, Math.Max(0, Result.Length - 1));
                 _backspaceHeldDurationSinceInvocation += delta;
-                if (_backspaceHeldDurationSinceInvocation > backspaceRepeatInterval)
+                if (_backspaceHeldDurationSinceInvocation > BackspaceRepeatInterval)
                 {
                     Result = Result.Substring(0, Math.Max(0, Result.Length - 1));
-                    _backspaceHeldDurationSinceInvocation -= backspaceRepeatInterval;
+                    _backspaceHeldDurationSinceInvocation -= BackspaceRepeatInterval;
                 }
             }
             if (!state.IsKeyDown(Keys.Back))
