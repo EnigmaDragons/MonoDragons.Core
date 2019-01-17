@@ -1,75 +1,36 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.EventSystem;
+using MonoDragons.Core.Inputs.KeyboardEvents;
 
 namespace MonoDragons.Core.UserInterface
 {
     public sealed class KeyboardTyping : IAutomaton
     {
-        private static TimeSpan backspaceRepeatInterval = TimeSpan.FromMilliseconds(75);
+        private static readonly TimeSpan backspaceRepeatInterval = TimeSpan.FromMilliseconds(60);
 
-        public string Result { get; private set; } = "";
+        private Action<string> _setValue = t => {};
+        public string Result { get; private set; }
 
-        Keys[] keys;
-        bool[] IskeyUp;
         private TimeSpan _backspaceHeldDurationSinceInvocation;
 
         public KeyboardTyping(string startingValue = "")
         {
             Result = startingValue;
-            InitValidKeys();
+            Event.Subscribe<KeyboardCharacterInputted>(e => Result += e.Character.ToString(), this);
         }
 
-        private void InitValidKeys()
+        public KeyboardTyping OutputTo(Action<string> setValue)
         {
-            keys = new Keys[38];
-            var tempkeys = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToArray();
-            var j = 0;
-            for (var i = 0; i < tempkeys.Length; i++)
-            {
-                if (i == 1 || i == 11 || (i > 26 && i < 63))
-                {
-                    keys[j] = tempkeys[i];
-                    j++;
-                }
-            }
-            IskeyUp = new bool[keys.Length];
-            for (int i = 0; i < keys.Length; i++)
-                IskeyUp[i] = true;
+            _setValue = setValue;
+            return this;
         }
 
         public void Update(TimeSpan delta)
         {
-            var state = Keyboard.GetState();
-            var i = 0;
-            foreach (Keys key in keys)
-            {
-                if (state.IsKeyDown(key))
-                {
-                    if (IskeyUp[i])
-                    {
-                        if (key == Keys.Back && Result != "") Result = Result.Remove(Result.Length - 1);
-                        if (key == Keys.Space) Result += " ";
-                        if (i > 1 && i < 12)
-                        {
-                            if (state.IsKeyDown(Keys.RightShift) || state.IsKeyDown(Keys.LeftShift))
-                                Result += key.ToString()[1];
-                        }
-                        if (i > 11 && i < 38)
-                        {
-                            if ((state.IsKeyDown(Keys.RightShift) || state.IsKeyDown(Keys.LeftShift))
-                                == System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock))
-                                Result += key.ToString().ToLower();
-                            else Result += key.ToString();
-                        }
-                    }
-                    IskeyUp[i] = false;
-                }
-                else if (state.IsKeyUp(key)) IskeyUp[i] = true;
-                i++;
-            }
-            UpdateBackspace(state, delta);
+            UpdateBackspace(Keyboard.GetState(), delta);
+            _setValue(Result);
         }
 
         private void UpdateBackspace(KeyboardState state, TimeSpan delta)

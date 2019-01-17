@@ -76,9 +76,11 @@
     <Compile Include="Errors\ReportErrorHandler.cs" />
     <Compile Include="Errors\IErrorHandler.cs" />
     <Compile Include="Engine\TimerTask.cs" />
+    <Compile Include="Examples\CharacterCreationScene.cs" />
     <Compile Include="Examples\SimpleLogoScene.cs" />
     <Compile Include="Examples\SimpleMainMenuScene.cs" />
     <Compile Include="Inputs\DirectionChanged.cs" />
+    <Compile Include="Inputs\KeyboardEvents\KeyboardCharacterInputted.cs" />
     <Compile Include="Physics\Engine\Physics.cs" />
     <Compile Include="Physics\Engine\PhysicsInstance.cs" />
     <Compile Include="Physics\HorizontalDirection.cs" />

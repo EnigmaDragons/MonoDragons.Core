@@ -23,7 +23,7 @@ namespace MonoDragons.Core
         {
             Error.Handle(() =>
             {
-                using (var game = new NeedlesslyComplexMainGame(AppDetails.Name, "Logo", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), ErrorHandler))
+                using (var game = new NeedlesslyComplexMainGame(AppDetails.Name, "CharacterCreation", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), ErrorHandler))
                     game.Run();
             }, ErrorHandler.Handle);
         }
@@ -43,6 +43,7 @@ namespace MonoDragons.Core
             {
                 { "Logo", () => new SimpleLogoScene("MainMenu", EnigmaDragonsResources.LogoImage) },
                 { "MainMenu", () => new MainMenuScene("Logo") },
+                { "CharacterCreation", () => new CharacterCreationScene()}
             });
         }
 

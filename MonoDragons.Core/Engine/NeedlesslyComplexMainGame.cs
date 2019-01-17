@@ -4,7 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Development;
 using MonoDragons.Core.Errors;
+using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Inputs;
+using MonoDragons.Core.Inputs.KeyboardEvents;
 using MonoDragons.Core.Memory;
 using MonoDragons.Core.Physics;
 using MonoDragons.Core.Render;
@@ -40,9 +42,14 @@ namespace MonoDragons.Core.Engine
             _metrics = new Metrics();
 #endif
             Window.Title = title;
-            //((Form)Form.FromHandle(Window.Handle)).Closing += (o, e) => Environment.Exit(0);
+            Window.TextInput += OnTextInput;
         }
 
+        private void OnTextInput(object sender, TextInputEventArgs e)
+        {
+            Event.Publish(new KeyboardCharacterInputted(e.Character));
+        }
+        
         protected override void Initialize()
         {
             try
