@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using MonoDragons.Core;
-using MonoDragons.Core.Development;
 using MonoDragons.Core.Network;
 using MonoDragons.Core.Scenes;
 using MonoDragons.Core.UserInterface;
@@ -12,8 +11,8 @@ namespace MonoDragons.Examples.ScissorsPaperRock
     {
         private const string AppId = "Scissors Paper Rock Example";
         private const int Port = 44559;
-        private static readonly Type[] NetTypes = new [] { typeof(SelectionMade) };
-        private readonly Label _hostEndpoint = new Label { Transform = new Transform2(new Vector2(0, 400), new Size2(400, 60))};
+        private static readonly Type[] NetTypes = { typeof(SelectionMade) };
+        private readonly Label _hostEndpoint = new Label { Transform = new Transform2(new Vector2(260, 0), new Size2(200, 60))};
         
         public override void Init()
         {

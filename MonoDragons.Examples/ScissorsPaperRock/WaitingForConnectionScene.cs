@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
 using MonoDragons.Core;
-using MonoDragons.Core.Development;
 using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Network;
-using MonoDragons.Core.Physics;
 using MonoDragons.Core.Scenes;
 using MonoDragons.Core.UserInterface;
 

@@ -2,12 +2,12 @@
 
 namespace MonoDragons.Core.Engine
 {
-    public sealed class ActionAutomation : IAutomaton
+    public sealed class ActionAutomaton : IAutomaton
     {
         private readonly Action<TimeSpan> _action;
 
-        public ActionAutomation(Action action) : this(x => action()) {}
-        public ActionAutomation(Action<TimeSpan> action)
+        public ActionAutomaton(Action action) : this(x => action()) {}
+        public ActionAutomaton(Action<TimeSpan> action)
         {
             _action = action;
         }

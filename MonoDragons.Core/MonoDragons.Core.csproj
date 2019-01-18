@@ -65,7 +65,7 @@
     <Compile Include="Development\RecentEventDebugLogView.cs" />
     <Compile Include="Development\VolumeDemo.cs" />
     <Compile Include="EngimaDragons\EnigmaDragonsResources.cs" />
-    <Compile Include="Engine\ActionAutomation.cs" />
+    <Compile Include="Engine\ActionAutomaton.cs" />
     <Compile Include="Errors\Error.cs" />
     <Compile Include="Common\Map.cs" />
     <Compile Include="Common\MustInit.cs" />

@@ -25,7 +25,7 @@ namespace MonoDragons.Examples
         {
             Error.Handle(() =>
             {
-                using (var game = new NeedlesslyComplexMainGame(AppDetails.Name, "Lobby", new Display(800, 600, false), SetupScene(), CreateKeyboardController(), ErrorHandler))
+                using (var game = new NeedlesslyComplexMainGame(AppDetails.Name, "Lobby", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), ErrorHandler))
                     game.Run();
             }, ErrorHandler.Handle);
         }

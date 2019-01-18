@@ -26,7 +26,7 @@ namespace MonoDragons.Core.Engine
         private readonly IErrorHandler _errorHandler;
         private readonly Display _display;
 
-        public static SpriteBatch WorldSpriteBatch;
+        private SpriteBatch _worldSpriteBatch;
         private SpriteBatch _uiSpriteBatch;
 
         public NeedlesslyComplexMainGame(string title, string startingViewName, Display display,
@@ -43,14 +43,9 @@ namespace MonoDragons.Core.Engine
             _metrics = new Metrics();
 #endif
             Window.Title = title;
-            Window.TextInput += OnTextInput;
+            Window.TextInput += (sender, e) => Event.Publish(new KeyboardCharacterInputted(e.Character));
         }
 
-        private void OnTextInput(object sender, TextInputEventArgs e)
-        {
-            Event.Publish(new KeyboardCharacterInputted(e.Character));
-        }
-        
         protected override void Initialize()
         {
             try
@@ -65,9 +60,9 @@ namespace MonoDragons.Core.Engine
                         (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - CurrentDisplay.GameHeight) / 2 - 40); // Delete this once the above issue is fixed
                     IsMouseVisible = true;
                     _uiSpriteBatch = new SpriteBatch(GraphicsDevice);
-                    WorldSpriteBatch = new SpriteBatch(GraphicsDevice);
+                    _worldSpriteBatch = new SpriteBatch(GraphicsDevice);
                     Input.SetController(_controller);
-                    World.Init(WorldSpriteBatch);
+                    World.Init(_worldSpriteBatch);
                     UI.Init(_uiSpriteBatch); 
                     _scene.Init();
                     base.Initialize();
@@ -127,13 +122,13 @@ namespace MonoDragons.Core.Engine
             try
             {
                 _uiSpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.AnisotropicClamp);
-                WorldSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+                _worldSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
                 GraphicsDevice.Clear(Color.Black);
                 _scene.Draw();
 #if DEBUG
                 _metrics.Draw(Transform2.Zero);
 #endif
-                WorldSpriteBatch.End();
+                _worldSpriteBatch.End();
                 _uiSpriteBatch.End();
             }
             catch (Exception e)

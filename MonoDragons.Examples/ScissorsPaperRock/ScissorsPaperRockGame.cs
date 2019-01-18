@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoDragons.Core;
-using MonoDragons.Core.Development;
+using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
-using MonoDragons.Core.Network;
-using MonoDragons.Core.Physics;
 using MonoDragons.Core.Scenes;
 using MonoDragons.Core.UserInterface;
 
@@ -13,6 +11,7 @@ namespace MonoDragons.Examples.ScissorsPaperRock
 {
     public class RockPaperScissorsGame : ClickUiScene
     {
+        private readonly Queue<SelectionMade> _queuedSelections = new Queue<SelectionMade>();
         private readonly int _playerId = Rng.Int();
         private RockPaperScissorsPhase _phase;
         private IReadOnlyCollection<SelectionMade> _selections = new List<SelectionMade>();
@@ -22,7 +21,7 @@ namespace MonoDragons.Examples.ScissorsPaperRock
 
         public override void Init()
         {
-            Event.Subscribe<SelectionMade>(OnSelection, this);
+            Event.Subscribe<SelectionMade>(s => _queuedSelections.Enqueue(s), this);
             _mySelection = new UiImage { Image = "none", Transform = new Transform2(new Vector2(100, 100), new Size2(200, 400)), IsActive = () => _phase == RockPaperScissorsPhase.Resolving };
             _opponentSelection = new UiImage { Image = "none", Transform = new Transform2(new Vector2(500, 100), new Size2(200, 400)), IsActive = () => _phase == RockPaperScissorsPhase.Resolving };
             _winnerLabel = new Label { Text = "", IsVisible = () => _phase.Equals(RockPaperScissorsPhase.Resolving) };
@@ -34,7 +33,10 @@ namespace MonoDragons.Examples.ScissorsPaperRock
             Add(_winnerLabel);
             Add(_mySelection);
             Add(_opponentSelection);
+            Add(new ActionAutomaton(ProcessSelections));
         }
+        
+        
 
         private void Select(RPSOption rpsOption)
         {
@@ -42,13 +44,20 @@ namespace MonoDragons.Examples.ScissorsPaperRock
             Event.Publish(new SelectionMade { Id = _playerId, Selection = rpsOption });
         }
 
-        private void OnSelection(SelectionMade s)
+        private void ProcessSelections()
         {
-            _selections = _selections.Append(s);
-            var selectionBox = s.Id.Equals(_playerId) ? _mySelection : _opponentSelection;
-            selectionBox.Image = s.Selection.ToString().ToLower();
-            if (_selections.Count == 2)
-                BeginResolving();
+            if (_phase.Equals(RockPaperScissorsPhase.Resolving))
+                return;
+
+            while (_queuedSelections.Count > 0)
+            {
+                var s = _queuedSelections.Dequeue();
+                _selections = _selections.Append(s);
+                var selectionBox = s.Id.Equals(_playerId) ? _mySelection : _opponentSelection;
+                selectionBox.Image = s.Selection.ToString().ToLower();
+                if (_selections.Count == 2)
+                    BeginResolving();
+            }
         }
 
         private void BeginResolving()
