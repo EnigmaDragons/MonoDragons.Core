@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace MonoDragons.Core.Physics
+namespace MonoDragons.Core
 {
     public class Transform2
     {

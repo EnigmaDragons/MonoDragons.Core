@@ -13,7 +13,7 @@
     <AssemblyName>MonoDragons.Core</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>DesktopGL</MonoGamePlatform>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -65,6 +65,7 @@
     <Compile Include="Development\RecentEventDebugLogView.cs" />
     <Compile Include="Development\VolumeDemo.cs" />
     <Compile Include="EngimaDragons\EnigmaDragonsResources.cs" />
+    <Compile Include="Engine\ActionAutomaton.cs" />
     <Compile Include="Errors\Error.cs" />
     <Compile Include="Common\Map.cs" />
     <Compile Include="Common\MustInit.cs" />
@@ -81,6 +82,19 @@
     <Compile Include="Examples\SimpleMainMenuScene.cs" />
     <Compile Include="Inputs\DirectionChanged.cs" />
     <Compile Include="Inputs\KeyboardEvents\KeyboardCharacterInputted.cs" />
+    <Compile Include="Network\Core\NetGame.cs" />
+    <Compile Include="Network\Core\NetRole.cs" />
+    <Compile Include="Network\Events\DemoMessage.cs" />
+    <Compile Include="Network\Events\GameConnectionEstablished.cs" />
+    <Compile Include="Network\Events\GameServerStarted.cs" />
+    <Compile Include="Network\Events\NetJsonMessage.cs" />
+    <Compile Include="Network\JsonNetGame.cs" />
+    <Compile Include="Network\Multiplayer.cs" />
+    <Compile Include="Network\NetworkTestScene.cs" />
+    <Compile Include="Network\Transport\INetDataMessageHandler.cs" />
+    <Compile Include="Network\Transport\JsonEventNetDataMessageHandler.cs" />
+    <Compile Include="Network\Transport\JsonNetEvents.cs" />
+    <Compile Include="Network\Transport\NetMessageTypes.cs" />
     <Compile Include="Physics\Engine\Physics.cs" />
     <Compile Include="Physics\Engine\PhysicsInstance.cs" />
     <Compile Include="Physics\HorizontalDirection.cs" />
@@ -209,6 +223,9 @@
     <Compile Include="UserInterface\WrapGrid.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\lib\Lidgren.Network.dll</HintPath>
+    </Reference>
     <Reference Include="NAudio, Version=1.8.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\lib\NAudio.dll</HintPath>
     </Reference>

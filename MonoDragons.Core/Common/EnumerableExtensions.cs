@@ -14,6 +14,11 @@ namespace MonoDragons
             list.Add(item);
             return item;
         }
+
+        public static IReadOnlyCollection<T> Append<T>(this IReadOnlyCollection<T> items, T item)
+        {
+            return items.Concat(item.AsList()).ToList();
+        }
         
         public static void ForEach<T>(this IEnumerable<T> c, Action<T> action) => c.ToList().ForEach(action);
 

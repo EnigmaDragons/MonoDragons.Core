@@ -1,0 +1,38 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin/$(Platform)
+/intermediateDir:obj/$(Platform)
+/platform:DesktopGL
+/config:
+/profile:Reach
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+#---------------------------------- Content ---------------------------------#
+
+#begin Fonts/Enigmatic/Enigmatic-14.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Enigmatic/Enigmatic-14.spritefont
+
+#begin Fonts/Enigmatic/Enigmatic-18.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Enigmatic/Enigmatic-18.spritefont
+
+#begin Fonts/Enigmatic/Enigmatic-24.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Enigmatic/Enigmatic-24.spritefont
+
+#begin Fonts/Enigmatic/Enigmatic-36.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Enigmatic/Enigmatic-36.spritefont
+

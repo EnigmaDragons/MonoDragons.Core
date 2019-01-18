@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoDragons.Core", "MonoDragons.Core.csproj", "{A33F8FE3-A35A-4DDF-B96C-0157224F602C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoDragons.Core", "MonoDragons.Core\MonoDragons.Core.csproj", "{A33F8FE3-A35A-4DDF-B96C-0157224F602C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoDragons.Examples", "MonoDragons.Examples\MonoDragons.Examples.csproj", "{3C3F5D2C-765F-4C91-83DB-96C29DA7DC4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A33F8FE3-A35A-4DDF-B96C-0157224F602C}.Debug|x86.Build.0 = Debug|x86
 		{A33F8FE3-A35A-4DDF-B96C-0157224F602C}.Release|x86.ActiveCfg = Release|x86
 		{A33F8FE3-A35A-4DDF-B96C-0157224F602C}.Release|x86.Build.0 = Release|x86
+		{3C3F5D2C-765F-4C91-83DB-96C29DA7DC4B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C3F5D2C-765F-4C91-83DB-96C29DA7DC4B}.Debug|x86.Build.0 = Debug|Any CPU
+		{3C3F5D2C-765F-4C91-83DB-96C29DA7DC4B}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C3F5D2C-765F-4C91-83DB-96C29DA7DC4B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,7 +18,7 @@ namespace MonoDragons.Core.Scenes
 
         public void Draw() => Draw(Transform2.Zero);
 
-        public void AddClickable(ClickableUIElement obj)
+        public void Add(ClickableUIElement obj)
         {
             ClickUi.Add(obj);
             if (obj is IVisual)
