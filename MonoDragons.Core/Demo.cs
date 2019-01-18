@@ -44,7 +44,7 @@ namespace MonoDragons.Core
             {
                 { "Logo", () => new SimpleLogoScene("MainMenu", EnigmaDragonsResources.LogoImage) },
                 { "MainMenu", () => new MainMenuScene("Logo") },
-                { "CharacterCreation", () => new CharacterCreationScene()}
+                { "CharacterCreation", () => new CharacterCreationScene()},
                 { "NetworkTest", () => new NetworkTestScene()}
             });
         }

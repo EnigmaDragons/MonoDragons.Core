@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
@@ -28,6 +26,7 @@ namespace MonoDragons.Core.UserInterface
             _setValue = setValue;
             _setValue(Result);
             return this;
+        }
 
         public void Update(TimeSpan delta)
         {

@@ -13,7 +13,7 @@ namespace MonoDragons.Examples.ScissorsPaperRock
         private const string AppId = "Scissors Paper Rock Example";
         private const int Port = 44559;
         private static readonly Type[] NetTypes = new [] { typeof(SelectionMade) };
-        private readonly Label _hostEndpoint = new Label { Transform = new Transform2(new Vector2(300, 0), new Size2(200, 60))};
+        private readonly Label _hostEndpoint = new Label { Transform = new Transform2(new Vector2(0, 400), new Size2(400, 60))};
         
         public override void Init()
         {

@@ -9,7 +9,7 @@ namespace MonoDragons.Core.Examples
     {
         public override void Init()
         {
-            AddClickable(MakeButton("Done", UI.OfScreen(0.10f, 0.70f).ToPoint(), () => Scene.NavigateTo("MainMenu")));
+            Add(MakeButton("Done", UI.OfScreen(0.10f, 0.70f).ToPoint(), () => Scene.NavigateTo("MainMenu")));
             var nameLabel = new Label();
             Add(nameLabel);
             Add(new KeyboardTyping("Name").OutputTo(t => nameLabel.Text = t));
