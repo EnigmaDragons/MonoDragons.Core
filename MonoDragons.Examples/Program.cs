@@ -11,6 +11,7 @@ using MonoDragons.Core.Network;
 using MonoDragons.Core.Render;
 using MonoDragons.Core.Scenes;
 using MonoDragons.Examples.ScissorsPaperRock;
+using MonoDragons.Examples.TopDownMultiplayer;
 
 namespace MonoDragons.Examples
 {
@@ -25,7 +26,7 @@ namespace MonoDragons.Examples
         {
             Error.Handle(() =>
             {
-                using (var game = new NeedlesslyComplexMainGame(AppDetails.Name, "Lobby", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), ErrorHandler))
+                using (var game = new NeedlesslyComplexMainGame(AppDetails.Name, "TopDown", new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), ErrorHandler))
                     game.Run();
             }, ErrorHandler.Handle);
         }
@@ -43,7 +44,8 @@ namespace MonoDragons.Examples
         {
             return new SceneFactory(new Map<string, Func<IScene>>
             {
-                { "Lobby", () => new LobbyScene()}
+                { "Lobby", () => new LobbyScene()},
+                { "TopDown", () => new TopDownMultiplayerGame() }
             });
         }
 

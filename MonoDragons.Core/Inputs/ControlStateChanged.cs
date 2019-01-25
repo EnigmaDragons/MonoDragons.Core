@@ -3,11 +3,13 @@ namespace MonoDragons.Core.Inputs
 {
     public struct ControlStateChanged
     {
+        public int ControllerId { get; }
         public Control Control { get; }
         public ControlState State { get; }
 
-        public ControlStateChanged(Control control, ControlState state)
+        public ControlStateChanged(int controllerId, Control control, ControlState state)
         {
+            ControllerId = controllerId;
             Control = control;
             State = state;
         }

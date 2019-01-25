@@ -16,6 +16,11 @@ namespace MonoDragons.Core.Inputs
             VDir = vDir;
         }
 
+        public bool IsNeutral()
+        {
+            return HDir == HorizontalDirection.None && VDir == VerticalDirection.None;
+        }
+        
         public Point AsOffset()
         {
             return new Point((int)HDir, (int)VDir);

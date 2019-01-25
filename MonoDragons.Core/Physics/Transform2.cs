@@ -57,11 +57,9 @@ namespace MonoDragons.Core
         public Rectangle ToRectangle() => new Rectangle((Location * Scale).ToPoint(), (Size * Scale).ToPoint());
         public Transform2 WithPadding(int x, int y) => WithPadding(new Size2(x, y));
         public Transform2 WithPadding(Size2 amt) => new Transform2(Location + amt.ToVector(), Rotation, Size - (amt * 2), Scale, ZIndex);
-
-        public override string ToString()
-        {
-            return $"{Location} {Size} {Rotation} {Scale} {ZIndex}";
-        }
+        public Transform2 Copy() => new Transform2(Location, Rotation, Size, Scale, ZIndex);
+        
+        public override string ToString() => $"{Location} {Size} {Rotation} {Scale} {ZIndex}";
 
         public static Transform2 operator +(Transform2 t1, Transform2 t2)
         {

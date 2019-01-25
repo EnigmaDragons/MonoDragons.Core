@@ -2,7 +2,7 @@
 
 namespace MonoDragons.Core.Inputs
 {
-    public interface IController : IAutomaton
+    public interface IController : IAutomaton, IIdentifiable
     {
     }
 }

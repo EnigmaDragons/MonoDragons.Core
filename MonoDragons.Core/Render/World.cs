@@ -53,7 +53,15 @@ namespace MonoDragons.Core.Render
 
         public static void Draw(string imageName, Transform2 transform)
         {
-            Draw(imageName, transform.ToRectangle());
+            var texture = Resources.Load<Texture2D>(imageName);
+            _spriteBatch.Draw(texture: texture, 
+                destinationRectangle: ScaleRectangle(transform.ToRectangle()), 
+                sourceRectangle: null, 
+                color: Color.White, 
+                rotation: transform.Rotation.Value / 360f, 
+                origin: null, 
+                effects: SpriteEffects.None, 
+                layerDepth: 0.0f);
         }
 
         public static void Draw(string imageName, Transform2 transform, Color tint)

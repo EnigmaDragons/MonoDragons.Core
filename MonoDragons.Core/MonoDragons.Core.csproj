@@ -66,6 +66,7 @@
     <Compile Include="Development\VolumeDemo.cs" />
     <Compile Include="EngimaDragons\EnigmaDragonsResources.cs" />
     <Compile Include="Engine\ActionAutomaton.cs" />
+    <Compile Include="Engine\IIdentifiable.cs" />
     <Compile Include="Errors\Error.cs" />
     <Compile Include="Common\Map.cs" />
     <Compile Include="Common\MustInit.cs" />
@@ -95,6 +96,10 @@
     <Compile Include="Network\Transport\JsonEventNetDataMessageHandler.cs" />
     <Compile Include="Network\Transport\JsonNetEvents.cs" />
     <Compile Include="Network\Transport\NetMessageTypes.cs" />
+    <Compile Include="Physics\Collision\IPhysicsBody.cs" />
+    <Compile Include="Physics\Collision\PhysicsWorld.cs" />
+    <Compile Include="Physics\Collision\QuadTree.cs" />
+    <Compile Include="Physics\Collision\Velocity2.cs" />
     <Compile Include="Physics\Engine\Physics.cs" />
     <Compile Include="Physics\Engine\PhysicsInstance.cs" />
     <Compile Include="Physics\HorizontalDirection.cs" />

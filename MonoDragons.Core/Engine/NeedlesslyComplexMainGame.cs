@@ -61,7 +61,7 @@ namespace MonoDragons.Core.Engine
                     IsMouseVisible = true;
                     _uiSpriteBatch = new SpriteBatch(GraphicsDevice);
                     _worldSpriteBatch = new SpriteBatch(GraphicsDevice);
-                    Input.SetController(_controller);
+                    Input.SetDefaultController(_controller);
                     World.Init(_worldSpriteBatch);
                     UI.Init(_uiSpriteBatch); 
                     _scene.Init();
